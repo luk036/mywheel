@@ -247,6 +247,7 @@ class ShiftArray(list):
         return iter((i + self.start, v) for i, v in enumerate(self))
 
 
+# The main function is used to test the classes
 if __name__ == "__main__":
     arr = RepeatArray(1, 10)
     print(arr[4])

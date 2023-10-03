@@ -107,6 +107,7 @@ class RobinIterator:
 
 class Robin:
     """Round Robin
+
     The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and the
     `exclude` method returns an iterator starting from a specified part.
     The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and the

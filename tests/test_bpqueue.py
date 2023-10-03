@@ -1,8 +1,27 @@
-from mywheel.bpqueue import BPQueue
+from mywheel.bpqueue import BPQueue, BPQueueIterator
 from mywheel.dllist import Dllink
 
 
 def test_bpqueue():
+    bpq = BPQueue(-3, 3)
+    a = Dllink([0, 3])
+    bpq.append(a, 0)
+    it = BPQueueIterator(bpq)
+    b = next(it)
+    bpq.decrease_key(a, 1)
+    assert b.data[0] == 3
+    bpq.increase_key(a, 1)
+    assert b.data[0] == 4
+    bpq.modify_key(a, 1)
+    assert b.data[0] == 5
+    bpq.detach(a)
+    assert bpq._max == 0
+    bpq.clear()
+    assert bpq._max == 0
+    bpq.append(a, 1)
+ 
+
+def test_bpqueue1():
     try:
         _ = BPQueue(-10.4, 10.4)
     except TypeError:
