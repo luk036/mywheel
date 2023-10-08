@@ -400,4 +400,3 @@ class BPQueueIterator:
     #         dtype:  description
     #     """
     #     return self.next()
-

@@ -340,7 +340,7 @@ class Dllist(Generic[T]):
 
         """
         return DllIterator(self.head)
-    
+
 
 if __name__ == "__main__":
     import doctest

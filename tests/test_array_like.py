@@ -1,4 +1,4 @@
-from mywheel.array_like import ShiftArray, RepeatArray
+from mywheel.array_like import RepeatArray, ShiftArray
 
 
 def test_repeat_array():
@@ -21,7 +21,7 @@ def test_repeat_array():
     assert repeat_array.get(4) == 1
     for i in repeat_array:
         assert i == 1
-  
+
 
 def test_shift_array():
     """
@@ -33,4 +33,3 @@ def test_shift_array():
     assert shift_array[7] == 5
     shift_array[6] = 8
     assert shift_array[6] == 8
-

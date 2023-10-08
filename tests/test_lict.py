@@ -9,4 +9,3 @@ def test_lict():
     assert list(a.values()) == [1, 4, 3, 6]
     assert list(a.items()) == [(0, 1), (1, 4), (2, 3), (3, 6)]
     assert list(a.keys()) == [0, 1, 2, 3]
-

@@ -19,7 +19,7 @@ def test_bpqueue():
     bpq.clear()
     assert bpq._max == 0
     bpq.append(a, 1)
- 
+
 
 def test_bpqueue1():
     try:

@@ -10,4 +10,3 @@ def test_robin():
     assert r.exclude(3).cur.next.data == 4
     assert r.exclude(3).cur.next.next.data == 0
     assert r.exclude(3).cur.next.next.next.data == 1
-
