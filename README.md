@@ -18,6 +18,8 @@
 
 > Reinventing my wheel in Python
 
+![logo](./reinventing-my-wheel.svg)
+
 A longer description of your project goes here...
 
 
