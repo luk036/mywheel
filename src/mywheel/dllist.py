@@ -15,6 +15,17 @@ class Dllink(Generic[T]):
     information. Note that this class does not own the list node. They
     are supplied by the caller in order to better reuse the nodes.
 
+    .. svgbob::
+       :align: center
+
+            Dllink
+             +---------+
+             | next  *-|----->
+        <----|-* prev  |
+             +---------+
+             |  data   |
+             +---------+
+
     Examples:
         >>> a = Dllink(3)
     """
@@ -217,6 +228,17 @@ class Dllist(Generic[T]):
     algorithm. This saves memory and run-time to update the length
     information. Note that this class does not own the list node. They
     are supplied by the caller in order to better reuse the nodes.
+
+    .. svgbob::
+       :align: center
+
+      .----------------------------------------------- - - ------------------------------.
+      |  +--------+      +--------+      +--------+           +--------+      +--------+  )
+      `->| head *-|----->| {c}  *-|----->| {c}  *-|--- - - -->| {c}  *-|----->| {c1} *-|-'
+       .-|-* {a}  |<-----|-*      |<-----|-*      |<-- - - ---|-*      |<-----|-*      |<-.
+      (  +--------+      +--------+      +--------+           +--------+      +--------+   |
+       `---------------------------------------------- - - -------------------------------'
+
     """
 
     __slots__ = "head"

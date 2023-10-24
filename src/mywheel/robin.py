@@ -5,6 +5,16 @@ class SlNode:
     """Node for a Singly-linked list
     The `SlNode` class represents a node in a singly-linked list, with a `next` pointer and a `data`
     value.
+
+    .. svgbob::
+       :align: center
+
+            SlNode
+             +---------+
+             | next  *-|----->
+             +---------+
+             |  data   |
+             +---------+
     """
 
     next: "SlNode"
@@ -112,6 +122,15 @@ class Robin:
     `exclude` method returns an iterator starting from a specified part.
     The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and the
     `exclude` method returns an iterator starting from a specified part.
+
+    .. svgbob::
+       :align: center
+
+      .----------------------------------------------- - - ------------------------------.
+      |  +--------+      +--------+      +--------+           +--------+      +--------+  )
+      `->|   0  *-|----->|   1  *-|----->|   2  *-|--- - - -->| n-2  *-|----->| n-1  *-|-'
+         +--------+      +--------+      +--------+           +--------+      +--------+
+
     """
 
     __slots__ = "cycle"
