@@ -21,6 +21,7 @@ class Dllink(Generic[T]):
             Dllink
              +---------+
              | next  *-|----->
+             +---------+
         <----|-* prev  |
              +---------+
              |  data   |

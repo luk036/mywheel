@@ -8,7 +8,7 @@ sentinel = Item([0, 8965])
 
 
 class BPQueue:
-    """The `BPQueue` class is a bounded priority queue implementation using an array of doubly-linked
+    r"""The `BPQueue` class is a bounded priority queue implementation using an array of doubly-linked
     lists, optimized for small integer keys.
 
     Bounded Priority Queue with integer keys in [a..b].
@@ -52,7 +52,7 @@ class BPQueue:
          sentinel |0   |
                   +----+^
                          \
-                           always empty
+               always empty
 
     """
 
