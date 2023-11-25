@@ -8,7 +8,7 @@ sentinel = Item([0, 8965])
 
 
 class BPQueue:
-    """The `BPQueue` class is a bounded priority queue implementation using an array of doubly-linked
+    r"""The `BPQueue` class is a bounded priority queue implementation using an array of doubly-linked
     lists, optimized for small integer keys.
 
     Bounded Priority Queue with integer keys in [a..b].
@@ -26,6 +26,34 @@ class BPQueue:
     sentinel) is used to reduce the boundary checking during updating.
 
     All member functions assume that the keys are within the bound.
+
+    .. svgbob::
+       :align: center
+
+                  +----+
+                b |high|
+                  +----+
+                  |    |
+                  +----+    +----+    +----+
+                  |max-|--->|{c}-|--->|{c} |
+                  +----+    +----+    +----+
+                  |    |
+                  +----+    +----+    +----+    +----+
+                  |   -|--->|{c}-|--->|{c}-|--->|{c} |
+                  +----+    +----+    +----+    +----+
+                  :    :
+
+                  :    :
+                  +----+    +----+    +----+    +----+    +----+
+                  |2  -|--->|{c}-|--->|{c}-|--->|{c}-|--->|{c} |
+                  +----+    +----+    +----+    +----+    +----+
+                a |1   |
+                  +----+
+         sentinel |0   |
+                  +----+^
+                         \
+               always empty
+
     """
 
     __slots__ = ("_max", "_offset", "_high", "_bucket")
