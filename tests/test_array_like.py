@@ -33,3 +33,6 @@ def test_shift_array():
     assert shift_array[7] == 5
     shift_array[6] = 8
     assert shift_array[6] == 8
+
+    for i, v in shift_array.items():
+        assert v == shift_array[i]

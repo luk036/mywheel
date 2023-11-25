@@ -222,6 +222,7 @@ class BPQueue:
             >>> a.data[0]
             3
         """
+        assert delta > 0
         it.detach()
         it.data[0] -= delta
         assert it.data[0] > 0

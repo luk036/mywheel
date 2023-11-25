@@ -6,6 +6,22 @@ def test_bpqueue():
     bpq = BPQueue(-3, 3)
     a = Dllink([0, 3])
     bpq.append(a, 0)
+    assert bpq.get_max() == 0
+    assert bpq.is_empty() is False
+    bpq.set_key(a, 0)
+    assert a.data[0] == 4
+    bpq.popleft()
+    assert bpq.is_empty() is True
+    assert bpq.get_max() == -4
+
+    a = Dllink([0, 3])
+    bpq.append_direct(a)
+    assert bpq.get_max() == 0
+    bpq.increase_key(a, 1)
+    assert bpq.get_max() == 1
+    bpq.decrease_key(a, 1)
+    assert bpq.get_max() == 0
+
     it = BPQueueIterator(bpq)
     b = next(it)
     bpq.decrease_key(a, 1)
@@ -65,3 +81,23 @@ def test_bpqueue1():
 
     bpq1.clear()
     assert bpq1._max == 0  # is_empty()
+
+
+def test_bpqueue3():
+    bpq = BPQueue(-3, 3)
+    a = Dllink([0, 3])
+    bpq.append(a, 0)
+    bpq.modify_key(a, 0)  # unchange
+    assert bpq.get_max() == 0
+
+    bpq.modify_key(a, -1)
+    assert bpq.get_max() == -1
+
+    a.lock()
+    bpq.modify_key(a, 1)  # unchange because it is locked
+    assert bpq.get_max() == -1
+
+    b = Dllink([0, 8])
+    bpq.append(b, -3)
+    bpq.modify_key(b, 1)
+    assert bpq.get_max() == -1
