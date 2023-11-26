@@ -1,5 +1,4 @@
 from typing import Iterable, List
-
 from .dllist import Dllink, Dllist
 
 Item = Dllink[List[int]]
@@ -240,7 +239,8 @@ class BPQueue:
         :return: There is no return statement in the code, so nothing is being returned.
 
         Note:
-            The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            1. The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            2. Items will be inserted if they are not in the BPQueue
 
         Examples:
             >>> bpq = BPQueue(-3, 3)
@@ -250,13 +250,12 @@ class BPQueue:
             >>> a.data[0]
             3
         """
-        assert delta > 0
         it.detach()
         it.data[0] -= delta
         assert it.data[0] > 0
         assert it.data[0] <= self._high
         self._bucket[it.data[0]].append(it)  # FIFO
-        if self._max < it.data[0]:
+        if self._max < it.data[0]:  # item may not be in the BPQueue
             self._max = it.data[0]
             return
         while self._bucket[self._max].is_empty():
@@ -275,7 +274,8 @@ class BPQueue:
         :type delta: int
 
         Note:
-            The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            1. The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            2. Items will be inserted if they are not in the BPQueue
 
         Examples:
             >>> bpq = BPQueue(-3, 3)

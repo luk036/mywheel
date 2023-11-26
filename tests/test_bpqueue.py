@@ -1,5 +1,5 @@
 from mywheel.bpqueue import BPQueue, BPQueueIterator
-from mywheel.dllist import Dllink
+from mywheel.dllist import Dllink, Dllist
 
 
 def test_bpqueue():
@@ -34,7 +34,14 @@ def test_bpqueue():
     assert bpq._max == 0
     bpq.clear()
     assert bpq._max == 0
-    bpq.append(a, 1)
+
+    c = Dllink([3, 2])
+    waiting_list = Dllist(99)
+    waiting_list.append(c)  # will unlock c
+    bpq.modify_key(c, -1)  # c is not yet in bpq
+    assert not bpq.is_empty()
+    assert bpq._max == 2
+    assert waiting_list.is_empty
 
 
 def test_bpqueue1():
