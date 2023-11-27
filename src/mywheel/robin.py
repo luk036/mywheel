@@ -3,6 +3,7 @@ from typing import List
 
 class SlNode:
     """Node for a Singly-linked list
+
     The `SlNode` class represents a node in a singly-linked list, with a `next` pointer and a `data`
     value.
 
@@ -44,8 +45,7 @@ class RobinIterator:
         """
         The function initializes the current and stop pointers to the given node.
 
-        :param node: The `node` parameter is an instance of the `SlNode` class. It represents a node in a
-        singly linked list
+        :param node: The `node` parameter is an instance of the `SlNode` class. It represents a node in a singly linked list
         :type node: SlNode
 
         Examples:
@@ -91,6 +91,7 @@ class RobinIterator:
     def __iter__(self) -> "RobinIterator":
         """
         The function returns an instance of the RobinIterator class.
+
         :return: The `__iter__` method is returning an instance of the `RobinIterator` class.
         """
         return self
@@ -99,6 +100,7 @@ class RobinIterator:
         """
         The `next` function returns the next element in a linked list and raises a `StopIteration` exception
         if there are no more elements.
+
         :return: The method is returning an integer value.
         """
         self.cur = self.cur.next
@@ -110,6 +112,7 @@ class RobinIterator:
     def __next__(self):
         """
         The __next__ function returns the next item in the iterator.
+
         :return: The `next()` method is being called and its return value is being returned.
         """
         return self.next()
@@ -140,8 +143,7 @@ class Robin:
         """
         The function initializes a cycle of linked nodes with a given number of parts.
 
-        :param num_parts: The `num_parts` parameter is an integer that represents the number of parts in the
-        cycle
+        :param num_parts: The `num_parts` parameter is an integer that represents the number of parts in the cycle
         :type num_parts: int
         """
         self.cycle = list(SlNode(k) for k in range(num_parts))
@@ -156,7 +158,9 @@ class Robin:
 
         :param from_part: The `from_part` parameter is an integer that represents the starting index of the
         cycle that should be excluded
+
         :type from_part: int
+
         :return: The `exclude` method is returning a `RobinIterator` object.
 
         Examples:
