@@ -22,6 +22,11 @@
 
 A longer description of your project goes here...
 
+## Used In
+
+- [digraphx](https://luk036.github.io/digraphx)
+- [netlistx](https://luk036.github.io/netlistx)
+- [ckpttnpy](https://luk036.github.io/ckpttnpy)
 
 <!-- pyscaffold-notes -->
 
