@@ -26,8 +26,7 @@ class Lict(MutableMapping[int, T]):
 
         :param key: The `key` parameter is of type `int` and it represents the index of the element that you want to retrieve from the list
         :type key: int
-        :return: The `__getitem__` method is returning the item at the specified index in the `lst`
-        attribute.
+        :return: The `__getitem__` method is returning the item at the specified index in the `lst` attribute.
 
         Examples:
             >>> a = Lict([1, 4, 3, 6])
@@ -65,6 +64,7 @@ class Lict(MutableMapping[int, T]):
     def __iter__(self) -> Iterator:
         """
         The function returns an iterator that yields elements from the `rng` attribute of the object.
+
         :return: The `iter(self.rng)` is being returned.
 
         Examples:
@@ -108,6 +108,7 @@ class Lict(MutableMapping[int, T]):
         """
         The `values` function returns an iterator that yields the elements of the `lst` attribute of the
         `Lict` object.
+
         :return: The `values` method returns an iterator object.
 
         Examples:
@@ -124,6 +125,7 @@ class Lict(MutableMapping[int, T]):
     def items(self):
         """
         The function returns an enumeration of the items in the list.
+
         :return: The `items` method is returning an enumeration of the `lst` attribute.
         """
         return enumerate(self.lst)

@@ -30,6 +30,7 @@ class RepeatArray:
         :param _: The parameter "_" in the __getitem__ method is used to indicate that the key argument is
         ignored. It is a convention in Python to use "_" as a placeholder for variables that are not used or
         not important in a particular context. In this case, the key argument is not used in the method implementation
+
         :return: The value stored in the `self.value` attribute.
 
         Examples:
@@ -51,6 +52,7 @@ class RepeatArray:
     def __len__(self):
         """
         The function returns the size of an object.
+
         :return: The size of the object.
 
         Examples:
@@ -64,6 +66,7 @@ class RepeatArray:
     def __iter__(self):
         """
         The function returns an iterator that repeats the value of the object a specified number of times.
+
         :return: The `repeat` function is being returned.
 
         Examples:
@@ -84,6 +87,7 @@ class RepeatArray:
 
         :param _: The underscore (_) is a convention in Python to indicate that a parameter is not going to
         be used in the function. In this case, the parameter is ignored and not used in the function logic
+
         :return: The value of the `self.value` attribute is being returned.
 
         Examples:
@@ -117,6 +121,7 @@ class ShiftArray(list):
         The function overrides the `__new__` method of the `list` class in Python.
 
         :param cls: The `cls` parameter in the `__new__` method refers to the class itself. It is automatically passed as the first argument when the method is called
+
         :return: The `__new__` method is returning a new instance of the class `cls` as a list.
 
         Examples:
@@ -132,7 +137,6 @@ class ShiftArray(list):
             2
             >>> shift_array[5]
             3
-
         """
         return list.__new__(cls, *args, **kwargs)
 
@@ -177,8 +181,6 @@ class ShiftArray(list):
             2
             >>> shift_array[5]
             3
-
-
         """
         self.start = start
 

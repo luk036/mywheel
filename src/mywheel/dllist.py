@@ -56,6 +56,7 @@ class Dllink(Generic[T]):
     def is_locked(self) -> bool:
         """
         The `is_locked` function returns `True` if the node is locked, and `False` otherwise.
+
         :return: The method is returning a boolean value indicating whether the node is locked or not.
 
         Examples:
@@ -115,6 +116,7 @@ class Dllink(Generic[T]):
     def popleft(self) -> "Dllink[T]":
         """
         The `popleft` function removes and returns the node at the front of a doubly linked list.
+
         :return: The method `popleft` returns a `Dllink` object.
 
         Examples:
@@ -133,6 +135,7 @@ class Dllink(Generic[T]):
     def pop(self) -> "Dllink[T]":
         """
         The `pop` function removes and returns the previous node in a doubly linked list.
+
         :return: The `pop` method is returning a `Dllink` object.
 
         Examples:
@@ -167,7 +170,7 @@ class Dllink(Generic[T]):
 
     # def __iter__(self):
     #     """iterable
-
+    #
     #     Returns:
     #         Dllink:  itself
     #     """
@@ -200,6 +203,7 @@ class DllIterator(Generic[T]):
         """
         The `__next__` function returns the next item in a doubly linked list and raises a `StopIteration`
         exception if there are no more items.
+
         :return: The next item in the Dllist.
 
         Examples:
@@ -263,6 +267,7 @@ class Dllist(Generic[T]):
     def is_empty(self) -> bool:
         """
         The `is_empty` function checks if a doubly linked list is empty.
+
         :return: a boolean value indicating whether the list is empty or not.
 
         Examples:
@@ -319,6 +324,7 @@ class Dllist(Generic[T]):
     def popleft(self):
         """
         The `popleft` function removes and returns the first node in a doubly linked list.
+
         :return: The `popleft` method is returning a `Dllink` object.
 
         Examples:
@@ -334,6 +340,7 @@ class Dllist(Generic[T]):
     def pop(self):
         """
         The `pop` function removes and returns the last node in a doubly linked list.
+
         :return: The `pop` method is returning a `Dllink` object.
 
         Examples:
@@ -349,6 +356,7 @@ class Dllist(Generic[T]):
     def __iter__(self) -> DllIterator[T]:
         """
         The `__iter__` function returns an iterator object for a doubly linked list.
+
         :return: The `__iter__` method is returning an instance of the `DllIterator` class, passing
         `self.head` as an argument.
 

@@ -1,5 +1,4 @@
 from typing import Iterable, List
-
 from .dllist import Dllink, Dllist
 
 Item = Dllink[List[int]]
@@ -89,6 +88,7 @@ class BPQueue:
     def is_empty(self) -> bool:
         """
         The `is_empty` function checks if a BPQueue object is empty.
+
         :return: The method is returning a boolean value, indicating whether the object is empty or not.
 
         Examples:
@@ -101,6 +101,7 @@ class BPQueue:
     def get_max(self) -> int:
         """
         The `get_max` function returns the maximum value in a BPQueue object.
+
         :return: The method `get_max` returns the maximum value, which is an integer.
 
         Examples:
@@ -126,8 +127,7 @@ class BPQueue:
 
     def set_key(self, it: Item, gain: int) -> None:
         """
-        The function `set_key` sets the key value of an item by subtracting the offset from the given gain
-        value.
+        The function `set_key` sets the key value of an item by subtracting the offset from the given gain value.
 
         :param it: The `it` parameter is of type `Item` and represents the item for which the key value is being set
         :type it: Item
@@ -213,6 +213,7 @@ class BPQueue:
     def popleft(self) -> Item:
         """
         The `popleft` function removes and returns the node with the highest key from the BPQueue.
+
         :return: The method `popleft` returns a `Dllink` object.
 
         Examples:
@@ -240,7 +241,8 @@ class BPQueue:
         :return: There is no return statement in the code, so nothing is being returned.
 
         Note:
-            The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            1. The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            2. Items will be inserted if they are not in the BPQueue
 
         Examples:
             >>> bpq = BPQueue(-3, 3)
@@ -255,7 +257,7 @@ class BPQueue:
         assert it.data[0] > 0
         assert it.data[0] <= self._high
         self._bucket[it.data[0]].append(it)  # FIFO
-        if self._max < it.data[0]:
+        if self._max < it.data[0]:  # item may not be in the BPQueue
             self._max = it.data[0]
             return
         while self._bucket[self._max].is_empty():
@@ -267,14 +269,18 @@ class BPQueue:
         position in a bucket list.
 
         :param it: it is a variable of type Item, which represents an item in a data structure
+
         :type it: Item
+
         :param delta: The `delta` parameter in the `increase_key` function represents the change in the key
         value of the item `it`. It is an integer value that determines how much the key value should be
         increased
+
         :type delta: int
 
         Note:
-            The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            1. The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            2. Items will be inserted if they are not in the BPQueue
 
         Examples:
             >>> bpq = BPQueue(-3, 3)
@@ -299,14 +305,19 @@ class BPQueue:
         position in a bucket data structure.
 
         :param it: it is a reference to an item in a doubly linked list
+
         :type it: Item
+
         :param delta: The parameter "delta" represents the change in the key value of the item. It is an
         integer value that determines how much the key value should be modified
+
         :type delta: int
+
         :return: There is no return statement in the code, so nothing is being returned.
 
         Note:
-            The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            1. The order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.
+            2. Items will be inserted if they are not in the BPQueue
 
         Examples:
             >>> bpq = BPQueue(-3, 3)
@@ -330,6 +341,7 @@ class BPQueue:
 
         :param it: The parameter "it" is of type Dllink, which is a class or object that represents a doubly
         linked list node to be detached from the BPQueue
+
         :type it: Item
 
         Examples:
@@ -359,6 +371,7 @@ class BPQueue:
     def __iter__(self):
         """
         The function returns an iterator object for a priority queue.
+
         :return: The `__iter__` method is returning an instance of the `BPQueueIterator` class.
         """
         return BPQueueIterator(self)
@@ -398,6 +411,7 @@ class BPQueueIterator:
         """
         The `__next__` function returns the next item in a linked list, iterating through the buckets in
         reverse order.
+
         :return: an object of type "Dllink".
 
         Examples:
