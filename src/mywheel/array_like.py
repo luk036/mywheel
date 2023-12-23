@@ -184,6 +184,9 @@ class ShiftArray(list):
         """
         self.start = start
 
+    def __len__(self):
+        return list.__len__(self)
+
     def __getitem__(self, key):
         """
         The `__getitem__` function returns the item at the specified index, adjusted by the `start` attribute.
