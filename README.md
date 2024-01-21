@@ -14,7 +14,7 @@
 [![Documentation Status](https://readthedocs.org/projects/mywheel/badge/?version=latest)](https://mywheel.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://codecov.io/gh/luk036/mywheel/branch/main/graph/badge.svg?token=U7PKg0lceH)](https://codecov.io/gh/luk036/mywheel)
 
-# ☸ mywheel
+# ⚙️ mywheel
 
 > Reinventing my wheel in Python
 
