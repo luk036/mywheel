@@ -28,8 +28,8 @@ class RepeatArray:
         The `__getitem__` function returns the value of the object regardless of the key provided.
 
         :param _: The parameter "_" in the __getitem__ method is used to indicate that the key argument is
-        ignored. It is a convention in Python to use "_" as a placeholder for variables that are not used or
-        not important in a particular context. In this case, the key argument is not used in the method implementation
+                  ignored. It is a convention in Python to use "_" as a placeholder for variables that are not used or
+                  not important in a particular context. In this case, the key argument is not used in the method implementation
 
         :return: The value stored in the `self.value` attribute.
 
@@ -86,7 +86,7 @@ class RepeatArray:
         The `get` function returns the value of the object.
 
         :param _: The underscore (_) is a convention in Python to indicate that a parameter is not going to
-        be used in the function. In this case, the parameter is ignored and not used in the function logic
+                  be used in the function. In this case, the parameter is ignored and not used in the function logic
 
         :return: The value of the `self.value` attribute is being returned.
 

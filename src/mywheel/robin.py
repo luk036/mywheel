@@ -157,7 +157,7 @@ class Robin:
         The `exclude` function returns a `RobinIterator` object that excludes a specified part of a cycle.
 
         :param from_part: The `from_part` parameter is an integer that represents the starting index of the
-        cycle that should be excluded
+                          cycle that should be excluded
 
         :type from_part: int
 

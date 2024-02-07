@@ -274,8 +274,8 @@ class BPQueue:
         :type it: Item
 
         :param delta: The `delta` parameter in the `increase_key` function represents the change in the key
-        value of the item `it`. It is an integer value that determines how much the key value should be
-        increased
+                      value of the item `it`. It is an integer value that determines how much the key value should be
+                      increased
 
         :type delta: int
 
@@ -310,7 +310,7 @@ class BPQueue:
         :type it: Item
 
         :param delta: The parameter "delta" represents the change in the key value of the item. It is an
-        integer value that determines how much the key value should be modified
+                      integer value that determines how much the key value should be modified
 
         :type delta: int
 
@@ -341,7 +341,7 @@ class BPQueue:
         The `detach` function detachs an item from a priority queue.
 
         :param it: The parameter "it" is of type Dllink, which is a class or object that represents a doubly
-        linked list node to be detached from the BPQueue
+                   linked list node to be detached from the BPQueue
 
         :type it: Item
 
