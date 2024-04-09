@@ -17,7 +17,6 @@ class Lict(MutableMapping[int, T]):
         :param lst: The `lst` parameter is a list that is being passed to the `__init__` method. It is used to initialize the `self.lst` attribute of the class
         :type lst: List[T]
         """
-        self.rng = range(len(lst))
         self.lst = lst
 
     def __getitem__(self, key: int) -> T:
@@ -76,7 +75,7 @@ class Lict(MutableMapping[int, T]):
             2
             3
         """
-        return iter(self.rng)
+        return iter(range(len(self.lst)))
 
     def __contains__(self, value) -> bool:
         """
@@ -90,7 +89,7 @@ class Lict(MutableMapping[int, T]):
             >>> 2 in a
             True
         """
-        return value in self.rng
+        return value < len(self.lst) and value >= 0
 
     def __len__(self) -> int:
         """
@@ -102,7 +101,7 @@ class Lict(MutableMapping[int, T]):
             >>> len(a)
             4
         """
-        return len(self.rng)
+        return len(self.lst)
 
     def values(self):
         """
