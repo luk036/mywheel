@@ -12,9 +12,9 @@
 
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
 [![Documentation Status](https://readthedocs.org/projects/mywheel/badge/?version=latest)](https://mywheel.readthedocs.io/en/latest/?badge=latest)
-[![codecov](https://codecov.io/gh/luk036/mywheel/branch/main/graph/badge.svg?token=U7PKg0lceH)](https://codecov.io/gh/luk036/mywheel)
+[![Coverage Status](https://coveralls.io/repos/github/luk036/mywheel/badge.svg?branch=main)](https://coveralls.io/github/luk036/mywheel?branch=main)
 
-# ⚙️ mywheel
+# ⚙️  mywheel
 
 > Reinventing my wheel in Python
 

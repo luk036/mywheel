@@ -64,7 +64,7 @@ class Dllink(Generic[T]):
             >>> a.is_locked()
             True
         """
-        return self.next == self
+        return id(self.next) == id(self)
 
     def lock(self) -> None:
         """
@@ -124,7 +124,7 @@ class Dllink(Generic[T]):
             >>> b = Dllink(4)
             >>> a.appendleft(b)
             >>> c = a.popleft()
-            >>> b == c
+            >>> id(b) == id(c)
             True
         """
         res = self.next
@@ -143,7 +143,7 @@ class Dllink(Generic[T]):
             >>> b = Dllink(4)
             >>> a.append(b)
             >>> c = a.pop()
-            >>> b == c
+            >>> id(b) == id(c)
             True
         """
         res = self.prev
@@ -212,10 +212,10 @@ class DllIterator(Generic[T]):
             >>> a.append(b)
             >>> cursor = iter(a)
             >>> c = next(cursor)
-            >>> b == c
+            >>> id(b) == id(c)
             True
         """
-        if self.cur != self.link:
+        if id(self.cur) != id(self.link):
             res = self.cur
             self.cur = self.cur.next
             return res
@@ -275,7 +275,7 @@ class Dllist(Generic[T]):
             >>> a.is_empty()
             True
         """
-        return self.head.next == self.head
+        return id(self.head.next) == id(self.head)
 
     def clear(self) -> None:
         """
@@ -332,7 +332,7 @@ class Dllist(Generic[T]):
             >>> b = Dllink(4)
             >>> a.appendleft(b)
             >>> c = a.popleft()
-            >>> b == c
+            >>> id(b) == id(c)
             True
         """
         return self.head.popleft()
@@ -348,7 +348,7 @@ class Dllist(Generic[T]):
             >>> b = Dllink(4)
             >>> a.append(b)
             >>> c = a.pop()
-            >>> b == c
+            >>> id(b) == id(c)
             True
         """
         return self.head.pop()
@@ -366,7 +366,7 @@ class Dllist(Generic[T]):
             >>> a.append(b)
             >>> it = iter(a)
             >>> c = next(it)
-            >>> b == c
+            >>> id(b) == id(c)
             True
 
         """
