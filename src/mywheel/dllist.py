@@ -79,7 +79,7 @@ class Dllink(Generic[T]):
         """
         self.next = self
 
-    def appendleft(self, node: "Dllink[T]") -> None:
+    def attach(self, node: "Dllink[T]") -> None:
         """
         The `appendleft` function appends a node to the front of a doubly linked list.
 
@@ -89,29 +89,29 @@ class Dllink(Generic[T]):
         Examples:
             >>> a = Dllink(3)
             >>> b = Dllink(4)
-            >>> a.appendleft(b)
+            >>> a.attach(b)
         """
         node.next = self.next
         self.next.prev = node
         self.next = node
         node.prev = self
 
-    def append(self, node: "Dllink[T]") -> None:
-        """
-        The `append` function appends a node to the back of a doubly linked list.
-
-        :param node: The `node` parameter is an instance of the `Dllink` class
-        :type node: "Dllink[T]"
-
-        Examples:
-            >>> a = Dllink(3)
-            >>> b = Dllink(4)
-            >>> a.append(b)
-        """
-        node.prev = self.prev
-        self.prev.next = node
-        self.prev = node
-        node.next = self
+    # def append(self, node: "Dllink[T]") -> None:
+    #     """
+    #     The `append` function appends a node to the back of a doubly linked list.
+    #
+    #     :param node: The `node` parameter is an instance of the `Dllink` class
+    #     :type node: "Dllink[T]"
+    #
+    #     Examples:
+    #         >>> a = Dllink(3)
+    #         >>> b = Dllink(4)
+    #         >>> a.append(b)
+    #     """
+    #     node.prev = self.prev
+    #     self.prev.next = node
+    #     self.prev = node
+    #     node.next = self
 
     def detach(self) -> None:
         """
@@ -285,7 +285,7 @@ class Dllist(Generic[T]):
             >>> a.is_empty()
             False
         """
-        self.head.appendleft(node)
+        self.head.attach(node)
 
     def append(self, node: Dllink[T]) -> None:
         """
@@ -301,7 +301,7 @@ class Dllist(Generic[T]):
             >>> a.is_empty()
             False
         """
-        self.head.append(node)
+        self.head.prev.attach(node)
 
     def popleft(self):
         """
