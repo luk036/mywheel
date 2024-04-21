@@ -113,48 +113,20 @@ class Dllink(Generic[T]):
         self.prev = node
         node.next = self
 
-    def popleft(self) -> "Dllink[T]":
-        """
-        The `popleft` function removes and returns the node at the front of a doubly linked list.
-
-        :return: The method `popleft` returns a `Dllink` object.
-
-        Examples:
-            >>> a = Dllink(3)
-            >>> b = Dllink(4)
-            >>> a.appendleft(b)
-            >>> c = a.popleft()
-            >>> id(b) == id(c)
-            True
-        """
-        res = self.next
-        self.next = res.next
-        self.next.prev = self
-        return res
-
-    def pop(self) -> "Dllink[T]":
-        """
-        The `pop` function removes and returns the previous node in a doubly linked list.
-
-        :return: The `pop` method is returning a `Dllink` object.
-
-        Examples:
-            >>> a = Dllink(3)
-            >>> b = Dllink(4)
-            >>> a.append(b)
-            >>> c = a.pop()
-            >>> id(b) == id(c)
-            True
-        """
-        res = self.prev
-        self.prev = res.prev
-        self.prev.next = self
-        return res
-
     def detach(self) -> None:
         """
         The `detach` function removes a node from a doubly linked list by updating the previous and next
         pointers of the surrounding nodes.
+
+        .. svgbob::
+           :align: center
+
+                         .---------------.
+             +--------+  |   +--------+  |   +--------+
+           ->| {c}  *-|--'   | {c}  *-|- `-->| {c}  *-|-
+            -|-*      |<-.  -|-*      |  .---|-*      |<-
+             +--------+  |   +--------+  |   +--------+
+                         `---------------'
 
         Examples:
             >>> a = Dllink(3)
@@ -237,12 +209,12 @@ class Dllist(Generic[T]):
     .. svgbob::
        :align: center
 
-      .----------------------------------------------- - - ------------------------------.
+      .----------------------------------------------- ... ------------------------------.
       |  +--------+      +--------+      +--------+           +--------+      +--------+  )
-      `->| head *-|----->| {c}  *-|----->| {c}  *-|--- - - -->| {c}  *-|----->| {c1} *-|-'
-       .-|-* {a}  |<-----|-*      |<-----|-*      |<-- - - ---|-*      |<-----|-*      |<-.
-      (  +--------+      +--------+      +--------+           +--------+      +--------+   |
-       `---------------------------------------------- - - -------------------------------'
+      `->| head *-|----->| {c}  *-|----->| {c}  *-|--- ... -->| {c}  *-|----->| {c}  *-|-'
+       .-|-* {a}  |<-----|-*      |<-----|-*      |<-- ... ---|-*      |<-----|-*      |<-.
+      (  +--------+      +--------+      +--------+           +--------+      +--------+  |
+       `---------------------------------------------- ... -------------------------------'
 
     """
 
@@ -269,6 +241,16 @@ class Dllist(Generic[T]):
         The `is_empty` function checks if a doubly linked list is empty.
 
         :return: a boolean value indicating whether the list is empty or not.
+
+        .. svgbob::
+           :align: center
+
+          .-------------.
+          |  +--------+  )
+          `->| head *-|-'
+           .-|-* {a}  |<-.
+          (  +--------+  |
+           `-------------'
 
         Examples:
             >>> a = Dllist(3)
@@ -327,6 +309,16 @@ class Dllist(Generic[T]):
 
         :return: The `popleft` method is returning a `Dllink` object.
 
+        .. svgbob::
+           :align: center
+
+                         .---------------.
+             +--------+  |   +--------+  |   +--------+           +--------+      +--------+
+           ->| head *-|--'   | {c}  *-|- `-->| {c}  *-|--- ... -->| {c}  *-|----->| {c}  *-|-
+            -|-* {a}  |<-.  -|-*      |  .---|-*      |<-- ... ---|-*      |<-----|-*      |<-
+             +--------+  |   +--------+  |   +--------+           +--------+      +--------+
+                         `---------------'
+
         Examples:
             >>> a = Dllist(3)
             >>> b = Dllink(4)
@@ -335,7 +327,9 @@ class Dllist(Generic[T]):
             >>> id(b) == id(c)
             True
         """
-        return self.head.popleft()
+        res = self.head.next
+        res.detach()
+        return res
 
     def pop(self):
         """
@@ -351,7 +345,9 @@ class Dllist(Generic[T]):
             >>> id(b) == id(c)
             True
         """
-        return self.head.pop()
+        res = self.head.prev
+        res.detach()
+        return res
 
     def __iter__(self) -> DllIterator[T]:
         """
