@@ -1,8 +1,11 @@
+import pytest
+
 from mywheel.bpqueue import BPQueue, BPQueueIterator
 from mywheel.dllist import Dllink, Dllist
 
 
-def test_bpqueue():
+
+def test_bpqueue1():
     bpq = BPQueue(-3, 3)
     a = Dllink([0, 3])
     bpq.append(a, 0)
@@ -14,8 +17,10 @@ def test_bpqueue():
     assert bpq.is_empty() is True
     assert bpq.get_max() == -4
 
+def test_bpqueue2():
+    bpq = BPQueue(-3, 3)
     a = Dllink([0, 3])
-    bpq.append_direct(a)
+    bpq.appendleft_direct(a)
     assert bpq.get_max() == 0
     bpq.increase_key(a, 1)
     assert bpq.get_max() == 1
@@ -36,7 +41,7 @@ def test_bpqueue():
     assert bpq._max == 0
 
     c = Dllink([3, 2])
-    waiting_list = Dllist(99)
+    waiting_list = Dllist([99, 98])
     waiting_list.append(c)  # will unlock c
     bpq.modify_key(c, -1)  # c is not yet in bpq
     assert not bpq.is_empty()
@@ -44,11 +49,9 @@ def test_bpqueue():
     assert waiting_list.is_empty
 
 
-def test_bpqueue1():
-    try:
+def test_bpqueue3():
+    with pytest.raises(TypeError):
         _ = BPQueue(-10.4, 10.4)
-    except TypeError:
-        print("ok")
 
     bpq1 = BPQueue(-10, 10)
     bpq2 = BPQueue(-10, 10)
@@ -90,7 +93,7 @@ def test_bpqueue1():
     assert bpq1._max == 0  # is_empty()
 
 
-def test_bpqueue3():
+def test_bpqueue4():
     bpq = BPQueue(-3, 3)
     a = Dllink([0, 3])
     bpq.append(a, 0)

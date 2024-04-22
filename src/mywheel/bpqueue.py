@@ -84,7 +84,7 @@ class BPQueue:
         self._offset = a - 1
         self._high = b - self._offset
         self._bucket = list(Dllist([i, 4848]) for i in range(self._high + 1))
-        self._bucket[0].append(sentinel)  # sentinel
+        self._bucket[0].appendleft(sentinel)  # sentinel
 
     def is_empty(self) -> bool:
         """
@@ -145,9 +145,9 @@ class BPQueue:
         """
         it.data[0] = gain - self._offset
 
-    def append_direct(self, it: Item) -> None:
+    def appendleft_direct(self, it: Item) -> None:
         """
-        The `append_direct` function appends an item to a list using its internal key.
+        The `appendleft_direct` function appends an item to a list using its internal key.
 
         :param it: The parameter `it` is of type `Item`, which is a class or data structure representing an item
         :type it: Item
@@ -155,16 +155,40 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
-            >>> bpq.append_direct(a)
+            >>> bpq.appendleft_direct(a)
             >>> bpq.is_empty()
             False
         """
         assert it.data[0] > self._offset
-        self.append(it, it.data[0])
+        self.appendleft(it, it.data[0])
+
+    def appendleft(self, it: Item, k: int) -> None:
+        """
+        The `appendleft` function appends an item with an external key to a priority queue.
+
+        :param it: The parameter "it" is of type Dllink, which is a class or object that represents a doubly linked list node. It is used to store the item that needs to be appended to the BPQueue
+        :type it: Item
+        :param k: The parameter `k` represents the external key that is associated with the item being appended to the BPQueue
+        :type k: int
+
+        Examples:
+            >>> bpq = BPQueue(-3, 3)
+            >>> a = Dllink([0, 3])
+            >>> bpq.appendleft(a, 0)
+            >>> bpq.is_empty()
+            False
+            >>> a.data[0]
+            4
+        """
+        assert k > self._offset
+        it.data[0] = k - self._offset
+        if self._max < it.data[0]:
+            self._max = it.data[0]
+        self._bucket[it.data[0]].appendleft(it)
 
     def append(self, it: Item, k: int) -> None:
         """
-        The `append` function appends an item with an external key to a priority queue.
+        The `appendleft` function appends an item with an external key to a priority queue.
 
         :param it: The parameter "it" is of type Dllink, which is a class or object that represents a doubly linked list node. It is used to store the item that needs to be appended to the BPQueue
         :type it: Item
@@ -206,7 +230,7 @@ class BPQueue:
         for it in nodes:
             it.data[0] -= self._offset
             assert it.data[0] > 0
-            self._bucket[it.data[0]].append(it)
+            self._bucket[it.data[0]].appendleft(it)
         self._max = self._high
         while self._bucket[self._max].is_empty():
             self._max -= 1
@@ -220,7 +244,7 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
-            >>> bpq.append(a, 0)
+            >>> bpq.appendleft(a, 0)
             >>> b = bpq.popleft()
             >>> bpq.is_empty()
             True
@@ -248,7 +272,7 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
-            >>> bpq.append(a, 0)
+            >>> bpq.appendleft(a, 0)
             >>> bpq.decrease_key(a, 1)
             >>> a.data[0]
             3
@@ -286,7 +310,7 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
-            >>> bpq.append(a, 0)
+            >>> bpq.appendleft(a, 0)
             >>> bpq.increase_key(a, 1)
             >>> a.data[0]
             5
@@ -323,7 +347,7 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
-            >>> bpq.append(a, 0)
+            >>> bpq.appendleft(a, 0)
             >>> bpq.modify_key(a, 1)
             >>> a.data[0]
             5
@@ -348,7 +372,7 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
-            >>> bpq.append(a, 0)
+            >>> bpq.appendleft(a, 0)
             >>> bpq.detach(a)
             >>> bpq.is_empty()
             True
@@ -396,7 +420,7 @@ class BPQueueIterator:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
-            >>> bpq.append(a, 0)
+            >>> bpq.appendleft(a, 0)
             >>> it = BPQueueIterator(bpq)
             >>> b = next(it)
             >>> next(it)
@@ -418,7 +442,7 @@ class BPQueueIterator:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
-            >>> bpq.append(a, 0)
+            >>> bpq.appendleft(a, 0)
             >>> it = BPQueueIterator(bpq)
             >>> b = next(it)
             >>> next(it)
