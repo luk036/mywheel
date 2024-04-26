@@ -4,7 +4,6 @@ from mywheel.bpqueue import BPQueue, BPQueueIterator
 from mywheel.dllist import Dllink, Dllist
 
 
-
 def test_bpqueue1():
     bpq = BPQueue(-3, 3)
     a = Dllink([0, 3])
