@@ -140,17 +140,6 @@ class Dllink(Generic[T]):
         p.next = n
         n.prev = p
 
-    # def __iter__(self):
-    #     """iterable
-    #
-    #     Returns:
-    #         Dllink:  itself
-    #     """
-    #     cur = self.next
-    #     while cur != self:
-    #         yield cur
-    #         cur = cur.next
-
 
 class DllIterator(Generic[T]):
     """The `DllIterator` class is a list iterator that allows traversal of a doubly

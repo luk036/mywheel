@@ -14,11 +14,11 @@
 [![Documentation Status](https://readthedocs.org/projects/mywheel/badge/?version=latest)](https://mywheel.readthedocs.io/en/latest/?badge=latest)
 [![Coverage Status](https://coveralls.io/repos/github/luk036/mywheel/badge.svg?branch=main)](https://coveralls.io/github/luk036/mywheel?branch=main)
 
+![logo](./reinventing-my-wheel.svg)
+
 # 🛞 mywheel
 
 > Reinventing my wheel in Python
-
-![logo](./reinventing-my-wheel.svg)
 
 A longer description of your project goes here...
 
