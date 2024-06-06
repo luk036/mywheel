@@ -16,6 +16,7 @@ def test_bpqueue1():
     assert bpq.is_empty() is True
     assert bpq.get_max() == -4
 
+
 def test_bpqueue2():
     bpq = BPQueue(-3, 3)
     a = Dllink([0, 3])
