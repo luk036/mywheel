@@ -81,7 +81,7 @@ class Dllink(Generic[T]):
 
     def attach(self, node: "Dllink[T]") -> None:
         """
-        The `appendleft` function appends a node to the front of a doubly linked list.
+        The `attach` function appends a node to the front of a doubly linked list.
 
         :param node: The `node` parameter is an instance of the `Dllink` class
         :type node: "Dllink[T]"
@@ -131,7 +131,7 @@ class Dllink(Generic[T]):
         Examples:
             >>> a = Dllink(3)
             >>> b = Dllink(4)
-            >>> a.append(b)
+            >>> a.attach(b)
             >>> b.detach()
         """
         assert self.next
