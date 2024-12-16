@@ -1,3 +1,23 @@
+""" 
+Doubly Linked List Implementation
+
+This code implements a doubly linked list data structure in Python. A doubly linked list is a type of data structure where each element (node) contains data and links to both the next and previous elements in the list. This implementation provides two main classes: Dllink for individual nodes and Dllist for the entire list.
+
+The purpose of this code is to provide a flexible and efficient way to store and manipulate collections of data. It's particularly useful when you need to frequently insert or remove elements from the middle of a list, as these operations can be performed quickly in a doubly linked list.
+
+The code doesn't take any specific inputs or produce outputs on its own. Instead, it provides a set of tools (classes and methods) that programmers can use to create and manipulate doubly linked lists in their own programs. Users of this code can create lists, add elements to them, remove elements, and iterate through the lists.
+
+The Dllink class represents individual nodes in the list. Each node contains three pieces of information: the data it holds, a reference to the next node, and a reference to the previous node. The Dllist class represents the entire list, using a special "head" node as a reference point for the start of the list.
+
+The code achieves its purpose through a series of methods that manipulate these nodes and their connections. For example, the attach method in Dllink adds a new node after the current one by adjusting the next and previous references of the affected nodes. The appendleft and append methods in Dllist add new nodes to the beginning or end of the list, respectively.
+
+An important aspect of this implementation is that it doesn't keep track of the list's length. This design choice saves memory and processing time, as the length doesn't need to be updated with each operation. However, it means that if a user needs to know the length of the list, they would need to count the elements manually.
+
+The code also includes an iterator (DllIterator) that allows users to easily traverse the list from beginning to end. This is particularly useful for processing all elements in the list in order.
+
+Overall, this doubly linked list implementation provides a powerful and flexible tool for managing collections of data, especially in situations where frequent insertions and deletions are needed throughout the list.
+"""
+
 from typing import Generic, TypeVar
 
 T = TypeVar("T")

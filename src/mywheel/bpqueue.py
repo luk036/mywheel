@@ -1,3 +1,23 @@
+""" 
+BPQueue (Bounded Priority Queue)
+
+This code implements a Bounded Priority Queue (BPQueue) data structure. The purpose of this data structure is to efficiently manage and prioritize items within a specific range of integer keys. It's particularly useful when you need to handle a large number of items with priorities that fall within a known, limited range.
+
+The BPQueue takes two main inputs when initialized: a lower bound (a) and an upper bound (b) for the priority range. These bounds define the valid range of priorities for items in the queue. The queue can then accept items (represented by the Item type, which is a doubly-linked list node) along with their associated priority values.
+
+The main outputs of the BPQueue are the items themselves, typically retrieved in order of highest priority. The queue provides methods to add items, remove the highest-priority item, modify item priorities, and iterate through the items in descending priority order.
+
+The BPQueue achieves its purpose through a clever combination of an array (called buckets) and doubly-linked lists. Each bucket in the array corresponds to a specific priority level. Items with the same priority are stored in the same bucket using a doubly-linked list. This structure allows for fast insertion, deletion, and priority modifications.
+
+The key logic flows in the BPQueue involve maintaining the correct order of items and efficiently updating the maximum priority. When items are added or their priorities are changed, the code ensures they are placed in the correct bucket. The queue keeps track of the highest non-empty bucket (_max), allowing for quick access to the highest-priority items.
+
+An important data transformation happens when inserting items: the external priority value is converted to an internal index by subtracting an offset. This allows the queue to use array indices efficiently, even when the priority range doesn't start at zero.
+
+The BPQueue also includes an iterator (BPQueueIterator) that allows for traversing the items in descending priority order. This iterator moves through the buckets from highest to lowest, yielding items from each non-empty bucket.
+
+Overall, the BPQueue provides a specialized data structure that offers efficient operations for managing prioritized items within a bounded range, making it useful for scenarios where fast priority-based access and modifications are required.
+"""
+
 from typing import Iterable, List
 
 from .dllist import Dllink, Dllist
