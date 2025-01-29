@@ -1,4 +1,4 @@
-""" 
+"""
 Round-Robin Implementation
 
 This code implements a round-robin algorithm, which is a method for fairly distributing tasks or resources among a group of participants. The main purpose of this code is to create a circular list of elements and provide a way to iterate through them, starting from any given point.

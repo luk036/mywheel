@@ -1,4 +1,4 @@
-""" 
+"""
 Doubly Linked List Implementation
 
 This code implements a doubly linked list data structure in Python. A doubly linked list is a type of data structure where each element (node) contains data and links to both the next and previous elements in the list. This implementation provides two main classes: Dllink for individual nodes and Dllist for the entire list.

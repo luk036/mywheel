@@ -1,4 +1,4 @@
-""" 
+"""
 BPQueue (Bounded Priority Queue)
 
 This code implements a Bounded Priority Queue (BPQueue) data structure. The purpose of this data structure is to efficiently manage and prioritize items within a specific range of integer keys. It's particularly useful when you need to handle a large number of items with priorities that fall within a known, limited range.
