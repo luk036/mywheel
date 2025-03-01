@@ -3,10 +3,10 @@ from typing import Iterator, List, MutableMapping, TypeVar
 T = TypeVar("T")
 
 
-class Lict(MutableMapping[int, T]):
-    """Lict
+class MapAdapter(MutableMapping[int, T]):
+    """MapAdapter
 
-    The `Lict` class is a custom implementation of a mutable mapping with integer keys and generic
+    The `MapAdapter` class is a custom implementation of a mutable mapping with integer keys and generic
     values, which adapts a list to behave like a dictionary.
     """
 
@@ -21,14 +21,14 @@ class Lict(MutableMapping[int, T]):
 
     def __getitem__(self, key: int) -> T:
         """
-        This function allows you to access an element in a Lict object by its index.
+        This function allows you to access an element in a MapAdapter object by its index.
 
         :param key: The `key` parameter is of type `int` and it represents the index of the element that you want to retrieve from the list
         :type key: int
         :return: The `__getitem__` method is returning the item at the specified index in the `lst` attribute.
 
         Examples:
-            >>> a = Lict([1, 4, 3, 6])
+            >>> a = MapAdapter([1, 4, 3, 6])
             >>> a[2]
             3
         """
@@ -44,7 +44,7 @@ class Lict(MutableMapping[int, T]):
         :type new_value: T
 
         Examples:
-            >>> a = Lict([1, 4, 3, 6])
+            >>> a = MapAdapter([1, 4, 3, 6])
             >>> a[2] = 7
             >>> print(a[2])
             7
@@ -54,7 +54,7 @@ class Lict(MutableMapping[int, T]):
     def __delitem__(self, _):
         """
         The __delitem__ function raises a NotImplementedError and provides a docstring explaining that
-        deleting items from Lict is not recommended.
+        deleting items from MapAdapter is not recommended.
 
         :param _: The underscore (_) is typically used as a placeholder for a variable or value that is not going to be used or referenced in the code. In this case, it is used as a placeholder for the key parameter in the __delitem__ method
         """
@@ -67,7 +67,7 @@ class Lict(MutableMapping[int, T]):
         :return: The `iter(self.rng)` is being returned.
 
         Examples:
-            >>> a = Lict([1, 4, 3, 6])
+            >>> a = MapAdapter([1, 4, 3, 6])
             >>> for i in a:
             ...     print(i)
             0
@@ -85,7 +85,7 @@ class Lict(MutableMapping[int, T]):
         :return: The method is returning a boolean value, indicating whether the given value is present in the `self.rng` attribute.
 
         Examples:
-            >>> a = Lict([1, 4, 3, 6])
+            >>> a = MapAdapter([1, 4, 3, 6])
             >>> 2 in a
             True
         """
@@ -97,7 +97,7 @@ class Lict(MutableMapping[int, T]):
         :return: The `len` function is returning the length of the `self.rng` attribute.
 
         Examples:
-            >>> a = Lict([1, 4, 3, 6])
+            >>> a = MapAdapter([1, 4, 3, 6])
             >>> len(a)
             4
         """
@@ -106,12 +106,12 @@ class Lict(MutableMapping[int, T]):
     def values(self):
         """
         The `values` function returns an iterator that yields the elements of the `lst` attribute of the
-        `Lict` object.
+        `MapAdapter` object.
 
         :return: The `values` method returns an iterator object.
 
         Examples:
-            >>> a = Lict([1, 4, 3, 6])
+            >>> a = MapAdapter([1, 4, 3, 6])
             >>> for i in a.values():
             ...     print(i)
             1
@@ -131,7 +131,7 @@ class Lict(MutableMapping[int, T]):
 
 
 if __name__ == "__main__":
-    a = Lict([0] * 8)
+    a = MapAdapter([0] * 8)
     for i in a:
         a[i] = i * i
     for i, v in a.items():

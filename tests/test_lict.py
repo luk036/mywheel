@@ -1,8 +1,8 @@
-from mywheel.lict import Lict
+from mywheel.map_adapter import MapAdapter
 
 
 def test_lict():
-    a = Lict([1, 4, 3, 6])
+    a = MapAdapter([1, 4, 3, 6])
     assert a[2] == 3
     assert 3 in a
     assert len(a) == 4
