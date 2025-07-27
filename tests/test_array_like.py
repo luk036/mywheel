@@ -29,6 +29,9 @@ def test_shift_array():
     """
     shift_array = ShiftArray([1, 2, 3, 4, 5])
     shift_array.set_start(3)
+    assert shift_array[3] == 1
+    assert shift_array[4] == 2
+    assert shift_array[5] == 3
     assert shift_array[6] == 4
     assert shift_array[7] == 5
     shift_array[6] = 8
@@ -36,3 +39,8 @@ def test_shift_array():
 
     for i, v in shift_array.items():
         assert v == shift_array[i]
+
+
+if __name__ == "__main__":
+    test_repeat_array()
+    test_shift_array()
