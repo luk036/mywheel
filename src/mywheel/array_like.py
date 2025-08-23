@@ -209,6 +209,8 @@ class ShiftArray(list):
             3
 
         """
+        if not (0 <= key - self.start < len(self)):
+            raise IndexError("Index out of range")
         return list.__getitem__(self, key - self.start)
 
     def __setitem__(self, key, newValue):

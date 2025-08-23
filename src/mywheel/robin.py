@@ -164,6 +164,9 @@ class Robin:
         :param num_parts: The `num_parts` parameter is an integer that represents the number of parts in the cycle
         :type num_parts: int
         """
+        if num_parts == 0:
+            self.cycle = []
+            return
         self.cycle = list(SlNode(k) for k in range(num_parts))
         sl2 = self.cycle[-1]
         for sl1 in self.cycle:
@@ -189,6 +192,8 @@ class Robin:
             >>> iter.stop.data == 3
             True
         """
+        if not self.cycle:
+            raise IndexError("Cannot exclude from an empty cycle.")
         return RobinIterator(self.cycle[from_part])
 
 

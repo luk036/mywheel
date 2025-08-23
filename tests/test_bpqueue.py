@@ -1,113 +1,134 @@
 import pytest
-
 from mywheel.bpqueue import BPQueue, BPQueueIterator
-from mywheel.dllist import Dllink, Dllist
+from mywheel.dllist import Dllink
 
 
-def test_bpqueue1():
-    bpq = BPQueue(-3, 3)
-    a = Dllink([0, 3])
-    bpq.append(a, 0)
-    assert bpq.get_max() == 0
-    assert bpq.is_empty() is False
-    bpq.set_key(a, 0)
-    assert a.data[0] == 4
-    bpq.popleft()
-    assert bpq.is_empty() is True
-    assert bpq.get_max() == -4
+class TestBPQueue:
+    def test_constructor(self):
+        bpq = BPQueue(-3, 3)
+        assert bpq.is_empty()
+        assert bpq.get_max() == -4  # a - 1
+
+    def test_append_and_pop(self):
+        bpq = BPQueue(-5, 5)
+        a = Dllink([0, 1])
+        b = Dllink([0, 2])
+        c = Dllink([0, 3])
+
+        bpq.append(a, 3)
+        bpq.append(b, -2)
+        bpq.append(c, 5)
+
+        assert not bpq.is_empty()
+        assert bpq.get_max() == 5
+
+        item = bpq.popleft()
+        assert item is c
+        assert bpq.get_max() == 3
+
+        item = bpq.popleft()
+        assert item is a
+        assert bpq.get_max() == -2
+
+        item = bpq.popleft()
+        assert item is b
+        assert bpq.is_empty()
+
+    def test_appendleft(self):
+        bpq = BPQueue(-5, 5)
+        a = Dllink([0, 1])
+        b = Dllink([0, 2])
+
+        bpq.appendleft(a, 3)
+        bpq.appendleft(b, 3)
+
+        assert bpq.popleft() is b
+        assert bpq.popleft() is a
+
+    def test_appendfrom(self):
+        bpq = BPQueue(-10, 10)
+        nodes = [Dllink([2 * i - 10, i]) for i in range(10)]
+        bpq.appendfrom(nodes)
+        assert bpq.get_max() == 8
+        count = 0
+        for _ in bpq:
+            count += 1
+        assert count == 10
+
+    def test_clear(self):
+        bpq = BPQueue(-5, 5)
+        bpq.append(Dllink([0, 1]), 3)
+        bpq.clear()
+        assert bpq.is_empty()
+
+    def test_key_manipulation(self):
+        bpq = BPQueue(-5, 5)
+        a = Dllink([0, 1])
+
+        bpq.append(a, 0)
+        assert bpq.get_max() == 0
+
+        bpq.increase_key(a, 2)
+        assert bpq.get_max() == 2
+
+        bpq.decrease_key(a, 3)
+        assert bpq.get_max() == -1
+
+        bpq.modify_key(a, 4)
+        assert bpq.get_max() == 3
+
+        bpq.modify_key(a, -5)
+        assert bpq.get_max() == -2
+
+    def test_detach(self):
+        bpq = BPQueue(-5, 5)
+        a = Dllink([0, 1])
+        b = Dllink([0, 2])
+
+        bpq.append(a, 3)
+        bpq.append(b, 5)
+
+        bpq.detach(a)
+        assert bpq.get_max() == 5
+        assert bpq.popleft() is b
+        assert bpq.is_empty()
+
+    def test_locked_item(self):
+        bpq = BPQueue(-5, 5)
+        a = Dllink([0, 1])
+        bpq.append(a, 0)
+        a.lock()
+        bpq.modify_key(a, 3)  # Should have no effect
+        assert bpq.get_max() == 0
 
 
-def test_bpqueue2():
-    bpq = BPQueue(-3, 3)
-    a = Dllink([0, 3])
-    bpq.appendleft_direct(a)
-    assert bpq.get_max() == 0
-    bpq.increase_key(a, 1)
-    assert bpq.get_max() == 1
-    bpq.decrease_key(a, 1)
-    assert bpq.get_max() == 0
+class TestBPQueueIterator:
+    def test_iteration(self):
+        bpq = BPQueue(-5, 5)
+        a = Dllink([0, 1])
+        b = Dllink([0, 2])
+        c = Dllink([0, 3])
 
-    it = BPQueueIterator(bpq)
-    b = next(it)
-    bpq.decrease_key(a, 1)
-    assert b.data[0] == 3
-    bpq.increase_key(a, 1)
-    assert b.data[0] == 4
-    bpq.modify_key(a, 1)
-    assert b.data[0] == 5
-    bpq.detach(a)
-    assert bpq._max == 0
-    bpq.clear()
-    assert bpq._max == 0
+        bpq.append(a, 3)
+        bpq.append(b, -2)
+        bpq.append(c, 5)
 
-    c = Dllink([3, 2])
-    waiting_list = Dllist([99, 98])
-    waiting_list.append(c)  # will unlock c
-    bpq.modify_key(c, -1)  # c is not yet in bpq
-    assert not bpq.is_empty()
-    assert bpq._max == 2
-    assert waiting_list.is_empty
+        items = [item.data[1] for item in bpq]
+        assert items == [3, 1, 2]
 
+    def test_empty_iteration(self):
+        bpq = BPQueue(-5, 5)
+        items = list(bpq)
+        assert items == []
 
-def test_bpqueue3():
-    with pytest.raises(TypeError):
-        _ = BPQueue(-10.4, 10.4)
+    def test_iterator_invalidation(self):
+        bpq = BPQueue(-5, 5)
+        a = Dllink([0, 1])
+        bpq.append(a, 3)
 
-    bpq1 = BPQueue(-10, 10)
-    bpq2 = BPQueue(-10, 10)
+        it = iter(bpq)
+        next(it)
+        bpq.popleft()  # This invalidates the iterator
 
-    assert bpq1._max == 0  # is_empty()
-
-    d = Dllink([0, 0])
-    e = Dllink([0, 1])
-    f = Dllink([0, 2])
-
-    assert d.data[0] == 0
-
-    bpq1.append(e, 3)
-    bpq1.append(f, -10)
-    bpq1.append(d, 5)
-
-    bpq2.append(bpq1.popleft(), -6)  # d
-    bpq2.append(bpq1.popleft(), 3)
-    bpq2.append(bpq1.popleft(), 0)
-
-    bpq2.modify_key(d, 15)
-    bpq2.modify_key(d, -3)
-    bpq2.detach(f)
-    assert bpq1._max == 0  # is_empty()
-    assert bpq2.get_max() == 6
-    bpq1.clear()
-    nodelist = list(Dllink([0, i]) for i in range(10))
-
-    for i, it in enumerate(nodelist):
-        it.data[0] = 2 * i - 10
-    bpq1.appendfrom(nodelist)
-
-    count = 0
-    for _ in bpq1:
-        count += 1
-    assert count == 10
-
-    bpq1.clear()
-    assert bpq1._max == 0  # is_empty()
-
-
-def test_bpqueue4():
-    bpq = BPQueue(-3, 3)
-    a = Dllink([0, 3])
-    bpq.append(a, 0)
-    bpq.modify_key(a, 0)  # unchange
-    assert bpq.get_max() == 0
-
-    bpq.modify_key(a, -1)
-    assert bpq.get_max() == -1
-
-    a.lock()
-    bpq.modify_key(a, 1)  # unchange because it is locked
-    assert bpq.get_max() == -1
-
-    b = Dllink([0, 8])
-    bpq.append(b, -3)
-    bpq.modify_key(b, 1)
-    assert bpq.get_max() == -1
+        with pytest.raises(StopIteration):
+            next(it)

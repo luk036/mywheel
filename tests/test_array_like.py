@@ -1,46 +1,69 @@
+import pytest
 from mywheel.array_like import RepeatArray, ShiftArray
 
 
-def test_repeat_array():
-    """
-    The `test_repeat_array` function is a function that tests the `RepeatArray` class.
-    """
-    repeat_array = RepeatArray(1, 5)
-    assert repeat_array.value == 1
-    assert repeat_array.size == 5
-    assert repeat_array[0] == 1
-    assert repeat_array[1] == 1
-    assert repeat_array[2] == 1
-    assert repeat_array[3] == 1
-    assert repeat_array[4] == 1
-    assert len(repeat_array) == 5
-    assert repeat_array.get(0) == 1
-    assert repeat_array.get(1) == 1
-    assert repeat_array.get(2) == 1
-    assert repeat_array.get(3) == 1
-    assert repeat_array.get(4) == 1
-    for i in repeat_array:
-        assert i == 1
+class TestRepeatArray:
+    def test_constructor(self):
+        ra = RepeatArray(10, 5)
+        assert ra.value == 10
+        assert ra.size == 5
+
+    def test_getitem(self):
+        ra = RepeatArray(10, 5)
+        assert ra[0] == 10
+        assert ra[4] == 10
+        # The index is ignored, so any index should work
+        assert ra[100] == 10
+
+    def test_len(self):
+        ra = RepeatArray(10, 5)
+        assert len(ra) == 5
+
+    def test_iter(self):
+        ra = RepeatArray(10, 3)
+        assert list(ra) == [10, 10, 10]
+
+    def test_get(self):
+        ra = RepeatArray(10, 5)
+        assert ra.get(0) == 10
+        assert ra.get(100) == 10
 
 
-def test_shift_array():
-    """
-    The `test_shift_array` function is a function that tests the `ShiftArray` class.
-    """
-    shift_array = ShiftArray([1, 2, 3, 4, 5])
-    shift_array.set_start(3)
-    assert shift_array[3] == 1
-    assert shift_array[4] == 2
-    assert shift_array[5] == 3
-    assert shift_array[6] == 4
-    assert shift_array[7] == 5
-    shift_array[6] = 8
-    assert shift_array[6] == 8
+class TestShiftArray:
+    def test_constructor(self):
+        sa = ShiftArray([1, 2, 3])
+        assert sa.start == 0
+        assert list(sa) == [1, 2, 3]
 
-    for i, v in shift_array.items():
-        assert v == shift_array[i]
+    def test_set_start(self):
+        sa = ShiftArray([1, 2, 3])
+        sa.set_start(5)
+        assert sa.start == 5
 
+    def test_getitem(self):
+        sa = ShiftArray([1, 2, 3])
+        sa.set_start(5)
+        assert sa[5] == 1
+        assert sa[7] == 3
+        with pytest.raises(IndexError):
+            sa[4]
+        with pytest.raises(IndexError):
+            sa[8]
 
-if __name__ == "__main__":
-    test_repeat_array()
-    test_shift_array()
+    def test_setitem(self):
+        sa = ShiftArray([1, 2, 3])
+        sa.set_start(5)
+        sa[6] = 10
+        assert sa[6] == 10
+        assert list(sa) == [1, 10, 3]
+        with pytest.raises(IndexError):
+            sa[8] = 5
+
+    def test_len(self):
+        sa = ShiftArray([1, 2, 3])
+        assert len(sa) == 3
+
+    def test_items(self):
+        sa = ShiftArray([1, 2, 3])
+        sa.set_start(5)
+        assert list(sa.items()) == [(5, 1), (6, 2), (7, 3)]
