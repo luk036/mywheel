@@ -1,5 +1,6 @@
 import pytest
-from mywheel.robin import SlNode, Robin, RobinIterator
+
+from mywheel.robin import Robin, RobinIterator, SlNode
 
 
 def test_slnode():

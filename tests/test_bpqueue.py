@@ -1,5 +1,6 @@
 import pytest
-from mywheel.bpqueue import BPQueue, BPQueueIterator
+
+from mywheel.bpqueue import BPQueue
 from mywheel.dllist import Dllink
 
 

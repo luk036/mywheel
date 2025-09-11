@@ -1,4 +1,5 @@
 import pytest
+
 from mywheel.array_like import RepeatArray, ShiftArray
 
 

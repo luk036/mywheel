@@ -1,4 +1,5 @@
 import pytest
+
 from mywheel.map_adapter import MapAdapter
 
 
