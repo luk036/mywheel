@@ -1,9 +1,9 @@
-from typing import Iterator, List, MutableMapping, TypeVar
+from typing import Iterator, List, Mapping, TypeVar
 
 T = TypeVar("T")
 
 
-class MapAdapter(MutableMapping[int, T]):
+class MapAdapter(Mapping[int, T]):
     """MapAdapter
 
     The `MapAdapter` class is a custom implementation of a mutable mapping with integer keys and generic

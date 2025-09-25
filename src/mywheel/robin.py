@@ -1,19 +1,39 @@
 """
 Round-Robin Implementation
 
-This code implements a round-robin algorithm, which is a method for fairly distributing tasks or resources among a group of participants. The main purpose of this code is to create a circular list of elements and provide a way to iterate through them, starting from any given point.
+This code implements a round-robin algorithm, which is a method for fairly distributing tasks
+or resources among a group of participants. The main purpose of this code is to create a
+circular list of elements and provide a way to iterate through them, starting from any given
+point.
 
-The code defines three main classes: SlNode, RobinIterator, and Robin. SlNode represents a node in a singly-linked list, containing a data value and a reference to the next node. RobinIterator is responsible for iterating over the linked list, while Robin sets up the circular structure and provides a method to start iterating from a specific point.
+The code defines three main classes: SlNode, RobinIterator, and Robin. SlNode represents a node
+in a singly-linked list, containing a data value and a reference to the next node. RobinIterator
+is responsible for iterating over the linked list, while Robin sets up the circular structure
+and provides a method to start iterating from a specific point.
 
-The primary input for this code is the number of parts or elements in the round-robin cycle, which is provided when creating a Robin object. The main output is an iterator that allows you to cycle through the elements in the list, starting from a specified position.
+The primary input for this code is the number of parts or elements in the round-robin cycle,
+which is provided when creating a Robin object. The main output is an iterator that allows you
+to cycle through the elements in the list, starting from a specified position.
 
-To achieve its purpose, the code first creates a circular linked list using the SlNode class. Each node contains an integer value and a reference to the next node. The Robin class sets up this circular structure by creating a list of nodes and connecting them in a loop.
+To achieve its purpose, the code first creates a circular linked list using the SlNode class.
+Each node contains an integer value and a reference to the next node. The Robin class sets up
+this circular structure by creating a list of nodes and connecting them in a loop.
 
-The key functionality is provided by the exclude method in the Robin class. This method takes an integer parameter representing the starting position and returns a RobinIterator object. The iterator allows you to cycle through the elements of the list, starting from the specified position and continuing until you've gone through all elements except the starting one.
+The key functionality is provided by the exclude method in the Robin class. This method takes an
+integer parameter representing the starting position and returns a RobinIterator object. The
+iterator allows you to cycle through the elements of the list, starting from the specified
+position and continuing until you've gone through all elements except the starting one.
 
-An important aspect of the logic is how the iteration works. The RobinIterator keeps track of two pointers: cur (current) and stop. As you iterate, cur moves to the next node in the list. The iteration stops when cur reaches the stop node, which is set to the starting position. This ensures that you go through all elements exactly once before stopping.
+An important aspect of the logic is how the iteration works. The RobinIterator keeps track of
+two pointers: cur (current) and stop. As you iterate, cur moves to the next node in the list.
+The iteration stops when cur reaches the stop node, which is set to the starting position. This
+ensures that you go through all elements exactly once before stopping.
 
-In summary, this code provides a flexible way to implement a round-robin system, allowing users to start from any point in the cycle and iterate through all other elements before returning to the starting point. This can be useful in various scenarios, such as task scheduling or resource allocation, where you need to fairly distribute something among a group of participants in a circular manner.
+In summary, this code provides a flexible way to implement a round-robin system, allowing users
+to start from any point in the cycle and iterate through all other elements before returning to
+the starting point. This can be useful in various scenarios, such as task scheduling or resource
+allocation, where you need to fairly distribute something among a group of participants in a
+circular manner.
 """
 
 from typing import List
@@ -114,12 +134,11 @@ class RobinIterator:
         """
         return self
 
-    def next(self) -> int:
+    def __next__(self) -> int:
         """
-        The `next` function returns the next element in a linked list and raises a `StopIteration` exception
-        if there are no more elements.
+        The __next__ function returns the next item in the iterator.
 
-        :return: The method is returning an integer value.
+        :return: The `next()` method is being called and its return value is being returned.
         """
         self.cur = self.cur.next
         if self.cur != self.stop:
@@ -127,22 +146,14 @@ class RobinIterator:
         else:
             raise StopIteration()
 
-    def __next__(self):
-        """
-        The __next__ function returns the next item in the iterator.
-
-        :return: The `next()` method is being called and its return value is being returned.
-        """
-        return self.next()
-
 
 class Robin:
     """Round Robin
 
-    The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and the
-    `exclude` method returns an iterator starting from a specified part.
-    The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and the
-    `exclude` method returns an iterator starting from a specified part.
+    The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and
+    the `exclude` method returns an iterator starting from a specified part.
+    The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and
+    the `exclude` method returns an iterator starting from a specified part.
 
     .. svgbob::
        :align: center

@@ -23,14 +23,13 @@ class RepeatArray:
         self.value = value
         self.size = size
 
-    def __getitem__(self, _):  # key is ignored
+    def __getitem__(self, _key):  # key is ignored
         """
         The `__getitem__` function returns the value of the object regardless of the key provided.
 
-        :param _: The parameter "_" in the __getitem__ method is used to indicate that the key argument is
-                  ignored. It is a convention in Python to use "_" as a placeholder for variables that are not used or
-                  not important in a particular context. In this case, the key argument is not used in the method implementation
-
+        :param _key: The parameter `_key` in the __getitem__ method is used to indicate that the key argument is
+                     ignored. It is a convention in Python to use `_key` as a placeholder for variables that are not used or
+                     not important in a particular context. In this case, the key argument is not used in the method implementation
         :return: The value stored in the `self.value` attribute.
 
         Examples:
@@ -81,12 +80,12 @@ class RepeatArray:
         """
         return repeat(self.value, self.size)
 
-    def get(self, _):  # defaultvalue is ignored
+    def get(self, _item):  # defaultvalue is ignored
         """
         The `get` function returns the value of the object.
 
-        :param _: The underscore (_) is a convention in Python to indicate that a parameter is not going to
-                  be used in the function. In this case, the parameter is ignored and not used in the function logic
+        :param _item: The underscore `_item` is a convention in Python to indicate that a parameter is not going to
+                      be used in the function. In this case, the parameter is ignored and not used in the function logic
 
         :return: The value of the `self.value` attribute is being returned.
 
@@ -116,30 +115,6 @@ class ShiftArray(list):
     list with arbitrary range
     """
 
-    def __new__(cls, *args, **kwargs):
-        """
-        The function overrides the `__new__` method of the `list` class in Python.
-
-        :param cls: The `cls` parameter in the `__new__` method refers to the class itself. It is automatically passed as the first argument when the method is called
-
-        :return: The `__new__` method is returning a new instance of the class `cls` as a list.
-
-        Examples:
-            >>> shift_array = ShiftArray([1, 2, 3, 4, 5])
-            >>> shift_array.set_start(3)
-            >>> shift_array[6]
-            4
-            >>> shift_array[7]
-            5
-            >>> shift_array[3]
-            1
-            >>> shift_array[4]
-            2
-            >>> shift_array[5]
-            3
-        """
-        return list.__new__(cls, *args, **kwargs)
-
     def __init__(self, *args, **kwargs):
         """
         The function is a constructor that initializes an object with a start value of 0 and calls the
@@ -159,8 +134,8 @@ class ShiftArray(list):
             >>> shift_array[5]
             3
         """
+        super().__init__(*args, **kwargs)
         self.start = 0
-        list.__init__(self, *args, **kwargs)
 
     def set_start(self, start):
         """
@@ -183,9 +158,6 @@ class ShiftArray(list):
             3
         """
         self.start = start
-
-    def __len__(self):
-        return list.__len__(self)
 
     def __getitem__(self, key):
         """

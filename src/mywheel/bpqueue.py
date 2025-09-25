@@ -1,21 +1,41 @@
 """
 BPQueue (Bounded Priority Queue)
 
-This code implements a Bounded Priority Queue (BPQueue) data structure. The purpose of this data structure is to efficiently manage and prioritize items within a specific range of integer keys. It's particularly useful when you need to handle a large number of items with priorities that fall within a known, limited range.
+This code implements a Bounded Priority Queue (BPQueue) data structure. The purpose of this
+data structure is to efficiently manage and prioritize items within a specific range of
+integer keys. It's particularly useful when you need to handle a large number of items with
+priorities that fall within a known, limited range.
 
-The BPQueue takes two main inputs when initialized: a lower bound (a) and an upper bound (b) for the priority range. These bounds define the valid range of priorities for items in the queue. The queue can then accept items (represented by the Item type, which is a doubly-linked list node) along with their associated priority values.
+The BPQueue takes two main inputs when initialized: a lower bound (a) and an upper bound (b)
+for the priority range. These bounds define the valid range of priorities for items in the
+queue. The queue can then accept items (represented by the Item type, which is a doubly-linked
+list node) along with their associated priority values.
 
-The main outputs of the BPQueue are the items themselves, typically retrieved in order of highest priority. The queue provides methods to add items, remove the highest-priority item, modify item priorities, and iterate through the items in descending priority order.
+The main outputs of the BPQueue are the items themselves, typically retrieved in order of
+highest priority. The queue provides methods to add items, remove the highest-priority item,
+modify item priorities, and iterate through the items in descending priority order.
 
-The BPQueue achieves its purpose through a clever combination of an array (called buckets) and doubly-linked lists. Each bucket in the array corresponds to a specific priority level. Items with the same priority are stored in the same bucket using a doubly-linked list. This structure allows for fast insertion, deletion, and priority modifications.
+The BPQueue achieves its purpose through a clever combination of an array (called buckets) and
+doubly-linked lists. Each bucket in the array corresponds to a specific priority level. Items
+with the same priority are stored in the same bucket using a doubly-linked list. This structure
+allows for fast insertion, deletion, and priority modifications.
 
-The key logic flows in the BPQueue involve maintaining the correct order of items and efficiently updating the maximum priority. When items are added or their priorities are changed, the code ensures they are placed in the correct bucket. The queue keeps track of the highest non-empty bucket (_max), allowing for quick access to the highest-priority items.
+The key logic flows in the BPQueue involve maintaining the correct order of items and
+efficiently updating the maximum priority. When items are added or their priorities are
+changed, the code ensures they are placed in the correct bucket. The queue keeps track of the
+highest non-empty bucket (_max), allowing for quick access to the highest-priority items.
 
-An important data transformation happens when inserting items: the external priority value is converted to an internal index by subtracting an offset. This allows the queue to use array indices efficiently, even when the priority range doesn't start at zero.
+An important data transformation happens when inserting items: the external priority value is
+converted to an internal index by subtracting an offset. This allows the queue to use array
+indices efficiently, even when the priority range doesn't start at zero.
 
-The BPQueue also includes an iterator (BPQueueIterator) that allows for traversing the items in descending priority order. This iterator moves through the buckets from highest to lowest, yielding items from each non-empty bucket.
+The BPQueue also includes an iterator (BPQueueIterator) that allows for traversing the items
+in descending priority order. This iterator moves through the buckets from highest to lowest,
+yielding items from each non-empty bucket.
 
-Overall, the BPQueue provides a specialized data structure that offers efficient operations for managing prioritized items within a bounded range, making it useful for scenarios where fast priority-based access and modifications are required.
+Overall, the BPQueue provides a specialized data structure that offers efficient operations
+for managing prioritized items within a bounded range, making it useful for scenarios where
+fast priority-based access and modifications are required.
 """
 
 from typing import Iterable, List
@@ -28,8 +48,8 @@ sentinel = Item([0, 8965])
 
 
 class BPQueue:
-    r"""The `BPQueue` class is a bounded priority queue implementation using an array of doubly-linked
-    lists, optimized for small integer keys.
+    r"""The `BPQueue` class is a bounded priority queue implementation using an array of
+    doubly-linked lists, optimized for small integer keys.
 
     Bounded Priority Queue with integer keys in [a..b].
     Implemented by array (bucket) of doubly-linked lists.
@@ -148,11 +168,14 @@ class BPQueue:
 
     def set_key(self, it: Item, gain: int) -> None:
         """
-        The function `set_key` sets the key value of an item by subtracting the offset from the given gain value.
+        The function `set_key` sets the key value of an item by subtracting the offset from the
+        given gain value.
 
-        :param it: The `it` parameter is of type `Item` and represents the item for which the key value is being set
+        :param it: The `it` parameter is of type `Item` and represents the item for which the key
+                   value is being set
         :type it: Item
-        :param gain: The `gain` parameter is an integer representing the key value that will be set for the item
+        :param gain: The `gain` parameter is an integer representing the key value that will be set
+                     for the item
         :type gain: int
 
         Examples:
@@ -169,7 +192,8 @@ class BPQueue:
         """
         The `appendleft_direct` function appends an item to a list using its internal key.
 
-        :param it: The parameter `it` is of type `Item`, which is a class or data structure representing an item
+        :param it: The parameter `it` is of type `Item`, which is a class or data structure
+                   representing an item
         :type it: Item
 
         Examples:
@@ -186,15 +210,12 @@ class BPQueue:
         """
         The `appendleft` function appends an item with an external key to a priority queue.
 
-        :param it: The parameter "it" is of type Dllink, which is a class or object that represents a doubly linked list node. It is used to store the item that needs to be appended to the BPQueue
+        :param it: The parameter "it" is of type Dllink, which is a class or object that represents a
+                   doubly linked list node. It is used to store the item that needs to be appended
+                   to the BPQueue
         :type it: Item
-        :param k: The parameter `k` represents the external key that is associated with the item being appended to the BPQueue
-        :type k: int
-
-        Examples:
-            >>> bpq = BPQueue(-3, 3)
-            >>> a = Dllink([0, 3])
-            >>> bpq.appendleft(a, 0)
+        :param k: The parameter `k` represents the external key that is associated with the item being
+                  appended to the BPQueue
             >>> bpq.is_empty()
             False
             >>> a.data[0]
@@ -210,9 +231,12 @@ class BPQueue:
         """
         The `appendleft` function appends an item with an external key to a priority queue.
 
-        :param it: The parameter "it" is of type Dllink, which is a class or object that represents a doubly linked list node. It is used to store the item that needs to be appended to the BPQueue
+        :param it: The parameter "it" is of type Dllink, which is a class or object that represents a
+                   doubly linked list node. It is used to store the item that needs to be appended
+                   to the BPQueue
         :type it: Item
-        :param k: The parameter `k` represents the external key that is associated with the item being appended to the BPQueue
+        :param k: The parameter `k` represents the external key that is associated with the item being
+                  appended to the BPQueue
         :type k: int
 
         Examples:
@@ -232,8 +256,8 @@ class BPQueue:
 
     def appendfrom(self, nodes: Iterable[Item]) -> None:
         """
-        The `appendfrom` function appends items from a list to a bucket, adjusting the data values of the
-        items and updating the maximum value.
+        The `appendfrom` function appends items from a list to a bucket, adjusting the data values
+        of the items and updating the maximum value.
 
         :param nodes: The `nodes` parameter is an iterable of `Item` objects
         :type nodes: Iterable[Item]
@@ -276,8 +300,8 @@ class BPQueue:
 
     def decrease_key(self, it: Item, delta: int) -> None:
         """
-        The `decrease_key` function decreases the key of an item by a specified delta and updates the item's
-        position in a bucket data structure.
+        The `decrease_key` function decreases the key of an item by a specified delta and updates the
+        item's position in a bucket data structure.
 
         :param it: it is a reference to an item in a doubly linked list
         :type it: Item
@@ -305,13 +329,12 @@ class BPQueue:
         if self._max < it.data[0]:  # item may not be in the BPQueue
             self._max = it.data[0]
             return
-        while self._bucket[self._max].is_empty():
-            self._max -= 1
+        self._update_max_key()
 
     def increase_key(self, it: Item, delta: int) -> None:
         """
-        The `increase_key` function increases the key of an item by a given delta and updates the item's
-        position in a bucket list.
+        The `increase_key` function increases the key of an item by a given delta and updates the
+        item's position in a bucket list.
 
         :param it: it is a variable of type Item, which represents an item in a data structure
 
@@ -343,11 +366,12 @@ class BPQueue:
         # self._bucket[it.data[0]].append(it)  # LIFO
         if self._max < it.data[0]:
             self._max = it.data[0]
+        self._update_max_key()
 
     def modify_key(self, it: Item, delta: int) -> None:
         """
-        The `modify_key` function modifies the key of an item by a specified delta and updates the item's
-        position in a bucket data structure.
+        The `modify_key` function modifies the key of an item by a specified delta and updates the
+        item's position in a bucket data structure.
 
         :param it: it is a reference to an item in a doubly linked list
 
@@ -398,20 +422,14 @@ class BPQueue:
             True
         """
         it.detach()
+        self._update_max_key()
+
+    def _update_max_key(self) -> None:
+        """
+        The `_update_max_key` function updates the maximum key in a BPQueue object.
+        """
         while self._bucket[self._max].is_empty():
             self._max -= 1
-
-    # def __iter__(self):
-    #     """iterator
-
-    #     Returns:
-    #         bpq_iterator
-    #     """
-    #     curkey = self._max
-    #     while curkey > 0:
-    #         for item in self._bucket[curkey]:
-    #             yield item
-    #         curkey -= 1
 
     def __iter__(self):
         """
@@ -425,9 +443,8 @@ class BPQueue:
 class BPQueueIterator:
     """The BPQueueIterator class is a bounded priority queue iterator that allows traversal of the queue in descending order.
 
-    Bounded Priority Queue Iterator. Traverse the queue in descending
-    order. Detaching queue items may invalidate the iterator because
-    the iterator makes a copy of current key.
+    Bounded Priority Queue Iterator. Traverse the queue in descending order. Detaching queue
+    items may invalidate the iterator because the iterator makes a copy of current key.
     """
 
     def __init__(self, bpq: BPQueue) -> None:
