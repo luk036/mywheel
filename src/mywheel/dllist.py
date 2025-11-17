@@ -171,6 +171,17 @@ class Dllink(Generic[T]):
 class DllIterator(Generic[T]):
     """The `DllIterator` class is a list iterator that allows traversal of a doubly
     linked list from the first item.
+
+    .. svgbob::
+       :align: center
+
+        +---+     +---+     +---+
+        | A | <-> | B | <-> | C |
+        +---+     +---+     +---+
+          ^         ^
+          |         |
+         cur       next
+
     """
 
     def __init__(self, link: Dllink[T]) -> None:
@@ -188,6 +199,9 @@ class DllIterator(Generic[T]):
         """
         self.link = link
         self.cur = link.next
+
+    def __iter__(self):
+        return self
 
     def __next__(self):
         """

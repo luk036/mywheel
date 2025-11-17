@@ -3,7 +3,16 @@ from itertools import repeat
 
 class RepeatArray:
     """The RepeatArray class creates a list-like object that repeats a given value for a specified number
-    of times."""
+    of times.
+
+    .. svgbob::
+       :align: center
+
+        +---+---+---+---+---+
+        | V | V | V | V | V |
+        +---+---+---+---+---+
+          0   1   2   3   4
+    """
 
     def __init__(self, value, size):
         """
@@ -121,6 +130,11 @@ class ShiftArray(list):
         constructor of the parent class "list".
 
         Examples:
+            >>> shift_array = ShiftArray([1, 2, 3])
+            >>> shift_array.start
+            0
+            >>> shift_array[0]
+            1
             >>> shift_array = ShiftArray([1, 2, 3, 4, 5])
             >>> shift_array.set_start(3)
             >>> shift_array[6]
@@ -179,6 +193,14 @@ class ShiftArray(list):
             2
             >>> shift_array[5]
             3
+            >>> shift_array[2]
+            Traceback (most recent call last):
+            ...
+            IndexError: Index out of range
+            >>> shift_array[8]
+            Traceback (most recent call last):
+            ...
+            IndexError: Index out of range
 
         """
         if not (0 <= key - self.start < len(self)):
@@ -201,6 +223,11 @@ class ShiftArray(list):
             >>> shift_array[6] = 8
             >>> shift_array[6]
             8
+            >>> shift_array[3] = 99
+            >>> shift_array[3]
+            99
+            >>> shift_array
+            [99, 2, 3, 8, 5]
         """
         list.__setitem__(self, key - self.start, newValue)
 

@@ -216,10 +216,21 @@ class BPQueue:
         :type it: Item
         :param k: The parameter `k` represents the external key that is associated with the item being
                   appended to the BPQueue
-            >>> bpq.is_empty()
-            False
-            >>> a.data[0]
+            >>> bpq = BPQueue(-3, 3)
+            >>> a = Dllink([0, 3])
+            >>> b = Dllink([0, 4])
+            >>> c = Dllink([0, 5])
+            >>> bpq.appendleft(a, 0)
+            >>> bpq.appendleft(b, 1)
+            >>> bpq.appendleft(c, 0)
+            >>> bpq.get_max()
+            1
+            >>> bpq.popleft().data[1]
             4
+            >>> bpq.popleft().data[1]
+            5
+            >>> bpq.popleft().data[1]
+            3
         """
         assert k > self._offset
         it.data[0] = k - self._offset
@@ -288,8 +299,17 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
+            >>> b = Dllink([0, 4])
+            >>> c = Dllink([0, 5])
             >>> bpq.appendleft(a, 0)
-            >>> b = bpq.popleft()
+            >>> bpq.appendleft(b, 1)
+            >>> bpq.appendleft(c, 0)
+            >>> bpq.popleft().data[1]
+            4
+            >>> bpq.popleft().data[1]
+            5
+            >>> bpq.popleft().data[1]
+            3
             >>> bpq.is_empty()
             True
         """
@@ -316,9 +336,19 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
+            >>> b = Dllink([0, 4])
             >>> bpq.appendleft(a, 0)
+            >>> bpq.appendleft(b, -1)
+            >>> bpq.get_max()
+            0
             >>> bpq.decrease_key(a, 1)
             >>> a.data[0]
+            3
+            >>> bpq.get_max()
+            -1
+            >>> bpq.popleft().data[1]
+            4
+            >>> bpq.popleft().data[1]
             3
         """
         it.detach()
@@ -353,10 +383,20 @@ class BPQueue:
         Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
+            >>> b = Dllink([0, 4])
             >>> bpq.appendleft(a, 0)
-            >>> bpq.increase_key(a, 1)
-            >>> a.data[0]
+            >>> bpq.appendleft(b, -1)
+            >>> bpq.get_max()
+            0
+            >>> bpq.increase_key(b, 2)
+            >>> b.data[0]
             5
+            >>> bpq.get_max()
+            1
+            >>> bpq.popleft().data[1]
+            4
+            >>> bpq.popleft().data[1]
+            3
         """
         it.detach()
         it.data[0] += delta
@@ -395,7 +435,12 @@ class BPQueue:
             >>> bpq.modify_key(a, 1)
             >>> a.data[0]
             5
-
+            >>> bpq.modify_key(a, -2)
+            >>> a.data[0]
+            3
+            >>> bpq.modify_key(a, 0) # no change
+            >>> a.data[0]
+            3
         """
         if it.next == it:  # locked
             return
@@ -445,6 +490,25 @@ class BPQueueIterator:
 
     Bounded Priority Queue Iterator. Traverse the queue in descending order. Detaching queue
     items may invalidate the iterator because the iterator makes a copy of current key.
+
+    .. svgbob::
+       :align: center
+
+        +---+       +---+       +---+
+        | Max | --->|   | --->|   |
+        +---+       +---+       +---+
+          |
+          v
+        +---+       +---+       +---+
+        |key| --->|   | --->|   |
+        +---+       +---+       +---+
+              .
+              .
+              .
+        +---+       +---+       +---+
+        |Min| --->|   | --->|   |
+        +---+       +---+       +---+
+
     """
 
     def __init__(self, bpq: BPQueue) -> None:
@@ -468,6 +532,9 @@ class BPQueueIterator:
         self.bpq = bpq
         self.curkey = bpq._max
         self.curitem = iter(bpq._bucket[bpq._max])
+
+    def __iter__(self):
+        return self
 
     def __next__(self) -> Item:
         """

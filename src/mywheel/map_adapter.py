@@ -8,6 +8,19 @@ class MapAdapter(Mapping[int, T]):
 
     The `MapAdapter` class is a custom implementation of a mutable mapping with integer keys and generic
     values, which adapts a list to behave like a dictionary.
+
+    .. svgbob::
+       :align: center
+
+        +---+---+---+---+
+        | 0 | 1 | 2 | 3 |
+        +---+---+---+---+
+          |   |   |   |
+          v   v   v   v
+        +---+---+---+---+
+        | A | B | C | D |
+        +---+---+---+---+
+          List
     """
 
     def __init__(self, lst: List[T]) -> None:
@@ -57,6 +70,12 @@ class MapAdapter(Mapping[int, T]):
         deleting items from MapAdapter is not recommended.
 
         :param _: The underscore (_) is typically used as a placeholder for a variable or value that is not going to be used or referenced in the code. In this case, it is used as a placeholder for the key parameter in the __delitem__ method
+        Examples:
+            >>> a = MapAdapter([1, 4, 3, 6])
+            >>> del a[0]
+            Traceback (most recent call last):
+            ...
+            NotImplementedError
         """
         raise NotImplementedError()
 
@@ -126,6 +145,15 @@ class MapAdapter(Mapping[int, T]):
         The function returns an enumeration of the items in the list.
 
         :return: The `items` method is returning an enumeration of the `lst` attribute.
+
+        Examples:
+            >>> a = MapAdapter([1, 4, 3, 6])
+            >>> for i, v in a.items():
+            ...     print(f"{i}: {v}")
+            0: 1
+            1: 4
+            2: 3
+            3: 6
         """
         return enumerate(self.lst)
 
