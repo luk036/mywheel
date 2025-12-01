@@ -4,13 +4,13 @@ from mywheel.dllist import Dllink, Dllist, DllIterator
 
 
 class TestDllink:
-    def test_constructor(self):
+    def test_constructor(self) -> None:
         link = Dllink(1)
         assert link.data == 1
         assert link.next is link
         assert link.prev is link
 
-    def test_lock_and_is_locked(self):
+    def test_lock_and_is_locked(self) -> None:
         link = Dllink(1)
         assert link.is_locked()
         link.next = Dllink(2)
@@ -18,7 +18,7 @@ class TestDllink:
         link.lock()
         assert link.is_locked()
 
-    def test_attach_and_detach(self):
+    def test_attach_and_detach(self) -> None:
         a = Dllink("a")
         b = Dllink("b")
         c = Dllink("c")
@@ -43,18 +43,18 @@ class TestDllink:
 
 
 class TestDllist:
-    def test_constructor(self):
+    def test_constructor(self) -> None:
         dlist = Dllist("head")
         assert dlist.head.data == "head"
         assert dlist.is_empty()
 
-    def test_clear(self):
+    def test_clear(self) -> None:
         dlist = Dllist("head")
         dlist.append(Dllink(1))
         dlist.clear()
         assert dlist.is_empty()
 
-    def test_append_and_pop(self):
+    def test_append_and_pop(self) -> None:
         dlist = Dllist("head")
         link1 = Dllink(1)
         link2 = Dllink(2)
@@ -76,7 +76,7 @@ class TestDllist:
         assert popped is link1
         assert dlist.is_empty()
 
-    def test_appendleft_and_popleft(self):
+    def test_appendleft_and_popleft(self) -> None:
         dlist = Dllist("head")
         link1 = Dllink(1)
         link2 = Dllink(2)
@@ -98,7 +98,7 @@ class TestDllist:
         assert popped is link1
         assert dlist.is_empty()
 
-    def test_iteration(self):
+    def test_iteration(self) -> None:
         dlist = Dllist("head")
         link1 = Dllink(1)
         link2 = Dllink(2)
@@ -111,20 +111,20 @@ class TestDllist:
         items = [item.data for item in dlist]
         assert items == [1, 2, 3]
 
-    def test_empty_iteration(self):
+    def test_empty_iteration(self) -> None:
         dlist = Dllist("head")
         items = [item.data for item in dlist]
         assert items == []
 
 
 class TestDllIterator:
-    def test_constructor(self):
+    def test_constructor(self) -> None:
         dlist = Dllist("head")
         iterator = DllIterator(dlist.head)
         assert iterator.link is dlist.head
         assert iterator.cur is dlist.head.next
 
-    def test_next(self):
+    def test_next(self) -> None:
         dlist = Dllist("head")
         link1 = Dllink(1)
         link2 = Dllink(2)

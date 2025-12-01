@@ -5,7 +5,7 @@ from src.mywheel.bpqueue import BPQueue, Dllink as BPQDllink  # Alias to avoid c
 
 
 # Stress tests for Dllist
-def test_dllist_stress_large_add_remove():
+def test_dllist_stress_large_add_remove() -> None:
     dll = Dllist(0)
     num_elements = 10000
     nodes = [Dllink(i) for i in range(num_elements)]
@@ -21,7 +21,7 @@ def test_dllist_stress_large_add_remove():
     assert dll.is_empty()
 
 
-def test_dllist_stress_random_operations():
+def test_dllist_stress_random_operations() -> None:
     dll = Dllist(0)
     num_operations = 5000
     max_value = 1000
@@ -62,7 +62,7 @@ def test_dllist_stress_random_operations():
 
 
 # Stress tests for BPQueue
-def test_bpqueue_stress_large_add_pop():
+def test_bpqueue_stress_large_add_pop() -> None:
     bpq = BPQueue(0, 100)  # Priority range from 0 to 100
     num_elements = 10000
 
@@ -93,7 +93,7 @@ def test_bpqueue_stress_large_add_pop():
     assert bpq.is_empty()
 
 
-# def test_bpqueue_stress_random_key_modifications():
+# def test_bpqueue_stress_random_key_modifications() -> None:
 #     bpq = BPQueue(0, 100)
 #     num_elements = 1000
 #     num_operations = 5000

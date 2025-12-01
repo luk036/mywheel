@@ -5,12 +5,12 @@ from mywheel.dllist import Dllink
 
 
 class TestBPQueue:
-    def test_constructor(self):
+    def test_constructor(self) -> None:
         bpq = BPQueue(-3, 3)
         assert bpq.is_empty()
         assert bpq.get_max() == -4  # a - 1
 
-    def test_append_and_pop(self):
+    def test_append_and_pop(self) -> None:
         bpq = BPQueue(-5, 5)
         a = Dllink([0, 1])
         b = Dllink([0, 2])
@@ -35,7 +35,7 @@ class TestBPQueue:
         assert item is b
         assert bpq.is_empty()
 
-    def test_appendleft(self):
+    def test_appendleft(self) -> None:
         bpq = BPQueue(-5, 5)
         a = Dllink([0, 1])
         b = Dllink([0, 2])
@@ -46,7 +46,7 @@ class TestBPQueue:
         assert bpq.popleft() is b
         assert bpq.popleft() is a
 
-    def test_appendfrom(self):
+    def test_appendfrom(self) -> None:
         bpq = BPQueue(-10, 10)
         nodes = [Dllink([2 * i - 10, i]) for i in range(10)]
         bpq.appendfrom(nodes)
@@ -56,13 +56,13 @@ class TestBPQueue:
             count += 1
         assert count == 10
 
-    def test_clear(self):
+    def test_clear(self) -> None:
         bpq = BPQueue(-5, 5)
         bpq.append(Dllink([0, 1]), 3)
         bpq.clear()
         assert bpq.is_empty()
 
-    def test_key_manipulation(self):
+    def test_key_manipulation(self) -> None:
         bpq = BPQueue(-5, 5)
         a = Dllink([0, 1])
 
@@ -81,7 +81,7 @@ class TestBPQueue:
         bpq.modify_key(a, -5)
         assert bpq.get_max() == -2
 
-    def test_detach(self):
+    def test_detach(self) -> None:
         bpq = BPQueue(-5, 5)
         a = Dllink([0, 1])
         b = Dllink([0, 2])
@@ -94,7 +94,7 @@ class TestBPQueue:
         assert bpq.popleft() is b
         assert bpq.is_empty()
 
-    def test_locked_item(self):
+    def test_locked_item(self) -> None:
         bpq = BPQueue(-5, 5)
         a = Dllink([0, 1])
         bpq.append(a, 0)
@@ -104,7 +104,7 @@ class TestBPQueue:
 
 
 class TestBPQueueIterator:
-    def test_iteration(self):
+    def test_iteration(self) -> None:
         bpq = BPQueue(-5, 5)
         a = Dllink([0, 1])
         b = Dllink([0, 2])
@@ -117,12 +117,12 @@ class TestBPQueueIterator:
         items = [item.data[1] for item in bpq]
         assert items == [3, 1, 2]
 
-    def test_empty_iteration(self):
+    def test_empty_iteration(self) -> None:
         bpq = BPQueue(-5, 5)
         items = list(bpq)
         assert items == []
 
-    def test_iterator_invalidation(self):
+    def test_iterator_invalidation(self) -> None:
         bpq = BPQueue(-5, 5)
         a = Dllink([0, 1])
         bpq.append(a, 3)

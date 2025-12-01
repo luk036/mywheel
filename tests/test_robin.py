@@ -3,14 +3,14 @@ import pytest
 from mywheel.robin import Robin, RobinIterator, SlNode
 
 
-def test_slnode():
+def test_slnode() -> None:
     """Test the SlNode class."""
     node = SlNode(5)
     assert node.data == 5
     assert node.next is node
 
 
-def test_robin_iterator_constructor():
+def test_robin_iterator_constructor() -> None:
     """Test the RobinIterator constructor."""
     node = SlNode(1)
     iterator = RobinIterator(node)
@@ -18,14 +18,14 @@ def test_robin_iterator_constructor():
     assert iterator.stop is node
 
 
-def test_robin_iterator_iter():
+def test_robin_iterator_iter() -> None:
     """Test the RobinIterator's __iter__ method."""
     node = SlNode(1)
     iterator = RobinIterator(node)
     assert iter(iterator) is iterator
 
 
-def test_robin_iterator_next():
+def test_robin_iterator_next() -> None:
     """Test the RobinIterator's next method."""
     r = Robin(3)
     iterator = r.exclude(0)
@@ -35,7 +35,7 @@ def test_robin_iterator_next():
         next(iterator)
 
 
-def test_robin_constructor():
+def test_robin_constructor() -> None:
     """Test the Robin constructor."""
     r = Robin(5)
     assert len(r.cycle) == 5
@@ -44,7 +44,7 @@ def test_robin_constructor():
         assert r.cycle[(i - 1) % 5].next is node
 
 
-def test_robin_exclude():
+def test_robin_exclude() -> None:
     """Test the Robin's exclude method."""
     r = Robin(5)
     iterator = r.exclude(3)
@@ -52,7 +52,7 @@ def test_robin_exclude():
     assert iterator.cur.data == 3
 
 
-def test_robin_iteration():
+def test_robin_iteration() -> None:
     """Test the round-robin iteration logic."""
     r = Robin(5)
     # Test starting from 0
@@ -68,14 +68,14 @@ def test_robin_iteration():
     assert result == [0, 1, 2, 3]
 
 
-def test_robin_one_part():
+def test_robin_one_part() -> None:
     """Test Robin with one part."""
     r = Robin(1)
     result = list(r.exclude(0))
     assert result == []
 
 
-def test_robin_zero_parts():
+def test_robin_zero_parts() -> None:
     """Test Robin with zero parts."""
     r = Robin(0)
     with pytest.raises(IndexError):
