@@ -44,18 +44,18 @@ class TestDllink:
 
 class TestDllist:
     def test_constructor(self) -> None:
-        dlist = Dllist("head")
-        assert dlist.head.data == "head"
+        dlist = Dllist(0)
+        assert dlist.head.data == 0
         assert dlist.is_empty()
 
     def test_clear(self) -> None:
-        dlist = Dllist("head")
+        dlist = Dllist(0)
         dlist.append(Dllink(1))
         dlist.clear()
         assert dlist.is_empty()
 
     def test_append_and_pop(self) -> None:
-        dlist = Dllist("head")
+        dlist = Dllist(0)  # Use int to match link types
         link1 = Dllink(1)
         link2 = Dllink(2)
 
@@ -77,7 +77,7 @@ class TestDllist:
         assert dlist.is_empty()
 
     def test_appendleft_and_popleft(self) -> None:
-        dlist = Dllist("head")
+        dlist = Dllist(0)  # Use int to match link types
         link1 = Dllink(1)
         link2 = Dllink(2)
 
@@ -99,7 +99,7 @@ class TestDllist:
         assert dlist.is_empty()
 
     def test_iteration(self) -> None:
-        dlist = Dllist("head")
+        dlist = Dllist(0)  # Use int to match link types
         link1 = Dllink(1)
         link2 = Dllink(2)
         link3 = Dllink(3)
@@ -112,7 +112,7 @@ class TestDllist:
         assert items == [1, 2, 3]
 
     def test_empty_iteration(self) -> None:
-        dlist = Dllist("head")
+        dlist = Dllist(0)  # Use int to match link types
         items = [item.data for item in dlist]
         assert items == []
 
@@ -125,7 +125,7 @@ class TestDllIterator:
         assert iterator.cur is dlist.head.next
 
     def test_next(self) -> None:
-        dlist = Dllist("head")
+        dlist = Dllist(0)  # Use int to match link types
         link1 = Dllink(1)
         link2 = Dllink(2)
         dlist.append(link1)
