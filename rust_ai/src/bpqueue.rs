@@ -235,33 +235,24 @@ impl BPQueue {
     }
 
     /// Returns an iterator over the queue in descending priority order.
-    pub fn iter(&self) -> BPQueueIterator {
+    pub fn iter(&self) -> BPQueueIterator<'_> {
         BPQueueIterator::new(self)
     }
 }
 
 /// An iterator over a BPQueue in descending priority order.
 pub struct BPQueueIterator<'a> {
-    bpq: &'a BPQueue,
     curkey: usize,
-    curitem: Option<std::slice::Iter<'a, Dllink<[i32; 2]>>>,
+    _marker: std::marker::PhantomData<&'a ()>,
 }
 
 impl<'a> BPQueueIterator<'a> {
     /// Creates a new iterator for the given BPQueue.
     fn new(bpq: &'a BPQueue) -> Self {
         let curkey = bpq.max;
-        let curitem = if curkey > 0 {
-            // Note: This is a simplified implementation
-            // In practice, we'd need to iterate over the Dllist
-            None
-        } else {
-            None
-        };
         Self {
-            bpq,
             curkey,
-            curitem,
+            _marker: std::marker::PhantomData,
         }
     }
 }

@@ -10,6 +10,7 @@ use std::ptr;
 /// # Safety
 /// This struct uses raw pointers for performance and flexibility.
 /// The caller must ensure proper memory management.
+#[repr(C, align(8))]
 pub struct Dllink<T> {
     next: *mut Dllink<T>,
     prev: *mut Dllink<T>,
@@ -21,27 +22,26 @@ impl<T> Dllink<T> {
     ///
     /// The node is initially locked (points to itself).
     pub fn new(data: T) -> Self {
-        let node = Self {
+        let mut node = Self {
             next: ptr::null_mut(),
             prev: ptr::null_mut(),
             data: UnsafeCell::new(data),
         };
-        // We can't set next/prev to point to self during construction
-        // The caller should call lock() after creation
+        node.lock();
         node
     }
 
     /// Returns whether the node is locked (points to itself).
     pub fn is_locked(&self) -> bool {
-        let self_ptr = self as *const _ as *mut _;
-        let result = ptr::eq(self.next, self_ptr);
-        result
+        let self_ptr = std::ptr::from_ref(self) as *mut Dllink<T>;
+        ptr::eq(self.next, self_ptr)
     }
 
     /// Locks the node (makes it point to itself).
     pub fn lock(&mut self) {
-        self.next = self as *mut _;
-        self.prev = self as *mut _;
+        let self_ptr = std::ptr::from_mut(self);
+        self.next = self_ptr;
+        self.prev = self_ptr;
     }
 
     /// Attaches another node after this node.
@@ -50,11 +50,13 @@ impl<T> Dllink<T> {
     /// The caller must ensure `node` is properly initialized and not already part of another list.
     pub unsafe fn attach(&mut self, node: &mut Dllink<T>) {
         node.next = self.next;
-        node.prev = self as *mut _;
-        unsafe {
-            (*self.next).prev = node as *mut _;
+        node.prev = std::ptr::from_mut(self);
+        if !self.next.is_null() {
+            unsafe {
+                (*self.next).prev = std::ptr::from_mut(node);
+            }
         }
-        self.next = node as *mut _;
+        self.next = std::ptr::from_mut(node);
     }
 
     /// Detaches this node from the list.
@@ -63,8 +65,12 @@ impl<T> Dllink<T> {
     /// The node must be part of a list.
     pub unsafe fn detach(&mut self) {
         unsafe {
-            (*self.next).prev = self.prev;
-            (*self.prev).next = self.next;
+            if !self.next.is_null() {
+                (*self.next).prev = self.prev;
+            }
+            if !self.prev.is_null() {
+                (*self.prev).next = self.next;
+            }
         }
     }
 

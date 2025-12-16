@@ -31,19 +31,21 @@ TEST(DllinkTest, AttachAndDetach) {
     a.attach(&b);
     EXPECT_EQ(a.next(), &b);
     EXPECT_EQ(b.prev(), &a);
-    EXPECT_TRUE(b.is_locked()); // b.next points to b
+    EXPECT_FALSE(b.is_locked()); // b is now part of circular list with a
 
     // Attach c after b
     b.attach(&c);
     EXPECT_EQ(b.next(), &c);
     EXPECT_EQ(c.prev(), &b);
-    EXPECT_TRUE(c.is_locked()); // c.next points to c
-    EXPECT_EQ(a.prev(), &c); // circular
+    EXPECT_FALSE(c.is_locked()); // c is now part of circular list
+    EXPECT_EQ(a.prev(), &c); // circular - c is before a
+    EXPECT_EQ(c.next(), &a); // circular - a is after c
 
     // Detach b
     b.detach();
     EXPECT_EQ(a.next(), &c);
     EXPECT_EQ(c.prev(), &a);
+    EXPECT_TRUE(b.is_locked()); // b is now locked after detach
 }
 
 TEST(DllistTest, Constructor) {
