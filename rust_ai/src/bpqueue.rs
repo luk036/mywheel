@@ -115,28 +115,6 @@ impl BPQueue {
         }
     }
 
-    /// Appends multiple items from an iterator.
-    ///
-    /// # Safety
-    /// All items must be properly initialized and not already in the queue.
-    pub unsafe fn appendfrom<'a, I>(&mut self, nodes: I)
-    where
-        I: Iterator<Item = &'a mut Dllink<[i32; 2]>>,
-    {
-        for it in nodes {
-            it.data_mut()[0] -= self.offset;
-            assert!(it.data()[0] > 0);
-            let key = it.data()[0] as usize;
-            unsafe {
-                self.bucket[key].appendleft(it);
-            }
-        }
-        self.max = self.high;
-        while self.bucket[self.max].is_empty() {
-            self.max -= 1;
-        }
-    }
-
     /// Removes and returns the item with the highest key.
     ///
     /// # Safety

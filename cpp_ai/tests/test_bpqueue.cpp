@@ -50,28 +50,6 @@ TEST(BPQueueTest, Appendlft) {
     EXPECT_EQ(item2->data()[1], 1); // a comes second
 }
 
-TEST(BPQueueTest, Appendfrom) {
-    BPQueue bpq(-10, 10);
-    std::vector<Dllink<std::array<int, 2>>> nodes;
-    for (int i = 0; i < 10; ++i) {
-        nodes.emplace_back(std::array<int, 2>{2 * i - 10, i});
-    }
-    
-    std::vector<Dllink<std::array<int, 2>>*> node_ptrs;
-    for (auto& node : nodes) {
-        node_ptrs.push_back(&node);
-    }
-    
-    bpq.appendfrom(node_ptrs);
-    EXPECT_EQ(bpq.get_max(), 8);
-    
-    int count = 0;
-    for (auto it = bpq.begin(); it != bpq.end(); ++it) {
-        ++count;
-    }
-    EXPECT_EQ(count, 10);
-}
-
 TEST(BPQueueTest, Clear) {
     BPQueue bpq(-5, 5);
     Dllink<std::array<int, 2>> node({0, 1});

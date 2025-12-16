@@ -46,16 +46,6 @@ class TestBPQueue:
         assert bpq.popleft() is b
         assert bpq.popleft() is a
 
-    def test_appendfrom(self) -> None:
-        bpq = BPQueue(-10, 10)
-        nodes = [Dllink([2 * i - 10, i]) for i in range(10)]
-        bpq.appendfrom(nodes)
-        assert bpq.get_max() == 8
-        count = 0
-        for _ in bpq:
-            count += 1
-        assert count == 10
-
     def test_clear(self) -> None:
         bpq = BPQueue(-5, 5)
         bpq.append(Dllink([0, 1]), 3)

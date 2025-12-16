@@ -265,31 +265,6 @@ class BPQueue:
             self._max = it.data[0]
         self._bucket[it.data[0]].append(it)
 
-    def appendfrom(self, nodes: Iterable[Item]) -> None:
-        """
-        The `appendfrom` function appends items from a list to a bucket, adjusting the data values
-        of the items and updating the maximum value.
-
-        :param nodes: The `nodes` parameter is an iterable of `Item` objects
-        :type nodes: Iterable[Item]
-
-        Examples:
-            >>> bpq = BPQueue(-3, 3)
-            >>> a = Dllink([0, 3])
-            >>> b = Dllink([1, 2])
-            >>> bpq.appendfrom([a, b])
-            >>> bpq.is_empty()
-            False
-
-        """
-        for it in nodes:
-            it.data[0] -= self._offset
-            assert it.data[0] > 0
-            self._bucket[it.data[0]].appendleft(it)
-        self._max = self._high
-        while self._bucket[self._max].is_empty():
-            self._max -= 1
-
     def popleft(self) -> Item:
         """
         The `popleft` function removes and returns the node with the highest key from the BPQueue.

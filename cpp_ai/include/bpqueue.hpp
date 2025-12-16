@@ -135,25 +135,6 @@ public:
     }
 
     /**
-     * @brief Append multiple items from a container.
-     * 
-     * @tparam Container Container type.
-     * @param nodes Container of items.
-     */
-    template<typename Container>
-    void appendfrom(Container& nodes) {
-        for (auto& it : nodes) {
-            it->data()[0] -= offset_;
-            assert(it->data()[0] > 0);
-            bucket_[it->data()[0]].appendleft(it);
-        }
-        max_ = high_;
-        while (bucket_[max_].is_empty()) {
-            --max_;
-        }
-    }
-
-    /**
      * @brief Remove and return the item with the highest key.
      * 
      * @return Item* Pointer to the removed item.
