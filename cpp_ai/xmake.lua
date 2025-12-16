@@ -1,100 +1,67 @@
 -- xmake.lua for cpp_ai project
--- Supports building the cpp_ai library and test executables
+-- Build system for C++17 implementation of Python mywheel data structures
+-- Includes: array_like, dllist, bpqueue, map_adapter, robin
 
 set_project("cpp_ai")
 set_version("0.1.0")
 
--- Set C++ standard
+-- Set C++ standard to C++17
 set_languages("c++17")
 
--- Configuration options
-option("tests")
-    set_default(false)
-    set_description("Enable building tests (requires GoogleTest)")
-    add_defines("ENABLE_TESTS")
+-- Add build modes
+add_rules("mode.debug", "mode.release")
 
-option("gtest_local")
-    set_default(false)
-    set_description("Use local GoogleTest instead of downloading")
+-- Compiler flags
+if is_mode("debug") then
+    add_cxxflags("-g", "-O0")
+else
+    add_cxxflags("-O2")
+end
 
--- Main library
+-- Common warnings
+add_cxxflags("-Wall", "-Wextra", "-Wpedantic")
+
+-- Download and use googletest for testing
+-- main = true: link with gtest_main which provides main()
+-- gmock = false: don't link with Google Mock
+add_requires("gtest", {configs = {main = true, gmock = false}})
+
+-- Main library target: static library containing all data structures
 target("cpp_ai")
     set_kind("static")
+    -- Public header files
+    add_headerfiles("include/(**.hpp)")
+    -- Source files
     add_files("src/array_like.cpp")
     add_files("src/dllist.cpp")
     add_files("src/bpqueue.cpp")
     add_files("src/map_adapter.cpp")
     add_files("src/robin.cpp")
+    -- Include directories (public for library users)
     add_includedirs("include", {public = true})
-    add_headerfiles("include/(*.hpp)")
-    
-    -- MSVC runtime library settings
-    if is_plat("windows") then
-        add_cxflags("/MD", "/MDd", {force = true})
-    end
 
--- Test executable (only built if tests option is enabled)
-if has_config("tests") then
-    if has_config("gtest_local") then
-        -- Assume GoogleTest is available locally
-        target("cpp_ai_tests")
-            set_kind("binary")
-            add_files("tests/test_array_like.cpp")
-            add_files("tests/test_dllist.cpp")
-            add_files("tests/test_bpqueue.cpp")
-            add_files("tests/test_map_adapter.cpp")
-            add_files("tests/test_robin.cpp")
-            add_includedirs("include")
-            add_deps("cpp_ai")
-            add_links("gtest", "gtest_main")
-    else
-        -- Download GoogleTest
-        add_requires("gtest")
-        target("cpp_ai_tests")
-            set_kind("binary")
-            add_files("tests/test_array_like.cpp")
-            add_files("tests/test_dllist.cpp")
-            add_files("tests/test_bpqueue.cpp")
-            add_files("tests/test_map_adapter.cpp")
-            add_files("tests/test_robin.cpp")
-            add_includedirs("include")
-            add_deps("cpp_ai")
-            add_packages("gtest")
-    end
-end
+-- Test executable target
+target("cpp_ai_tests")
+    set_kind("binary")
+    -- Test source files
+    add_files("tests/test_array_like.cpp")
+    add_files("tests/test_dllist.cpp")
+    add_files("tests/test_bpqueue.cpp")
+    add_files("tests/test_map_adapter.cpp")
+    add_files("tests/test_robin.cpp")
+    -- Include directories
+    add_includedirs("include")
+    -- Dependencies
+    add_deps("cpp_ai")  -- Link with our library
+    add_packages("gtest")  -- Link with gtest
 
--- Debug test executables
-local debug_files = {
-    "debug_test.cpp",
-    "debug_test2.cpp", 
-    "debug_test3.cpp",
-    "debug_test4.cpp",
-    "debug_test5.cpp",
-    "debug_test6.cpp"
-}
+-- Default targets to build
+set_default("cpp_ai", "cpp_ai_tests")
 
-for _, file in ipairs(debug_files) do
-    if os.isfile(file) then
-        local name = path.basename(file):match("(.+)%..+$")
-        target(name)
-            set_kind("binary")
-            add_files(file)
-            add_includedirs("include")
-            add_deps("cpp_ai")
-    end
-end
-
--- Default build task
-task("default")
-    on_run(function ()
-        -- Build the library by default
-        os.exec("xmake build cpp_ai")
-    end)
-
--- Clean task
-task("clean-all")
-    on_run(function ()
-        os.exec("xmake clean")
-        os.rm("build")
-        os.rm(".xmake")
-    end)
+-- Usage examples:
+--   xmake                 # Build library and tests
+--   xmake build cpp_ai    # Build only library
+--   xmake build cpp_ai_tests  # Build only tests
+--   xmake run cpp_ai_tests    # Run tests
+--   xmake clean           # Clean build
+--   xmake clean -a        # Clean all (including downloaded packages)
