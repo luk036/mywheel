@@ -1,15 +1,15 @@
-#include <gtest/gtest.h>
+#include "doctest.h"
 #include "bpqueue.hpp"
 
 using namespace cpp_ai;
 
-TEST(BPQueueTest, Constructor) {
+TEST_CASE("BPQueueTest - Constructor") {
     BPQueue bpq(-3, 3);
-    EXPECT_TRUE(bpq.is_empty());
-    EXPECT_EQ(bpq.get_max(), -4); // a - 1
+    CHECK(bpq.is_empty());
+    CHECK(bpq.get_max() == -4); // a - 1
 }
 
-TEST(BPQueueTest, AppendAndPop) {
+TEST_CASE("BPQueueTest - AppendAndPop") {
     BPQueue bpq(-5, 5);
     Dllink<std::array<int, 2>> a({0, 1});
     Dllink<std::array<int, 2>> b({0, 2});
@@ -19,23 +19,23 @@ TEST(BPQueueTest, AppendAndPop) {
     bpq.append(&b, -2);
     bpq.append(&c, 5);
 
-    EXPECT_FALSE(bpq.is_empty());
-    EXPECT_EQ(bpq.get_max(), 5);
+    CHECK_FALSE(bpq.is_empty());
+    CHECK(bpq.get_max() == 5);
 
     auto* item = bpq.popleft();
-    EXPECT_EQ(item->data()[1], 3);
-    EXPECT_EQ(bpq.get_max(), 3);
+    CHECK(item->data()[1] == 3);
+    CHECK(bpq.get_max() == 3);
 
     item = bpq.popleft();
-    EXPECT_EQ(item->data()[1], 1);
-    EXPECT_EQ(bpq.get_max(), -2);
+    CHECK(item->data()[1] == 1);
+    CHECK(bpq.get_max() == -2);
 
     item = bpq.popleft();
-    EXPECT_EQ(item->data()[1], 2);
-    EXPECT_TRUE(bpq.is_empty());
+    CHECK(item->data()[1] == 2);
+    CHECK(bpq.is_empty());
 }
 
-TEST(BPQueueTest, Appendlft) {
+TEST_CASE("BPQueueTest - Appendlft") {
     BPQueue bpq(-5, 5);
     Dllink<std::array<int, 2>> a({0, 1});
     Dllink<std::array<int, 2>> b({0, 2});
@@ -44,41 +44,41 @@ TEST(BPQueueTest, Appendlft) {
     bpq.appendleft(&b, 3);
 
     auto* item1 = bpq.popleft();
-    EXPECT_EQ(item1->data()[1], 2); // b was appended left, so it comes first
+    CHECK(item1->data()[1] == 2); // b was appended left, so it comes first
     
     auto* item2 = bpq.popleft();
-    EXPECT_EQ(item2->data()[1], 1); // a comes second
+    CHECK(item2->data()[1] == 1); // a comes second
 }
 
-TEST(BPQueueTest, Clear) {
+TEST_CASE("BPQueueTest - Clear") {
     BPQueue bpq(-5, 5);
     Dllink<std::array<int, 2>> node({0, 1});
     bpq.append(&node, 3);
     bpq.clear();
-    EXPECT_TRUE(bpq.is_empty());
+    CHECK(bpq.is_empty());
 }
 
-TEST(BPQueueTest, KeyManipulation) {
+TEST_CASE("BPQueueTest - KeyManipulation") {
     BPQueue bpq(-5, 5);
     Dllink<std::array<int, 2>> a({0, 1});
 
     bpq.append(&a, 0);
-    EXPECT_EQ(bpq.get_max(), 0);
+    CHECK(bpq.get_max() == 0);
 
     bpq.increase_key(&a, 2);
-    EXPECT_EQ(bpq.get_max(), 2);
+    CHECK(bpq.get_max() == 2);
 
     bpq.decrease_key(&a, 3);
-    EXPECT_EQ(bpq.get_max(), -1);
+    CHECK(bpq.get_max() == -1);
 
     bpq.modify_key(&a, 4);
-    EXPECT_EQ(bpq.get_max(), 3);
+    CHECK(bpq.get_max() == 3);
 
     bpq.modify_key(&a, -5);
-    EXPECT_EQ(bpq.get_max(), -2);
+    CHECK(bpq.get_max() == -2);
 }
 
-TEST(BPQueueTest, Detach) {
+TEST_CASE("BPQueueTest - Detach") {
     BPQueue bpq(-5, 5);
     Dllink<std::array<int, 2>> a({0, 1});
     Dllink<std::array<int, 2>> b({0, 2});
@@ -87,18 +87,18 @@ TEST(BPQueueTest, Detach) {
     bpq.append(&b, 5);
 
     bpq.detach(&a);
-    EXPECT_EQ(bpq.get_max(), 5);
+    CHECK(bpq.get_max() == 5);
     
     auto* item = bpq.popleft();
-    EXPECT_EQ(item->data()[1], 2);
-    EXPECT_TRUE(bpq.is_empty());
+    CHECK(item->data()[1] == 2);
+    CHECK(bpq.is_empty());
 }
 
-TEST(BPQueueTest, LockedItem) {
+TEST_CASE("BPQueueTest - LockedItem") {
     BPQueue bpq(-5, 5);
     Dllink<std::array<int, 2>> a({0, 1});
     bpq.append(&a, 0);
     a.lock();
     bpq.modify_key(&a, 3); // Should have no effect
-    EXPECT_EQ(bpq.get_max(), 0);
+    CHECK(bpq.get_max() == 0);
 }

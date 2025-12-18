@@ -149,7 +149,6 @@ public:
     class value_iterator {
     private:
         typename std::vector<T>::iterator current_;
-        typename std::vector<T>::iterator end_;
 
     public:
         using iterator_category = std::forward_iterator_tag;
@@ -160,8 +159,12 @@ public:
 
         value_iterator(typename std::vector<T>::iterator begin,
                       typename std::vector<T>::iterator end,
-                      typename std::vector<T>::iterator current = typename std::vector<T>::iterator())
-            : current_(current == typename std::vector<T>::iterator() ? begin : current), end_(end) {}
+                      typename std::vector<T>::iterator current)
+            : current_(current) {}
+        
+        value_iterator(typename std::vector<T>::iterator begin,
+                      typename std::vector<T>::iterator end)
+            : current_(begin) {}
 
         reference operator*() const { return *current_; }
         pointer operator->() const { return &(*current_); }
@@ -194,7 +197,6 @@ public:
     private:
         size_t index_;
         typename std::vector<T>::iterator current_;
-        typename std::vector<T>::iterator end_;
 
     public:
         using iterator_category = std::forward_iterator_tag;
@@ -206,8 +208,13 @@ public:
         item_iterator(size_t index,
                      typename std::vector<T>::iterator begin,
                      typename std::vector<T>::iterator end,
-                     typename std::vector<T>::iterator current = typename std::vector<T>::iterator())
-            : index_(index), current_(current == typename std::vector<T>::iterator() ? begin : current), end_(end) {}
+                     typename std::vector<T>::iterator current)
+            : index_(index), current_(current) {}
+        
+        item_iterator(size_t index,
+                     typename std::vector<T>::iterator begin,
+                     typename std::vector<T>::iterator end)
+            : index_(index), current_(begin) {}
 
         reference operator*() const { return {index_, *current_}; }
         

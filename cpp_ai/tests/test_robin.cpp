@@ -1,44 +1,45 @@
-#include <gtest/gtest.h>
+#include "doctest.h"
 #include "robin.hpp"
+#include <vector>
 
 using namespace cpp_ai;
 
-TEST(SlNodeTest, Constructor) {
+TEST_CASE("SlNodeTest - Constructor") {
     SlNode node(5);
-    EXPECT_EQ(node.data(), 5);
-    EXPECT_EQ(node.next(), &node);
+    CHECK(node.data() == 5);
+    CHECK(node.next() == &node);
 }
 
-TEST(RobinIteratorTest, Constructor) {
+TEST_CASE("RobinIteratorTest - Constructor") {
     SlNode node(1);
     RobinIterator iterator(&node);
-    EXPECT_EQ(*iterator, 1);
+    CHECK(*iterator == 1);
 }
 
-TEST(RobinIteratorTest, Next) {
+TEST_CASE("RobinIteratorTest - Next") {
     Robin r(3);
     auto iterator = r.exclude(0);
     
-    EXPECT_EQ(*iterator, 1);
+    CHECK(*iterator == 1);
     ++iterator;
-    EXPECT_EQ(*iterator, 2);
+    CHECK(*iterator == 2);
     ++iterator;
-    EXPECT_TRUE(iterator.is_done());
+    CHECK(iterator.is_done());
 }
 
-TEST(RobinTest, Constructor) {
+TEST_CASE("RobinTest - Constructor") {
     Robin r(5);
-    EXPECT_EQ(r.size(), 5);
-    EXPECT_FALSE(r.empty());
+    CHECK(r.size() == 5);
+    CHECK_FALSE(r.empty());
 }
 
-TEST(RobinTest, Exclude) {
+TEST_CASE("RobinTest - Exclude") {
     Robin r(5);
     auto iterator = r.exclude(3);
-    EXPECT_EQ(*iterator, 4);
+    CHECK(*iterator == 4);
 }
 
-TEST(RobinTest, Iteration) {
+TEST_CASE("RobinTest - Iteration") {
     Robin r(5);
     
     // Test starting from 0
@@ -48,7 +49,7 @@ TEST(RobinTest, Iteration) {
         result.push_back(*iterator);
         ++iterator;
     }
-    EXPECT_EQ(result, std::vector<int>({1, 2, 3, 4}));
+    CHECK(result == std::vector<int>({1, 2, 3, 4}));
 
     // Test starting from 3
     iterator = r.exclude(3);
@@ -57,7 +58,7 @@ TEST(RobinTest, Iteration) {
         result.push_back(*iterator);
         ++iterator;
     }
-    EXPECT_EQ(result, std::vector<int>({4, 0, 1, 2}));
+    CHECK(result == std::vector<int>({4, 0, 1, 2}));
 
     // Test starting from the last element
     iterator = r.exclude(4);
@@ -66,30 +67,30 @@ TEST(RobinTest, Iteration) {
         result.push_back(*iterator);
         ++iterator;
     }
-    EXPECT_EQ(result, std::vector<int>({0, 1, 2, 3}));
+    CHECK(result == std::vector<int>({0, 1, 2, 3}));
 }
 
-TEST(RobinTest, OnePart) {
+TEST_CASE("RobinTest - OnePart") {
     Robin r(1);
     auto iterator = r.exclude(0);
-    EXPECT_TRUE(iterator.is_done());
+    CHECK(iterator.is_done());
     
     std::vector<int> result;
     while (!iterator.is_done()) {
         result.push_back(*iterator);
         ++iterator;
     }
-    EXPECT_TRUE(result.empty());
+    CHECK(result.empty());
 }
 
-TEST(RobinTest, ZeroParts) {
+TEST_CASE("RobinTest - ZeroParts") {
     Robin r(0);
-    EXPECT_TRUE(r.empty());
-    EXPECT_THROW(r.exclude(0), std::out_of_range);
+    CHECK(r.empty());
+    CHECK_THROWS_AS(r.exclude(0), std::out_of_range);
 }
 
-TEST(RobinTest, OutOfRange) {
+TEST_CASE("RobinTest - OutOfRange") {
     Robin r(5);
-    EXPECT_THROW(r.exclude(5), std::out_of_range);
-    EXPECT_THROW(r.exclude(10), std::out_of_range);
+    CHECK_THROWS_AS(r.exclude(5), std::out_of_range);
+    CHECK_THROWS_AS(r.exclude(10), std::out_of_range);
 }

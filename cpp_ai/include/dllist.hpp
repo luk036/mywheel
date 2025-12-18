@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <iterator>
 #include <utility>
+#include <string>
 
 namespace cpp_ai {
 

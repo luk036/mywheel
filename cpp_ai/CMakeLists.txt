@@ -13,17 +13,6 @@ endif()
 # Enable testing
 enable_testing()
 
-# Download and setup GoogleTest
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz
-)
-
-# Set GoogleTest to use the same runtime library
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-
 # Main library
 add_library(cpp_ai
     src/array_like.cpp
@@ -44,7 +33,7 @@ add_executable(cpp_ai_tests
     tests/test_robin.cpp
 )
 
-target_include_directories(cpp_ai_tests PRIVATE include)
-target_link_libraries(cpp_ai_tests cpp_ai gtest gtest_main)
+target_include_directories(cpp_ai_tests PRIVATE include tests)
+target_link_libraries(cpp_ai_tests cpp_ai)
 
 add_test(NAME cpp_ai_tests COMMAND cpp_ai_tests)
