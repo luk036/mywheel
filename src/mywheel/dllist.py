@@ -162,10 +162,10 @@ class Dllink(Generic[T]):
             >>> b.detach()
         """
         assert self.next
-        n = self.next
-        p = self.prev
-        p.next = n
-        n.prev = p
+        next_node = self.next
+        prev_node = self.prev
+        prev_node.next = next_node
+        next_node.prev = prev_node
 
 
 class DllIterator(Generic[T]):

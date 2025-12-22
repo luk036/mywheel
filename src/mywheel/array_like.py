@@ -260,8 +260,8 @@ if __name__ == "__main__":
     for i in arr:
         print(i)
 
-    b = ShiftArray([9, 4, 1, 3, 8, 7, 6, 5])
-    b.set_start(10)
-    print(b[14])
-    for i in b:
+    shift_arr = ShiftArray([9, 4, 1, 3, 8, 7, 6, 5])
+    shift_arr.set_start(10)
+    print(shift_arr[14])
+    for i in shift_arr:
         print(i)

@@ -159,9 +159,9 @@ class MapAdapter(Mapping[int, T]):
 
 
 if __name__ == "__main__":
-    a = MapAdapter([0] * 8)
-    for i in a:
-        a[i] = i * i
-    for i, v in a.items():
+    map_adapter = MapAdapter([0] * 8)
+    for i in map_adapter:
+        map_adapter[i] = i * i
+    for i, v in map_adapter.items():
         print(f"{i}: {v}")
-    print(3 in a)
+    print(3 in map_adapter)

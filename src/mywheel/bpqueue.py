@@ -38,7 +38,7 @@ for managing prioritized items within a bounded range, making it useful for scen
 fast priority-based access and modifications are required.
 """
 
-from typing import Iterable, List
+from typing import List
 
 from .dllist import Dllink, Dllist
 

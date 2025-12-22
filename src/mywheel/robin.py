@@ -179,10 +179,10 @@ class Robin:
             self.cycle = []
             return
         self.cycle = list(SlNode(k) for k in range(num_parts))
-        sl2 = self.cycle[-1]
-        for sl1 in self.cycle:
-            sl2.next = sl1
-            sl2 = sl1
+        prev_node = self.cycle[-1]
+        for curr_node in self.cycle:
+            prev_node.next = curr_node
+            prev_node = curr_node
 
     def exclude(self, from_part: int) -> RobinIterator:
         """
@@ -209,6 +209,6 @@ class Robin:
 
 
 if __name__ == "__main__":
-    r = Robin(5)
-    for k in r.exclude(3):
+    robin = Robin(5)
+    for k in robin.exclude(3):
         print(k)
