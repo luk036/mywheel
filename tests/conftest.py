@@ -7,4 +7,8 @@ Read more about conftest.py under:
 - https://docs.pytest.org/en/stable/writing_plugins.html
 """
 
-# import pytest
+import sys
+import os
+
+# Add src directory to Python path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
