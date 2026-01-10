@@ -1,6 +1,8 @@
 import random
+
+from mywheel.bpqueue import BPQueue
+from mywheel.bpqueue import Dllink as BPQDllink  # Alias to avoid conflict
 from mywheel.dllist import Dllink, Dllist
-from mywheel.bpqueue import BPQueue, Dllink as BPQDllink  # Alias to avoid conflict
 
 
 # Stress tests for Dllist

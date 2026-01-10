@@ -64,13 +64,13 @@ impl Robin {
         if num_parts == 0 {
             return Self { cycle: Vec::new() };
         }
-        
+
         let mut nodes: Vec<Box<SlNode>> = (0..num_parts as i32)
             .map(|k| Box::new(SlNode::new(k)))
             .collect();
-        
+
         let mut cycle: Vec<*mut SlNode> = nodes.iter_mut().map(|node| &mut **node as *mut _).collect();
-        
+
         // Link nodes in a circular list
         for i in 0..num_parts {
             let prev = if i == 0 { num_parts - 1 } else { i - 1 };
@@ -78,10 +78,10 @@ impl Robin {
                 (*cycle[prev]).next = cycle[i];
             }
         }
-        
+
         // Leak the nodes to keep them alive
         std::mem::forget(nodes);
-        
+
         Self { cycle }
     }
 

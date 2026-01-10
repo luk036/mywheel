@@ -11,7 +11,7 @@ namespace cpp_ai {
 
 /**
  * @brief A map-like adapter for a vector.
- * 
+ *
  * Adapts a vector to behave like a map with integer keys.
  * Similar to Python's MapAdapter class.
  */
@@ -23,7 +23,7 @@ private:
 public:
     /**
      * @brief Construct a new MapAdapter object.
-     * 
+     *
      * @param lst Reference to the vector to adapt.
      */
     explicit MapAdapter(std::vector<T>& lst) : lst_(&lst) {}
@@ -47,7 +47,7 @@ public:
 
     /**
      * @brief Get the element at the specified index.
-     * 
+     *
      * @param key The index.
      * @return T& Reference to the element.
      * @throws std::out_of_range if index is out of range.
@@ -61,7 +61,7 @@ public:
 
     /**
      * @brief Get the element at the specified index (const version).
-     * 
+     *
      * @param key The index.
      * @return const T& Const reference to the element.
      * @throws std::out_of_range if index is out of range.
@@ -75,7 +75,7 @@ public:
 
     /**
      * @brief Set the element at the specified index.
-     * 
+     *
      * @param key The index.
      * @param value The new value.
      * @throws std::out_of_range if index is out of range.
@@ -89,7 +89,7 @@ public:
 
     /**
      * @brief Check if an index is within bounds.
-     * 
+     *
      * @param key The index to check.
      * @return true if index is within bounds, false otherwise.
      */
@@ -99,7 +99,7 @@ public:
 
     /**
      * @brief Get the size of the adapted vector.
-     * 
+     *
      * @return size_t The size.
      */
     size_t size() const { return lst_->size(); }
@@ -117,26 +117,26 @@ public:
         using pointer = const size_t*;
         using reference = size_t;
 
-        key_iterator(size_t size, size_t current = 0) 
+        key_iterator(size_t size, size_t current = 0)
             : current_(current), size_(size) {}
 
         reference operator*() const { return current_; }
-        
+
         key_iterator& operator++() {
             ++current_;
             return *this;
         }
-        
+
         key_iterator operator++(int) {
             key_iterator tmp = *this;
             ++(*this);
             return tmp;
         }
-        
+
         bool operator==(const key_iterator& other) const {
             return current_ == other.current_;
         }
-        
+
         bool operator!=(const key_iterator& other) const {
             return !(*this == other);
         }
@@ -161,29 +161,29 @@ public:
                       typename std::vector<T>::iterator end,
                       typename std::vector<T>::iterator current)
             : current_(current) {}
-        
+
         value_iterator(typename std::vector<T>::iterator begin,
                       typename std::vector<T>::iterator end)
             : current_(begin) {}
 
         reference operator*() const { return *current_; }
         pointer operator->() const { return &(*current_); }
-        
+
         value_iterator& operator++() {
             ++current_;
             return *this;
         }
-        
+
         value_iterator operator++(int) {
             value_iterator tmp = *this;
             ++(*this);
             return tmp;
         }
-        
+
         bool operator==(const value_iterator& other) const {
             return current_ == other.current_;
         }
-        
+
         bool operator!=(const value_iterator& other) const {
             return !(*this == other);
         }
@@ -210,30 +210,30 @@ public:
                      typename std::vector<T>::iterator end,
                      typename std::vector<T>::iterator current)
             : index_(index), current_(current) {}
-        
+
         item_iterator(size_t index,
                      typename std::vector<T>::iterator begin,
                      typename std::vector<T>::iterator end)
             : index_(index), current_(begin) {}
 
         reference operator*() const { return {index_, *current_}; }
-        
+
         item_iterator& operator++() {
             ++index_;
             ++current_;
             return *this;
         }
-        
+
         item_iterator operator++(int) {
             item_iterator tmp = *this;
             ++(*this);
             return tmp;
         }
-        
+
         bool operator==(const item_iterator& other) const {
             return current_ == other.current_;
         }
-        
+
         bool operator!=(const item_iterator& other) const {
             return !(*this == other);
         }
@@ -244,7 +244,7 @@ public:
 
     /**
      * @brief Get the adapted vector.
-     * 
+     *
      * @return std::vector<T>& Reference to the vector.
      */
     std::vector<T>& vector() { return *lst_; }

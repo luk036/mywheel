@@ -1,5 +1,5 @@
 //! MyWheel Rust implementation
-//! 
+//!
 //! This is a Rust port of the Python mywheel library, containing various data structures
 //! and utilities.
 

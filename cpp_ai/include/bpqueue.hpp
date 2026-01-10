@@ -12,16 +12,16 @@ namespace cpp_ai {
 
 /**
  * @brief Bounded Priority Queue with integer keys in [a..b].
- * 
+ *
  * Implemented by array (bucket) of doubly-linked lists.
  * Efficient if key is bounded by a small integer value.
- * 
+ *
  * Similar to Python's BPQueue class.
  */
 class BPQueue {
 private:
     using Item = Dllink<std::array<int, 2>>;
-    
+
     int max_;
     int offset_;
     int high_;
@@ -37,7 +37,7 @@ private:
 public:
     /**
      * @brief Construct a new BPQueue object.
-     * 
+     *
      * @param a Lower bound of key range (inclusive).
      * @param b Upper bound of key range (inclusive).
      */
@@ -60,14 +60,14 @@ public:
 
     /**
      * @brief Check if the queue is empty.
-     * 
+     *
      * @return true if empty, false otherwise.
      */
     bool is_empty() const { return max_ == 0; }
 
     /**
      * @brief Get the maximum key in the queue.
-     * 
+     *
      * @return int The maximum key.
      */
     int get_max() const { return max_ + offset_; }
@@ -84,7 +84,7 @@ public:
 
     /**
      * @brief Set the key of an item.
-     * 
+     *
      * @param it The item.
      * @param gain The new key value.
      */
@@ -94,7 +94,7 @@ public:
 
     /**
      * @brief Append an item using its internal key.
-     * 
+     *
      * @param it The item to append.
      */
     void appendleft_direct(Item* it) {
@@ -104,7 +104,7 @@ public:
 
     /**
      * @brief Append an item with an external key to the front of its bucket.
-     * 
+     *
      * @param it The item to append.
      * @param k The external key.
      */
@@ -120,7 +120,7 @@ public:
 
     /**
      * @brief Append an item with an external key to the end of its bucket.
-     * 
+     *
      * @param it The item to append.
      * @param k The external key.
      */
@@ -136,7 +136,7 @@ public:
 
     /**
      * @brief Remove and return the item with the highest key.
-     * 
+     *
      * @return Item* Pointer to the removed item.
      */
     Item* popleft() {
@@ -147,7 +147,7 @@ public:
 
     /**
      * @brief Decrease the key of an item.
-     * 
+     *
      * @param it The item.
      * @param delta The amount to decrease.
      */
@@ -166,7 +166,7 @@ public:
 
     /**
      * @brief Increase the key of an item.
-     * 
+     *
      * @param it The item.
      * @param delta The amount to increase.
      */
@@ -184,7 +184,7 @@ public:
 
     /**
      * @brief Modify the key of an item (increase or decrease).
-     * 
+     *
      * @param it The item.
      * @param delta The amount to modify (positive for increase, negative for decrease).
      */
@@ -201,7 +201,7 @@ public:
 
     /**
      * @brief Detach an item from the queue.
-     * 
+     *
      * @param it The item to detach.
      */
     void detach(Item* it) {
@@ -253,7 +253,7 @@ public:
         iterator() : bpq_(nullptr), curkey_(0), curitem_(), end_() {}
 
         // Constructor for begin iterator
-        explicit iterator(const BPQueue* bpq) 
+        explicit iterator(const BPQueue* bpq)
             : bpq_(bpq), curkey_(bpq->max_) {
             if (curkey_ > 0) {
                 curitem_ = bpq->bucket_[curkey_].cbegin();
@@ -266,28 +266,28 @@ public:
             // If curkey_ <= 0, we're already an end iterator
         }
 
-        value_type operator*() const { 
+        value_type operator*() const {
             // Need to cast away const since we're returning a non-const pointer
             return const_cast<Item*>(&(*curitem_));
         }
-        
+
         iterator& operator++() {
             if (curkey_ > 0) {
                 advance();
             }
             return *this;
         }
-        
+
         iterator operator++(int) {
             iterator tmp = *this;
             ++(*this);
             return tmp;
         }
-        
+
         bool operator==(const iterator& other) const {
             return curkey_ == other.curkey_ && curitem_ == other.curitem_;
         }
-        
+
         bool operator!=(const iterator& other) const {
             return !(*this == other);
         }

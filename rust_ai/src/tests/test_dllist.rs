@@ -12,14 +12,14 @@ fn test_dllink_constructor() {
 fn test_dllink_lock_and_is_locked() {
     let mut link = Dllink::new(1);
     assert!(link.is_locked());
-    
+
     // Create another node to test attachment
     let mut link2 = Dllink::new(2);
     unsafe {
         link.attach(&mut link2);
     }
     assert!(!link.is_locked());
-    
+
     link.lock();
     assert!(link.is_locked());
 }
@@ -92,7 +92,7 @@ fn test_dllist_append_and_pop() {
     unsafe {
         let popped = dlist.pop();
         assert_eq!(popped.data(), &2);
-        
+
         let popped = dlist.pop();
         assert_eq!(popped.data(), &1);
     }
@@ -117,7 +117,7 @@ fn test_dllist_appendleft_and_popleft() {
     unsafe {
         let popped = dlist.popleft();
         assert_eq!(popped.data(), &2);
-        
+
         let popped = dlist.popleft();
         assert_eq!(popped.data(), &1);
     }

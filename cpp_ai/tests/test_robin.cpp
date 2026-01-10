@@ -19,7 +19,7 @@ TEST_CASE("RobinIteratorTest - Constructor") {
 TEST_CASE("RobinIteratorTest - Next") {
     Robin r(3);
     auto iterator = r.exclude(0);
-    
+
     CHECK(*iterator == 1);
     ++iterator;
     CHECK(*iterator == 2);
@@ -41,7 +41,7 @@ TEST_CASE("RobinTest - Exclude") {
 
 TEST_CASE("RobinTest - Iteration") {
     Robin r(5);
-    
+
     // Test starting from 0
     auto iterator = r.exclude(0);
     std::vector<int> result;
@@ -74,7 +74,7 @@ TEST_CASE("RobinTest - OnePart") {
     Robin r(1);
     auto iterator = r.exclude(0);
     CHECK(iterator.is_done());
-    
+
     std::vector<int> result;
     while (!iterator.is_done()) {
         result.push_back(*iterator);

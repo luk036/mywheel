@@ -45,7 +45,7 @@ TEST_CASE("BPQueueTest - Appendlft") {
 
     auto* item1 = bpq.popleft();
     CHECK(item1->data()[1] == 2); // b was appended left, so it comes first
-    
+
     auto* item2 = bpq.popleft();
     CHECK(item2->data()[1] == 1); // a comes second
 }
@@ -88,7 +88,7 @@ TEST_CASE("BPQueueTest - Detach") {
 
     bpq.detach(&a);
     CHECK(bpq.get_max() == 5);
-    
+
     auto* item = bpq.popleft();
     CHECK(item->data()[1] == 2);
     CHECK(bpq.is_empty());

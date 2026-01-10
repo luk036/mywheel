@@ -28,16 +28,16 @@ impl BPQueue {
         let offset = a - 1;
         let high = (b - offset) as usize;
         let mut bucket = Vec::with_capacity(high + 1);
-        
+
         for i in 0..=high {
             bucket.push(Dllist::new([i as i32, 4848]));
         }
-        
+
         let mut sentinel = Dllink::new([0, 8965]);
         unsafe {
             bucket[0].appendleft(&mut sentinel);
         }
-        
+
         Self {
             max,
             offset,
@@ -121,11 +121,11 @@ impl BPQueue {
     /// The queue must not be empty.
     pub unsafe fn popleft(&mut self) {
         let max = self.max;
-        
+
         unsafe {
             self.bucket[max].popleft();
         }
-        
+
         // Update max
         while self.max > 0 && self.bucket[self.max].is_empty() {
             self.max -= 1;

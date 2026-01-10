@@ -60,7 +60,7 @@ fn test_bpqueue_appendleft() {
 fn test_bpqueue_clear() {
     let mut bpq = BPQueue::new(-5, 5);
     let mut a = Dllink::new([0, 1]);
-    
+
     unsafe {
         bpq.append(&mut a, 3);
     }
@@ -103,7 +103,7 @@ fn test_bpqueue_detach() {
 
         bpq.detach(&mut a);
         assert_eq!(bpq.get_max(), 5);
-        
+
         bpq.popleft();
     }
     assert!(bpq.is_empty());
@@ -113,7 +113,7 @@ fn test_bpqueue_detach() {
 fn test_bpqueue_locked_item() {
     let mut bpq = BPQueue::new(-5, 5);
     let mut a = Dllink::new([0, 1]);
-    
+
     unsafe {
         bpq.append(&mut a, 0);
         a.lock();

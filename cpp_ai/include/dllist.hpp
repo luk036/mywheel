@@ -10,7 +10,7 @@ namespace cpp_ai {
 
 /**
  * @brief A node in a doubly linked list.
- * 
+ *
  * Similar to Python's Dllink class.
  */
 template<typename T>
@@ -23,7 +23,7 @@ private:
 public:
     /**
      * @brief Construct a new Dllink object.
-     * 
+     *
      * @param data The data to store in the node.
      */
     explicit Dllink(T data) : next_(this), prev_(this), data_(std::move(data)) {}
@@ -33,7 +33,7 @@ public:
     Dllink& operator=(const Dllink&) = delete;
 
     // Allow moving
-    Dllink(Dllink&& other) noexcept 
+    Dllink(Dllink&& other) noexcept
         : next_(other.next_), prev_(other.prev_), data_(std::move(other.data_)) {
         if (next_ == &other) next_ = this;
         if (prev_ == &other) prev_ = this;
@@ -46,7 +46,7 @@ public:
             next_ = other.next_;
             prev_ = other.prev_;
             data_ = std::move(other.data_);
-            
+
             if (next_ == &other) next_ = this;
             if (prev_ == &other) prev_ = this;
             other.next_ = &other;
@@ -57,7 +57,7 @@ public:
 
     /**
      * @brief Check if the node is locked (points to itself).
-     * 
+     *
      * @return true if locked, false otherwise.
      */
     bool is_locked() const { return next_ == this; }
@@ -72,7 +72,7 @@ public:
 
     /**
      * @brief Attach another node after this node.
-     * 
+     *
      * @param node The node to attach.
      */
     void attach(Dllink* node) {
@@ -93,7 +93,7 @@ public:
 
     /**
      * @brief Get the next node.
-     * 
+     *
      * @return Dllink* Pointer to the next node.
      */
     Dllink* next() { return next_; }
@@ -101,7 +101,7 @@ public:
 
     /**
      * @brief Get the previous node.
-     * 
+     *
      * @return Dllink* Pointer to the previous node.
      */
     Dllink* prev() { return prev_; }
@@ -109,7 +109,7 @@ public:
 
     /**
      * @brief Get the data stored in the node.
-     * 
+     *
      * @return T& Reference to the data.
      */
     T& data() { return data_; }
@@ -118,7 +118,7 @@ public:
 
 /**
  * @brief A doubly linked list with a sentinel head node.
- * 
+ *
  * Similar to Python's Dllist class.
  */
 template<typename T>
@@ -129,7 +129,7 @@ private:
 public:
     /**
      * @brief Construct a new Dllist object.
-     * 
+     *
      * @param data Data for the sentinel head node.
      */
     explicit Dllist(T data = T{}) : head_(std::move(data)) {}
@@ -149,7 +149,7 @@ public:
 
     /**
      * @brief Check if the list is empty.
-     * 
+     *
      * @return true if empty, false otherwise.
      */
     bool is_empty() const { return head_.next() == &head_; }
@@ -161,21 +161,21 @@ public:
 
     /**
      * @brief Append a node to the front of the list.
-     * 
+     *
      * @param node The node to append.
      */
     void appendleft(Dllink<T>* node) { head_.attach(node); }
 
     /**
      * @brief Append a node to the end of the list.
-     * 
+     *
      * @param node The node to append.
      */
     void append(Dllink<T>* node) { head_.prev()->attach(node); }
 
     /**
      * @brief Remove and return the first node in the list.
-     * 
+     *
      * @return Dllink<T>* Pointer to the removed node.
      */
     Dllink<T>* popleft() {
@@ -186,7 +186,7 @@ public:
 
     /**
      * @brief Remove and return the last node in the list.
-     * 
+     *
      * @return Dllink<T>* Pointer to the removed node.
      */
     Dllink<T>* pop() {
@@ -209,18 +209,18 @@ public:
         using reference = Dllink<T>&;
 
         iterator() : current_(nullptr), head_(nullptr) {}
-        
+
         // Constructor for begin iterator
-        explicit iterator(Dllink<T>* head) 
+        explicit iterator(Dllink<T>* head)
             : current_(head->next() == head ? nullptr : head->next()), head_(head) {}
-        
+
         // Constructor for end iterator
-        iterator(Dllink<T>* head, std::nullptr_t) 
+        iterator(Dllink<T>* head, std::nullptr_t)
             : current_(nullptr), head_(head) {}
 
         reference operator*() const { return *current_; }
         pointer operator->() const { return current_; }
-        
+
         iterator& operator++() {
             current_ = current_->next();
             if (current_ == head_) {
@@ -228,17 +228,17 @@ public:
             }
             return *this;
         }
-        
+
         iterator operator++(int) {
             iterator tmp = *this;
             ++(*this);
             return tmp;
         }
-        
+
         bool operator==(const iterator& other) const {
             return current_ == other.current_;
         }
-        
+
         bool operator!=(const iterator& other) const {
             return !(*this == other);
         }
@@ -246,7 +246,7 @@ public:
 
     iterator begin() { return iterator(&head_); }
     iterator end() { return iterator(&head_, nullptr); }
-    
+
     // Const iterator support
     class const_iterator {
     private:
@@ -261,18 +261,18 @@ public:
         using reference = const Dllink<T>&;
 
         const_iterator() : current_(nullptr), head_(nullptr) {}
-        
+
         // Constructor for begin iterator
-        explicit const_iterator(const Dllink<T>* head) 
+        explicit const_iterator(const Dllink<T>* head)
             : current_(head->next() == head ? nullptr : head->next()), head_(head) {}
-        
+
         // Constructor for end iterator
-        const_iterator(const Dllink<T>* head, std::nullptr_t) 
+        const_iterator(const Dllink<T>* head, std::nullptr_t)
             : current_(nullptr), head_(head) {}
 
         reference operator*() const { return *current_; }
         pointer operator->() const { return current_; }
-        
+
         const_iterator& operator++() {
             current_ = current_->next();
             if (current_ == head_) {
@@ -280,17 +280,17 @@ public:
             }
             return *this;
         }
-        
+
         const_iterator operator++(int) {
             const_iterator tmp = *this;
             ++(*this);
             return tmp;
         }
-        
+
         bool operator==(const const_iterator& other) const {
             return current_ == other.current_;
         }
-        
+
         bool operator!=(const const_iterator& other) const {
             return !(*this == other);
         }

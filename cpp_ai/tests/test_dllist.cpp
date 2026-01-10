@@ -13,12 +13,12 @@ TEST_CASE("DllinkTest - Constructor") {
 TEST_CASE("DllinkTest - LockAndIsLocked") {
     Dllink<int> link(1);
     CHECK(link.is_locked());
-    
+
     // Simulate attaching to a list
     Dllink<int> other(2);
     link.attach(&other);
     CHECK_FALSE(link.is_locked());
-    
+
     link.lock();
     CHECK(link.is_locked());
 }
@@ -69,12 +69,12 @@ TEST_CASE("DllistTest - AppendAndPop") {
 
     dlist.append(&link1);
     CHECK_FALSE(dlist.is_empty());
-    
+
     dlist.append(&link2);
-    
+
     auto* popped = dlist.pop();
     CHECK(popped == &link2);
-    
+
     popped = dlist.pop();
     CHECK(popped == &link1);
     CHECK(dlist.is_empty());
@@ -87,12 +87,12 @@ TEST_CASE("DllistTest - AppendlftAndPopleft") {
 
     dlist.appendleft(&link1);
     CHECK_FALSE(dlist.is_empty());
-    
+
     dlist.appendleft(&link2);
-    
+
     auto* popped = dlist.popleft();
     CHECK(popped == &link2);
-    
+
     popped = dlist.popleft();
     CHECK(popped == &link1);
     CHECK(dlist.is_empty());

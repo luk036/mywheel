@@ -20,7 +20,7 @@ fn test_robin_exclude() {
 #[test]
 fn test_robin_iteration() {
     let mut r = Robin::new(5);
-    
+
     // Test starting from 0
     let result: Vec<i32> = r.exclude(0).collect();
     assert_eq!(result, vec![1, 2, 3, 4]);

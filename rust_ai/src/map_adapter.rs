@@ -95,10 +95,10 @@ impl<T> From<Vec<T>> for MapAdapter<T> {
 pub trait MapAdapterExt<K, V> {
     /// Returns an iterator over the keys.
     fn keys_iter(&self) -> std::collections::hash_map::Keys<'_, K, V>;
-    
+
     /// Returns an iterator over the values.
     fn values_iter(&self) -> std::collections::hash_map::Values<'_, K, V>;
-    
+
     /// Returns an iterator over (key, value) pairs.
     fn items_iter(&self) -> std::collections::hash_map::Iter<'_, K, V>;
 }
@@ -107,11 +107,11 @@ impl<K, V> MapAdapterExt<K, V> for HashMap<K, V> {
     fn keys_iter(&self) -> std::collections::hash_map::Keys<'_, K, V> {
         self.keys()
     }
-    
+
     fn values_iter(&self) -> std::collections::hash_map::Values<'_, K, V> {
         self.values()
     }
-    
+
     fn items_iter(&self) -> std::collections::hash_map::Iter<'_, K, V> {
         self.iter()
     }
