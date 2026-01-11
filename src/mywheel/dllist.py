@@ -180,7 +180,7 @@ class DllIterator(Generic[T]):
         +---+     +---+     +---+
           ^         ^
           |         |
-         cur       next
+         curr      next
 
     """
 
@@ -198,7 +198,7 @@ class DllIterator(Generic[T]):
             >>> it = iter(a)
         """
         self.link = link
-        self.cur = link.next
+        self.curr = link.next
 
     def __iter__(self):
         return self
@@ -214,14 +214,14 @@ class DllIterator(Generic[T]):
             >>> a = Dllist(3)
             >>> b = Dllink(4)
             >>> a.append(b)
-            >>> cursor = iter(a)
-            >>> c = next(cursor)
+            >>> current = iter(a)
+            >>> c = next(current)
             >>> id(b) == id(c)
             True
         """
-        if id(self.cur) != id(self.link):
-            res = self.cur
-            self.cur = self.cur.next
+        if id(self.curr) != id(self.link):
+            res = self.curr
+            self.curr = self.curr.next
             return res
         else:
             raise StopIteration()

@@ -16,7 +16,7 @@ def test_robin_iterator_constructor() -> None:
     """Test the RobinIterator constructor."""
     node = SlNode(1)
     iterator = RobinIterator(node)
-    assert iterator.cur is node
+    assert iterator.curr is node
     assert iterator.stop is node
 
 
@@ -51,7 +51,7 @@ def test_robin_exclude() -> None:
     r = Robin(5)
     iterator = r.exclude(3)
     assert isinstance(iterator, RobinIterator)
-    assert iterator.cur.data == 3
+    assert iterator.curr.data == 3
 
 
 def test_robin_iteration() -> None:
@@ -204,7 +204,7 @@ class TestRobinIteratorProperties:
             r = Robin(num_parts)
             iterator = r.exclude(from_part)
 
-            assert iterator.cur is r.cycle[from_part]
+            assert iterator.curr is r.cycle[from_part]
             assert iterator.stop is r.cycle[from_part]
 
     @given(

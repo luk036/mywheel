@@ -124,7 +124,7 @@ class TestDllIterator:
         dlist = Dllist("head")
         iterator = DllIterator(dlist.head)
         assert iterator.link is dlist.head
-        assert iterator.cur is dlist.head.next
+        assert iterator.curr is dlist.head.next
 
     def test_next(self) -> None:
         dlist = Dllist(0)  # Use int to match link types

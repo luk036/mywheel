@@ -24,7 +24,7 @@ impl SlNode {
 
 /// An iterator that iterates over a singly linked list starting from a given node.
 pub struct RobinIterator {
-    cur: *mut SlNode,
+    curr: *mut SlNode,
     stop: *mut SlNode,
 }
 
@@ -32,7 +32,7 @@ impl RobinIterator {
     /// Creates a new iterator starting from the given node.
     pub fn new(node: &mut SlNode) -> Self {
         Self {
-            cur: node as *mut _,
+            curr: node as *mut _,
             stop: node as *mut _,
         }
     }
@@ -43,9 +43,9 @@ impl Iterator for RobinIterator {
 
     fn next(&mut self) -> Option<Self::Item> {
         unsafe {
-            self.cur = (*self.cur).next;
-            if !ptr::eq(self.cur, self.stop) {
-                Some((*self.cur).data)
+            self.curr = (*self.curr).next;
+            if !ptr::eq(self.curr, self.stop) {
+                Some((*self.curr).data)
             } else {
                 None
             }

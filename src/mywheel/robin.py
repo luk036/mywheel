@@ -25,8 +25,8 @@ iterator allows you to cycle through the elements of the list, starting from the
 position and continuing until you've gone through all elements except the starting one.
 
 An important aspect of the logic is how the iteration works. The RobinIterator keeps track of
-two pointers: cur (current) and stop. As you iterate, cur moves to the next node in the list.
-The iteration stops when cur reaches the stop node, which is set to the starting position. This
+two pointers: curr (current) and stop. As you iterate, curr moves to the next node in the list.
+The iteration stops when curr reaches the stop node, which is set to the starting position. This
 ensures that you go through all elements exactly once before stopping.
 
 In summary, this code provides a flexible way to implement a round-robin system, allowing users
@@ -75,8 +75,8 @@ class RobinIterator:
     given node.
     """
 
-    __slots__ = ("cur", "stop")
-    cur: SlNode
+    __slots__ = ("curr", "stop")
+    curr: SlNode
     stop: SlNode
 
     def __init__(self, node: SlNode) -> None:
@@ -89,42 +89,42 @@ class RobinIterator:
         Examples:
             >>> node = SlNode(1)
             >>> iter = RobinIterator(node)
-            >>> iter.cur == node
+            >>> iter.curr == node
             True
             >>> iter.stop == node
             True
-            >>> iter.cur.next == node
+            >>> iter.curr.next == node
             True
             >>> iter.stop.next == node
             True
-            >>> iter.cur.data == 1
+            >>> iter.curr.data == 1
             True
             >>> iter.stop.data == 1
             True
-            >>> iter.cur.next.data == 1
+            >>> iter.curr.next.data == 1
             True
             >>> iter.stop.next.data == 1
             True
-            >>> iter.cur.next.next == node
+            >>> iter.curr.next.next == node
             True
             >>> iter.stop.next.next == node
             True
-            >>> iter.cur.next.next.data == 1
+            >>> iter.curr.next.next.data == 1
             True
             >>> iter.stop.next.next.data == 1
             True
-            >>> iter.cur.next.next.next == node
+            >>> iter.curr.next.next.next == node
             True
             >>> iter.stop.next.next.next == node
             True
-            >>> iter.cur.next.next.next.data == 1
+            >>> iter.curr.next.next.next.data == 1
             True
             >>> iter.stop.next.next.next.data == 1
             True
-            >>> iter.cur.next.next.next.next == node
+            >>> iter.curr.next.next.next.next == node
             True
         """
-        self.cur = self.stop = node
+        self.curr = self.stop = node
 
     def __iter__(self) -> "RobinIterator":
         """
@@ -140,9 +140,9 @@ class RobinIterator:
 
         :return: The `next()` method is being called and its return value is being returned.
         """
-        self.cur = self.cur.next
-        if self.cur != self.stop:
-            return self.cur.data
+        self.curr = self.curr.next
+        if self.curr != self.stop:
+            return self.curr.data
         else:
             raise StopIteration()
 
@@ -198,7 +198,7 @@ class Robin:
         Examples:
             >>> r = Robin(5)
             >>> iter = r.exclude(3)
-            >>> iter.cur.data == 3
+            >>> iter.curr.data == 3
             True
             >>> iter.stop.data == 3
             True

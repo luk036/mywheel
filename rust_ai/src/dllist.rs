@@ -98,7 +98,7 @@ impl<T> Drop for Dllink<T> {
 /// An iterator over a doubly linked list.
 pub struct DllIterator<'a, T> {
     link: &'a Dllink<T>,
-    cur: *mut Dllink<T>,
+    curr: *mut Dllink<T>,
 }
 
 impl<'a, T> DllIterator<'a, T> {
@@ -106,7 +106,7 @@ impl<'a, T> DllIterator<'a, T> {
     pub fn new(link: &'a Dllink<T>) -> Self {
         Self {
             link,
-            cur: link.next,
+            curr: link.next,
         }
     }
 }
@@ -115,11 +115,11 @@ impl<'a, T> Iterator for DllIterator<'a, T> {
     type Item = &'a Dllink<T>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if ptr::eq(self.cur, self.link as *const _ as *mut _) {
+        if ptr::eq(self.curr, self.link as *const _ as *mut _) {
             None
         } else {
-            let result = unsafe { &*self.cur };
-            self.cur = result.next;
+            let result = unsafe { &*self.curr };
+            self.curr = result.next;
             Some(result)
         }
     }
