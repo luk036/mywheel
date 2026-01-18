@@ -10,23 +10,132 @@
 [![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter)](https://twitter.com/mywheel)
 -->
 
+[![Python Version](https://img.shields.io/pypi/pyversions/mywheel.svg)](https://pypi.org/project/mywheel/)
+[![PyPI-Server](https://img.shields.io/pypi/v/mywheel.svg)](https://pypi.org/project/mywheel/)
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
 [![Documentation Status](https://readthedocs.org/projects/mywheel/badge/?version=latest)](https://mywheel.readthedocs.io/en/latest/?badge=latest)
 [![Coverage Status](https://coveralls.io/repos/github/luk036/mywheel/badge.svg?branch=main)](https://coveralls.io/github/luk036/mywheel?branch=main)
+[![License](https://img.shields.io/github/license/luk036/mywheel.svg)](https://github.com/luk036/mywheel/blob/main/LICENSE.txt)
 
 ![logo](./reinventing-my-wheel.svg)
 
 # 🛞 mywheel
 
-> Reinventing my wheel in Python
+> High-performance data structures and algorithms in Python
 
-A longer description of your project goes here...
+`mywheel` provides efficient implementations of fundamental data structures optimized for specific use cases in graph algorithms, EDA (Electronic Design Automation), and network optimization. All implementations prioritize memory efficiency and time complexity over Python's standard library alternatives.
 
-## Used In
+## 🚀 Quick Start
 
-- [digraphx](https://luk036.github.io/digraphx)
-- [netlistx](https://luk036.github.io/netlistx)
-- [ckpttnpy](https://luk036.github.io/ckpttnpy)
+### Installation
+
+```bash
+pip install mywheel
+```
+
+### Usage Examples
+
+#### Doubly Linked List with O(1) Operations
+
+```python
+from mywheel import Dllist, Dllink
+
+# Create list
+dlist = Dllist(0)  # sentinel node
+dlist.append(Dllink("A"))
+dlist.append(Dllink("B"))
+
+# O(1) operations
+node = dlist.popleft()  # Remove first
+dlist.appendleft(Dllink("C"))  # Add to front
+```
+
+#### Bounded Priority Queue for Small Integer Keys
+
+```python
+from mywheel import BPQueue, Dllink
+
+# Efficient for keys in range [-5, 5]
+bpq = BPQueue(-5, 5)
+
+# Add items with integer keys
+bpq.append(Dllink("task1"), 3)
+bpq.append(Dllink("task2"), 5)
+
+# Extract highest priority item
+item = bpq.popleft()
+```
+
+#### Round-Robin Iteration
+
+```python
+from mywheel import Robin
+
+# Create 5-part cycle
+robin = Robin(5)
+
+# Iterate excluding starting position
+for part in robin.exclude(2):
+    print(part)  # Prints: 3, 4, 0, 1
+```
+
+#### Array-Like Utilities
+
+```python
+from mywheel import MapAdapter
+
+# Adapt list to dict-like interface
+lst = [10, 20, 30, 40]
+mapping = MapAdapter(lst)
+
+mapping[0] = 99
+assert mapping[0] == 99
+```
+
+## 📊 Performance Characteristics
+
+| Data Structure | Insert | Delete | Lookup | Memory | Best For |
+|---------------|---------|---------|---------|---------|-----------|
+| `Dllist` | O(1) | O(1) | N/A | Minimal | Frequent front/back operations |
+| `BPQueue` | O(1)* | O(k) | O(1) | O(b-a) | Small bounded integer keys |
+| `Robin` | O(n) | N/A | O(1) | O(n) | Round-robin scheduling |
+| `MapAdapter` | O(1) | N/A | O(1) | O(n) | Dict-like list access |
+
+\* O(1) amortized for bounded keys
+
+## 🎯 Used In
+
+- [digraphx](https://luk036.github.io/digraphx) - Graph algorithms and data structures
+- [netlistx](https://luk036.github.io/netlistx) - VLSI netlist partitioning
+- [ckpttnpy](https://luk036.github.io/ckpttnpy) - Multi-level circuit partitioning
+
+## ✨ Features
+
+- **Memory Efficient**: Uses `__slots__` and sentinel nodes to minimize overhead
+- **Type Safe**: Full type hints with mypy support
+- **Well Tested**: 100% coverage with pytest and hypothesis
+- **Zero Dependencies**: Pure Python, no external runtime dependencies
+- **Python 3.8+**: Supports all modern Python versions
+
+## 🔧 Development
+
+```bash
+# Clone and install
+git clone https://github.com/luk036/mywheel.git
+cd mywheel
+pip install -e ".[testing]"
+
+# Run tests
+pytest
+
+# Run type checking
+mypy src/mywheel
+
+# Run linting
+pre-commit run --all-files
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 <!-- pyscaffold-notes -->
 

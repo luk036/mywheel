@@ -2,6 +2,8 @@ from typing import Iterator, List, Mapping, TypeVar
 
 T = TypeVar("T")
 
+__all__ = ["MapAdapter"]
+
 
 class MapAdapter(Mapping[int, T]):
     """MapAdapter

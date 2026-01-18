@@ -37,8 +37,10 @@ jobs:
       - uses: actions/setup-python@v4
         id: setup-python
         with: { python-version: "3.11" }
-      # - name: Run static analysis and format checkers
-      #   run: pipx run pre-commit run --all-files --show-diff-on-failure
+      - name: Run static analysis and format checkers
+        run: pipx run pre-commit run --all-files --show-diff-on-failure
+      - name: Type check with mypy
+        run: pipx run mypy src/mywheel --ignore-missing-imports
       - name: Build package distribution files
         run: >-
           pipx run --python '${{ steps.setup-python.outputs.python-path }}'
@@ -60,8 +62,11 @@ jobs:
     strategy:
       matrix:
         python:
-          - "3.9" # oldest Python supported by PSF
-          - "3.11" # newest Python that is stable
+          - "3.8" # minimum Python version supported
+          - "3.9"
+          - "3.10"
+          - "3.11"
+          - "3.12" # newest Python
         platform:
           - ubuntu-latest
           - macos-latest

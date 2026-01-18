@@ -1,5 +1,7 @@
 from itertools import repeat
 
+__all__ = ["RepeatArray", "ShiftArray"]
+
 
 class RepeatArray:
     """The RepeatArray class creates a list-like object that repeats a given value for a specified number

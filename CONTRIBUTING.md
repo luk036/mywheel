@@ -1,374 +1,255 @@
-```{todo} THIS IS SUPPOSED TO BE AN EXAMPLE. MODIFY IT ACCORDING TO YOUR NEEDS!
+# Contributing to mywheel
 
-   The document assumes you are using a source repository service that promotes a
-   contribution model similar to [GitHub's fork and pull request workflow].
-   While this is true for the majority of services (like GitHub, GitLab,
-   BitBucket), it might not be the case for private repositories (e.g., when
-   using Gerrit).
+Thank you for your interest in contributing to `mywheel`! This document provides guidelines and instructions for contributing to this project.
 
-   Also notice that the code examples might refer to GitHub URLs or the text
-   might use GitHub specific terminology (e.g., *Pull Request* instead of *Merge
-   Request*).
+## 🤝 How to Contribute
 
-   Please make sure to check the document having these assumptions in mind
-   and update things accordingly.
+### Reporting Issues
+
+Before creating an issue, please:
+
+1. Check if the issue already exists in [GitHub Issues](https://github.com/luk036/mywheel/issues)
+2. Use an appropriate issue template
+3. Include:
+   - Python version
+   - Operating system
+   - Minimal reproducible example
+   - Expected vs actual behavior
+
+### Submitting Pull Requests
+
+We welcome pull requests! Here's the process:
+
+1. **Fork** the repository
+2. **Create a branch** for your changes: `git checkout -b feature/your-feature`
+3. **Make your changes** following the guidelines below
+4. **Test thoroughly** (see Testing section)
+5. **Submit a PR** with a clear description
+
+## 🛠️ Development Setup
+
+### Prerequisites
+
+- Python 3.8 or higher
+- Git
+- Virtual environment (recommended)
+
+### Installation
+
+```bash
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/mywheel.git
+cd mywheel
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install in development mode with testing dependencies
+pip install -e ".[testing]"
+
+# Install pre-commit hooks
+pre-commit install
 ```
 
-```{todo} Provide the correct links/replacements at the bottom of the document.
+### Project Structure
 
 ```
-
-```{todo} You might want to have a look on [PyScaffold's contributor's guide],
-
-   especially if your project is open source. The text should be very similar to
-   this template, but there are a few extra contents that you might decide to
-   also include, like mentioning labels of your issue tracker or automated
-   releases.
+mywheel/
+├── src/mywheel/       # Source code
+│   ├── __init__.py
+│   ├── robin.py        # Round-robin implementation
+│   ├── dllist.py       # Doubly-linked list
+│   ├── bpqueue.py      # Bounded priority queue
+│   ├── map_adapter.py  # List-to-map adapter
+│   └── array_like.py  # Array-like utilities
+├── tests/             # Test suite
+│   ├── conftest.py
+│   └── test_*.py
+├── docs/              # Sphinx documentation
+└── AGENTS.md          # Guidelines for agentic contributors
 ```
 
-# Contributing
+## 📝 Code Style Guidelines
 
-Welcome to `mywheel` contributor's guide.
+### General Principles
 
-This document focuses on getting any potential contributor familiarized with
-the development processes, but [other kinds of contributions] are also appreciated.
+- **Follow existing patterns**: The codebase uses consistent patterns (see `AGENTS.md`)
+- **Type hints required**: All public APIs must have type hints
+- **Memory efficiency**: Use `__slots__` for classes with fixed attributes
+- **Docstrings**: Google/NumPy-style with doctest examples
 
-If you are new to using [git] or have never collaborated in a project previously,
-please have a look at [contribution-guide.org]. Other resources are also
-listed in the excellent [guide created by FreeCodeCamp] [^contrib1].
+### Specific Rules
 
-Please notice, all users and contributors are expected to be **open,
-considerate, reasonable, and respectful**. When in doubt,
-[Python Software Foundation's Code of Conduct] is a good reference in terms of
-behavior guidelines.
+1. **Imports**: Standard → Third-party → Local package
+   ```python
+   from typing import Generic, TypeVar
+   from hypothesis import given
+   from mywheel import Dllist
+   ```
 
-## Issue Reports
+2. **Naming**:
+   - Classes: `PascalCase`
+   - Functions/Methods: `snake_case`
+   - Private: `_leading_underscore`
 
-If you experience bugs or general issues with `mywheel`, please have a look
-on the [issue tracker].
-If you don't see anything useful there, please feel free to fire an issue report.
+3. **Error Handling**:
+   - Use `assert` for invariants and preconditions
+   - Raise specific exceptions (`IndexError`, `NotImplementedError`, `StopIteration`)
+   - Use `id()` for object identity comparisons
 
-:::{tip}
-Please don't forget to include the closed issues in your search.
-Sometimes a solution was already reported, and the problem is considered
-**solved**.
-:::
+4. **Circular References**:
+   ```python
+   # Self-referential initialization
+   self.next = self
 
-New issue reports should include information about your programming environment
-(e.g., operating system, Python version) and steps to reproduce the problem.
-Please try also to simplify the reproduction steps to a very minimal example
-that still illustrates the problem you are facing. By removing other factors,
-you help us to identify the root cause of the issue.
+   # Identity checks
+   if id(self.next) == id(self):
+   ```
 
-## Documentation Improvements
+### Before Committing
 
-You can help improve `mywheel` docs by making them more readable and coherent, or
-by adding missing information and correcting mistakes.
+```bash
+# Format code
+black .
+isort .
 
-`mywheel` documentation uses [Sphinx] as its main documentation compiler.
-This means that the docs are kept in the same repository as the project code, and
-that any documentation update is done in the same way was a code contribution.
+# Run linters
+flake8 src/mywheel
 
-```{todo} Don't forget to mention which markup language you are using.
+# Type check
+mypy src/mywheel
 
-    e.g.,  [reStructuredText] or [CommonMark] with [MyST] extensions.
+# Run tests
+pytest tests/
+
+# Run all checks at once
+pre-commit run --all-files
 ```
 
-```{todo} If your project is hosted on GitHub, you can also mention the following tip:
+## 🧪 Testing
 
-   :::{tip}
-      Please notice that the [GitHub web interface] provides a quick way of
-      propose changes in `mywheel`'s files. While this mechanism can
-      be tricky for normal code contributions, it works perfectly fine for
-      contributing to the docs, and can be quite handy.
+### Running Tests
 
-      If you are interested in trying this method out, please navigate to
-      the `docs` folder in the source [repository], find which file you
-      would like to propose changes and click in the little pencil icon at the
-      top, to open [GitHub's code editor]. Once you finish editing the file,
-      please write a message in the form at the bottom of the page describing
-      which changes have you made and what are the motivations behind them and
-      submit your proposal.
-   :::
+```bash
+# All tests with coverage
+pytest
+
+# Specific test file
+pytest tests/test_dllist.py
+
+# Specific test
+pytest tests/test_robin.py::test_slnode
+
+# Verbose output
+pytest -v
+
+# Pattern matching
+pytest -k "test_dllist"
+
+# In isolated environment (tox)
+tox
 ```
 
-When working on documentation changes in your local machine, you can
-compile them using [tox] :
+### Writing Tests
 
-```
-tox -e docs
-```
+- **Unit tests**: Use `pytest` for specific functionality
+- **Property tests**: Use `hypothesis` for data structure invariants
+- **Coverage**: Maintain 100% coverage for new code
+- **Test structure**:
+  ```python
+  # Standard pytest test
+  def test_feature():
+      assert expected == actual
 
-and use Python's built-in web server for a preview in your web browser
-(`http://localhost:8000`):
+  # Property-based test
+  @given(st.integers(min_value=1, max_value=100))
+  def test_property(value):
+      assert invariant_holds(value)
+  ```
 
-```
-python3 -m http.server --directory 'docs/_build/html'
-```
+### Test Naming
 
-## Code Contributions
+- Test classes: `Test<ClassName>`, `Test<ClassName>Properties`
+- Test functions: `test_<feature>`, `test_<behavior>`
 
-```{todo} Please include a reference or explanation about the internals of the project.
+## 📚 Documentation
 
-   An architecture description, design principles or at least a summary of the
-   main concepts will make it easy for potential contributors to get started
-   quickly.
-```
+### Docstrings
 
-### Submit an issue
+Use Google/NumPy-style docstrings for all public APIs:
 
-Before you work on any non-trivial code contribution it's best to first create
-a report in the [issue tracker] to start a discussion on the subject.
-This often provides additional considerations and avoids unnecessary work.
+```python
+def method(self, param: int) -> str:
+    """
+    Brief description.
 
-### Create an environment
+    Detailed description of what the method does.
 
-Before you start coding, we recommend creating an isolated [virtual environment]
-to avoid any problems with your installed Python packages.
-This can easily be done via either [virtualenv]:
+    Args:
+        param: Description of param
 
-```
-virtualenv <PATH TO VENV>
-source <PATH TO VENV>/bin/activate
-```
+    Returns:
+        Description of return value
 
-or [Miniconda]:
+    Raises:
+        IndexError: When param is out of range
 
-```
-conda create -n mywheel python=3 six virtualenv pytest pytest-cov
-conda activate mywheel
-```
-
-### Clone the repository
-
-1. Create an user account on GitHub if you do not already have one.
-
-2. Fork the project [repository]: click on the _Fork_ button near the top of the
-   page. This creates a copy of the code under your account on GitHub.
-
-3. Clone this copy to your local disk:
-
-   ```
-   git clone git@github.com:YourLogin/mywheel.git
-   cd mywheel
-   ```
-
-4. You should run:
-
-   ```
-   pip install -U pip setuptools -e .
-   ```
-
-   to be able to import the package under development in the Python REPL.
-
-   ```{todo} if you are not using pre-commit, please remove the following item:
-
-   ```
-
-5. Install [pre-commit]:
-
-   ```
-   pip install pre-commit
-   pre-commit install
-   ```
-
-   `mywheel` comes with a lot of hooks configured to automatically help the
-   developer to check the code being written.
-
-### Implement your changes
-
-1. Create a branch to hold your changes:
-
-   ```
-   git checkout -b my-feature
-   ```
-
-   and start making changes. Never work on the main branch!
-
-2. Start your work on this branch. Don't forget to add [docstrings] to new
-   functions, modules and classes, especially if they are part of public APIs.
-
-3. Add yourself to the list of contributors in `AUTHORS.rst`.
-
-4. When you’re done editing, do:
-
-   ```
-   git add <MODIFIED FILES>
-   git commit
-   ```
-
-   to record your changes in [git].
-
-   ```{todo} if you are not using pre-commit, please remove the following item:
-
-   ```
-
-   Please make sure to see the validation messages from [pre-commit] and fix
-   any eventual issues.
-   This should automatically use [flake8]/[black] to check/fix the code style
-   in a way that is compatible with the project.
-
-   :::{important}
-   Don't forget to add unit tests and documentation in case your
-   contribution adds an additional feature and is not just a bugfix.
-
-   Moreover, writing a [descriptive commit message] is highly recommended.
-   In case of doubt, you can check the commit history with:
-
-   ```
-   git log --graph --decorate --pretty=oneline --abbrev-commit --all
-   ```
-
-   to look for recurring communication patterns.
-   :::
-
-5. Please check that your changes don't break any unit tests with:
-
-   ```
-   tox
-   ```
-
-   (after having installed [tox] with `pip install tox` or `pipx`).
-
-   You can also use [tox] to run several other pre-configured tasks in the
-   repository. Try `tox -av` to see a list of the available checks.
-
-### Submit your contribution
-
-1. If everything works fine, push your local branch to the remote server with:
-
-   ```
-   git push -u origin my-feature
-   ```
-
-2. Go to the web page of your fork and click "Create pull request"
-   to send your changes for review.
-
-   ```{todo} if you are using GitHub, you can uncomment the following paragraph
-
-      Find more detailed information in [creating a PR]. You might also want to open
-      the PR as a draft first and mark it as ready for review after the feedbacks
-      from the continuous integration (CI) system or any required fixes.
-
-   ```
-
-### Troubleshooting
-
-The following tips can be used when facing problems to build or test the
-package:
-
-1. Make sure to fetch all the tags from the upstream [repository].
-   The command `git describe --abbrev=0 --tags` should return the version you
-   are expecting. If you are trying to run CI scripts in a fork repository,
-   make sure to push all the tags.
-   You can also try to remove all the egg files or the complete egg folder, i.e.,
-   `.eggs`, as well as the `*.egg-info` folders in the `src` folder or
-   potentially in the root of your project.
-
-2. Sometimes [tox] misses out when new dependencies are added, especially to
-   `setup.cfg` and `docs/requirements.txt`. If you find any problems with
-   missing dependencies when running a command with [tox], try to recreate the
-   `tox` environment using the `-r` flag. For example, instead of:
-
-   ```
-   tox -e docs
-   ```
-
-   Try running:
-
-   ```
-   tox -r -e docs
-   ```
-
-3. Make sure to have a reliable [tox] installation that uses the correct
-   Python version (e.g., 3.7+). When in doubt you can run:
-
-   ```
-   tox --version
-   # OR
-   which tox
-   ```
-
-   If you have trouble and are seeing weird errors upon running [tox], you can
-   also try to create a dedicated [virtual environment] with a [tox] binary
-   freshly installed. For example:
-
-   ```
-   virtualenv .venv
-   source .venv/bin/activate
-   .venv/bin/pip install tox
-   .venv/bin/tox -e all
-   ```
-
-4. [Pytest can drop you] in an interactive session in the case an error occurs.
-   In order to do that you need to pass a `--pdb` option (for example by
-   running `tox -- -k <NAME OF THE FALLING TEST> --pdb`).
-   You can also setup breakpoints manually instead of using the `--pdb` option.
-
-## Maintainer tasks
-
-### Releases
-
-```{todo} This section assumes you are using PyPI to publicly release your package.
-
-   If instead you are using a different/private package index, please update
-   the instructions accordingly.
+    Examples:
+        >>> obj.method(5)
+        'result'
+    """
 ```
 
-If you are part of the group of maintainers and have correct user permissions
-on [PyPI], the following steps can be used to release a new version for
-`mywheel`:
+### Module Documentation
 
-1. Make sure all unit tests are successful.
-2. Tag the current commit on the main branch with a release tag, e.g., `v1.2.3`.
-3. Push the new tag to the upstream [repository],
-   e.g., `git push upstream v1.2.3`
-4. Clean up the `dist` and `build` folders with `tox -e clean`
-   (or `rm -rf dist build`)
-   to avoid confusion with old builds and Sphinx docs.
-5. Run `tox -e build` and check that the files in `dist` have
-   the correct version (no `.dirty` or [git] hash) according to the [git] tag.
-   Also check the sizes of the distributions, if they are too big (e.g., >
-   500KB), unwanted clutter may have been accidentally included.
-6. Run `tox -e publish -- --repository pypi` and check that everything was
-   uploaded to [PyPI] correctly.
+Each module should have a module-level docstring explaining:
+- Purpose of the implementation
+- Key algorithms used
+- Performance characteristics
+- Usage examples
 
-[^contrib1]:
-    Even though, these resources focus on open source projects and
-    communities, the general ideas behind collaborating with other developers
-    to collectively create software are general and can be applied to all sorts
-    of environments, including private companies and proprietary code bases.
+## 🔄 Code Review Process
 
-[black]: https://pypi.org/project/black/
-[commonmark]: https://commonmark.org/
-[contribution-guide.org]: http://www.contribution-guide.org/
-[creating a pr]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
-[descriptive commit message]: https://chris.beams.io/posts/git-commit
-[docstrings]: https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
-[first-contributions tutorial]: https://github.com/firstcontributions/first-contributions
-[flake8]: https://flake8.pycqa.org/en/stable/
-[git]: https://git-scm.com
-[github web interface]: https://docs.github.com/en/github/managing-files-in-a-repository/managing-files-on-github/editing-files-in-your-repository
-[github's code editor]: https://docs.github.com/en/github/managing-files-in-a-repository/managing-files-on-github/editing-files-in-your-repository
-[github's fork and pull request workflow]: https://guides.github.com/activities/forking/
-[guide created by freecodecamp]: https://github.com/freecodecamp/how-to-contribute-to-open-source
-[miniconda]: https://docs.conda.io/en/latest/miniconda.html
-[myst]: https://myst-parser.readthedocs.io/en/latest/syntax/syntax.html
-[other kinds of contributions]: https://opensource.guide/how-to-contribute
-[pre-commit]: https://pre-commit.com/
-[pypi]: https://pypi.org/
-[pyscaffold's contributor's guide]: https://pyscaffold.org/en/stable/contributing.html
-[pytest can drop you]: https://docs.pytest.org/en/stable/usage.html#dropping-to-pdb-python-debugger-at-the-start-of-a-test
-[python software foundation's code of conduct]: https://www.python.org/psf/conduct/
-[restructuredtext]: https://www.sphinx-doc.org/en/master/usage/restructuredtext/
-[sphinx]: https://www.sphinx-doc.org/en/master/
-[tox]: https://tox.readthedocs.io/en/stable/
-[virtual environment]: https://realpython.com/python-virtual-environments-a-primer/
-[virtualenv]: https://virtualenv.pypa.io/en/stable/
+### Before Submitting PR
 
-```{todo} Please review and change the following definitions:
+1. ✅ All tests pass locally
+2. ✅ Type checking passes (`mypy`)
+3. ✅ Linting passes (`flake8`)
+4. ✅ Code formatted with `black` and `isort`
+5. ✅ New code has tests
+6. ✅ Docstrings updated
+7. ✅ `AGENTS.md` updated if adding new patterns
 
-```
+### During Review
 
-[repository]: https://github.com/<USERNAME>/mywheel
-[issue tracker]: https://github.com/<USERNAME>/mywheel/issues
+- **Be responsive**: Address review feedback promptly
+- **Explain changes**: Provide rationale for significant decisions
+- **Be patient**: Reviewers volunteer their time
+
+### After Merge
+
+- Your contribution will be credited in release notes
+- Thank you for helping improve `mywheel`!
+
+## 🚀 Release Process
+
+Releases are managed by maintainers:
+
+1. Version updated via `setuptools_scm` (git tags)
+2. Changelog updated in `CHANGELOG.md`
+3. Built and published to PyPI via CI
+
+## 💬 Getting Help
+
+- **GitHub Issues**: For bugs and feature requests
+- **Discussions**: For questions and general discussions
+- **Documentation**: Read [AGENTS.md](AGENTS.md) for codebase patterns
+
+## 📄 License
+
+By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE.txt).
+
+---
+
+Thank you for contributing to `mywheel`! 🎉
