@@ -1,10 +1,10 @@
 from importlib.metadata import PackageNotFoundError, version
 
-from .robin import Robin, RobinIterator, SlNode
-from .dllist import Dllist, Dllink, DllIterator
-from .bpqueue import BPQueue, BPQueueIterator, Item
-from .map_adapter import MapAdapter
 from .array_like import RepeatArray, ShiftArray
+from .bpqueue import BPQueue, BPQueueIterator, Item
+from .dllist import Dllink, Dllist, DllIterator
+from .map_adapter import MapAdapter
+from .robin import Robin, RobinIterator, SlNode
 
 try:
     # Change here if project is renamed and does not equal the package name

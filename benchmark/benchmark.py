@@ -5,10 +5,6 @@ Run with: python benchmark/benchmark.py
 """
 
 import timeit
-from collections import deque
-import heapq
-
-from mywheel import Dllist, Dllink, BPQueue, Robin
 
 
 def benchmark_dllist_vs_deque():
@@ -34,15 +30,15 @@ for i in range({n}):
 """
 
     print(f"Append operations (n={n}):")
-    t_dllist = timeit.timeit('dlist.append(Dllink(i))', setup=dlist_setup, number=1000)
+    t_dllist = timeit.timeit("dlist.append(Dllink(i))", setup=dlist_setup, number=1000)
     print(f"  Dllist:  {t_dllist:.5f} sec")
-    t_deque = timeit.timeit('dque.append(i)', setup=deque_setup, number=1000)
+    t_deque = timeit.timeit("dque.append(i)", setup=deque_setup, number=1000)
     print(f"  deque:    {t_deque:.5f} sec")
 
     dlist_pop_stmt = "[dlist.pop() for _ in range(1000)]"
     deque_pop_stmt = "[dque.pop() for _ in range(1000)]"
 
-    print(f"Pop operations (1000 items):")
+    print("Pop operations (1000 items):")
     t_dllist_pop = timeit.timeit(dlist_pop_stmt, setup=dlist_setup, number=10)
     print(f"  Dllist:  {t_dllist_pop:.5f} sec")
     t_deque_pop = timeit.timeit(deque_pop_stmt, setup=deque_setup, number=10)
