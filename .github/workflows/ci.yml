@@ -62,8 +62,7 @@ jobs:
     strategy:
       matrix:
         python:
-          - "3.8" # minimum Python version supported
-          - "3.9"
+          - "3.9" # minimum Python version supported
           - "3.10"
           - "3.11"
           - "3.12" # newest Python
