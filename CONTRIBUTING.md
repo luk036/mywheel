@@ -244,11 +244,11 @@ Releases are managed by maintainers:
 
 - **GitHub Issues**: For bugs and feature requests
 - **Discussions**: For questions and general discussions
-- **Documentation**: Read [AGENTS.md](AGENTS.md) for codebase patterns
+- **Documentation**: Read <AGENTS.md> for codebase patterns
 
 ## 📄 License
 
-By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE.txt).
+By contributing, you agree that your contributions will be licensed under the <LICENSE>.
 
 ---
 

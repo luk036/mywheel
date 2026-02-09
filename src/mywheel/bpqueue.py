@@ -218,6 +218,9 @@ class BPQueue:
         :type it: Item
         :param k: The parameter `k` represents the external key that is associated with the item being
                   appended to the BPQueue
+        :type k: int
+
+        Examples:
             >>> bpq = BPQueue(-3, 3)
             >>> a = Dllink([0, 3])
             >>> b = Dllink([0, 4])
