@@ -245,7 +245,7 @@ class BPQueue:
 
     def append(self, it: Item, k: int) -> None:
         """
-        The `appendleft` function appends an item with an external key to a priority queue.
+        The `append` function appends an item with an external key to a priority queue.
 
         :param it: The parameter "it" is of type Dllink, which is a class or object that represents a
                    doubly linked list node. It is used to store the item that needs to be appended
