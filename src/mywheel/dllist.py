@@ -202,7 +202,8 @@ class DllIterator(Generic[T]):
         self.link = link
         self.curr = link.next
 
-    def __iter__(self):
+    def __iter__(self) -> "DllIterator[T]":
+        """Return the iterator object itself."""
         return self
 
     def __next__(self):

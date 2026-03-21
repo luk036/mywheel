@@ -513,7 +513,8 @@ class BPQueueIterator:
         self.curkey = bpq._max
         self.curitem = iter(bpq._bucket[bpq._max])
 
-    def __iter__(self):
+    def __iter__(self) -> "BPQueueIterator":
+        """Return the iterator object itself."""
         return self
 
     def __next__(self) -> Item:
