@@ -544,4 +544,3 @@ class BPQueueIterator:
                 self.curkey -= 1
                 self.curitem = iter(self.bpq._bucket[self.curkey])
         raise StopIteration
-
