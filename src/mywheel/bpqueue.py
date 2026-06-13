@@ -545,10 +545,3 @@ class BPQueueIterator:
                 self.curitem = iter(self.bpq._bucket[self.curkey])
         raise StopIteration
 
-    # def __next__(self):
-    #     """[summary]
-
-    #     Returns:
-    #         dtype:  description
-    #     """
-    #     return self.next()

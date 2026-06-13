@@ -117,13 +117,9 @@ class RepeatArray:
         return self.value
 
 
-# The ShiftArray class is a subclass of the list class that allows for indexing and setting values
-# with an arbitrary starting index.
 class ShiftArray(list):
-    """ShiftArray
-    The `ShiftArray` class is a subclass of the built-in `list` class in Python. It extends the
-    functionality of a list by allowing the user to set a starting index for the list.
-    list with arbitrary range
+    """The `ShiftArray` class is a subclass of the built-in `list` class that allows
+    indexing and setting values with an arbitrary starting index.
     """
 
     def __init__(self, *args, **kwargs):

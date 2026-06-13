@@ -91,40 +91,12 @@ class RobinIterator:
         Examples:
             >>> node = SlNode(1)
             >>> iter = RobinIterator(node)
-            >>> iter.curr == node
+            >>> iter.curr is node
             True
-            >>> iter.stop == node
+            >>> iter.curr.next is node  # circular self-reference
             True
-            >>> iter.curr.next == node
-            True
-            >>> iter.stop.next == node
-            True
-            >>> iter.curr.data == 1
-            True
-            >>> iter.stop.data == 1
-            True
-            >>> iter.curr.next.data == 1
-            True
-            >>> iter.stop.next.data == 1
-            True
-            >>> iter.curr.next.next == node
-            True
-            >>> iter.stop.next.next == node
-            True
-            >>> iter.curr.next.next.data == 1
-            True
-            >>> iter.stop.next.next.data == 1
-            True
-            >>> iter.curr.next.next.next == node
-            True
-            >>> iter.stop.next.next.next == node
-            True
-            >>> iter.curr.next.next.next.data == 1
-            True
-            >>> iter.stop.next.next.next.data == 1
-            True
-            >>> iter.curr.next.next.next.next == node
-            True
+            >>> iter.curr.data
+            1
         """
         self.curr = self.stop = node
 
@@ -152,8 +124,6 @@ class RobinIterator:
 class Robin:
     """Round Robin
 
-    The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and
-    the `exclude` method returns an iterator starting from a specified part.
     The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and
     the `exclude` method returns an iterator starting from a specified part.
 
