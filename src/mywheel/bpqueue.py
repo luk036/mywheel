@@ -456,7 +456,7 @@ class BPQueue:
         while self._bucket[self._max].is_empty():
             self._max -= 1
 
-    def __iter__(self) -> BPQueueIterator:  # noqa: F821
+    def __iter__(self) -> "BPQueueIterator":
         """
         The function returns an iterator object for a priority queue.
 
