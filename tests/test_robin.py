@@ -106,7 +106,9 @@ class TestRobinProperties:
     @given(
         st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_exclude_completeness_property(self, num_parts: int, from_part: int) -> None:
+    def test_robin_exclude_completeness_property(
+        self, num_parts: int, from_part: int
+    ) -> None:
         """Excluding a part should iterate through all other parts exactly once."""
         if from_part < num_parts:
             r = Robin(num_parts)
@@ -198,7 +200,9 @@ class TestRobinIteratorProperties:
     @given(
         st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_iterator_initialization_property(self, num_parts: int, from_part: int) -> None:
+    def test_robin_iterator_initialization_property(
+        self, num_parts: int, from_part: int
+    ) -> None:
         """Iterator should initialize with correct current and stop nodes."""
         if from_part < num_parts:
             r = Robin(num_parts)
@@ -210,7 +214,9 @@ class TestRobinIteratorProperties:
     @given(
         st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_iterator_self_iterable_property(self, num_parts: int, from_part: int) -> None:
+    def test_robin_iterator_self_iterable_property(
+        self, num_parts: int, from_part: int
+    ) -> None:
         """Iterator should be self-iterable."""
         if from_part < num_parts:
             r = Robin(num_parts)

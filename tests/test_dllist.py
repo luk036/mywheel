@@ -172,7 +172,9 @@ class TestDllistProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_dllist_appendleft_popleft_roundtrip_property(self, values: list[int]) -> None:
+    def test_dllist_appendleft_popleft_roundtrip_property(
+        self, values: list[int]
+    ) -> None:
         """Appending left and then popping left should preserve order."""
         dlist = Dllist(0)
         links = [Dllink(value) for value in values]
@@ -264,7 +266,9 @@ class TestDllinkProperties:
         st.integers(min_value=-100, max_value=100),
         st.integers(min_value=-100, max_value=100),
     )
-    def test_dllink_attach_detach_symmetry_property(self, data1: int, data2: int) -> None:
+    def test_dllink_attach_detach_symmetry_property(
+        self, data1: int, data2: int
+    ) -> None:
         """Attaching and detaching should be symmetric operations."""
         link1 = Dllink(data1)
         link2 = Dllink(data2)

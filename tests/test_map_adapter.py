@@ -119,7 +119,9 @@ class TestMapAdapterProperties:
         st.integers(min_value=0, max_value=19),
         st.integers(min_value=-200, max_value=200),
     )
-    def test_map_adapter_getitem_property(self, values: list[int], index: int, new_value: int) -> None:
+    def test_map_adapter_getitem_property(
+        self, values: list[int], index: int, new_value: int
+    ) -> None:
         """Getting and setting items should work correctly."""
         if index < len(values):
             adapter = MapAdapter(values.copy())
@@ -158,7 +160,9 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_delitem_not_implemented_property(self, values: list[int]) -> None:
+    def test_map_adapter_delitem_not_implemented_property(
+        self, values: list[int]
+    ) -> None:
         """Delitem should always raise NotImplementedError."""
         adapter = MapAdapter(values)
         with pytest.raises(NotImplementedError):

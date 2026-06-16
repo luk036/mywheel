@@ -254,7 +254,9 @@ class TestBPQueueProperties:
             max_size=20,
         ),
     )
-    def test_bpqueue_priority_ordering_property(self, a: int, b: int, items_data: list[tuple[int, int]]) -> None:
+    def test_bpqueue_priority_ordering_property(
+        self, a: int, b: int, items_data: list[tuple[int, int]]
+    ) -> None:
         """Items should be returned in descending priority order."""
         bpq = BPQueue(a, b)
         items = []
@@ -305,7 +307,9 @@ class TestBPQueueProperties:
         st.integers(min_value=-3, max_value=3),
         st.integers(min_value=1, max_value=3),
     )
-    def test_bpqueue_increase_key_property(self, a: int, b: int, initial_key: int, delta: int) -> None:
+    def test_bpqueue_increase_key_property(
+        self, a: int, b: int, initial_key: int, delta: int
+    ) -> None:
         """Increasing key should move item to higher priority bucket."""
         if a <= initial_key <= b and a <= initial_key + delta <= b:
             bpq = BPQueue(a, b)
@@ -326,7 +330,9 @@ class TestBPQueueProperties:
         st.integers(min_value=-3, max_value=3),
         st.integers(min_value=1, max_value=3),
     )
-    def test_bpqueue_decrease_key_property(self, a: int, b: int, initial_key: int, delta: int) -> None:
+    def test_bpqueue_decrease_key_property(
+        self, a: int, b: int, initial_key: int, delta: int
+    ) -> None:
         """Decreasing key should move item to lower priority bucket."""
         if a <= initial_key <= b and a <= initial_key - delta <= b:
             bpq = BPQueue(a, b)
@@ -371,7 +377,9 @@ class TestBPQueueProperties:
             max_size=10,
         ),
     )
-    def test_bpqueue_detach_property(self, a: int, b: int, items_data: list[tuple[int, int]]) -> None:
+    def test_bpqueue_detach_property(
+        self, a: int, b: int, items_data: list[tuple[int, int]]
+    ) -> None:
         """Detaching an item should remove it from the queue."""
         bpq = BPQueue(a, b)
         items = []
