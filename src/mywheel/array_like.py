@@ -1,4 +1,5 @@
 from itertools import repeat
+from typing import Any, Iterator
 
 __all__ = ["RepeatArray", "ShiftArray"]
 
@@ -16,7 +17,7 @@ class RepeatArray:
           0   1   2   3   4
     """
 
-    def __init__(self, value, size):
+    def __init__(self, value: Any, size: int) -> None:
         """
         The function initializes an object with a value and size attribute.
 
@@ -34,7 +35,7 @@ class RepeatArray:
         self.value = value
         self.size = size
 
-    def __getitem__(self, _key):  # key is ignored
+    def __getitem__(self, _key: Any) -> Any:  # key is ignored
         """
         The `__getitem__` function returns the value of the object regardless of the key provided.
 
@@ -59,7 +60,7 @@ class RepeatArray:
         """
         return self.value
 
-    def __len__(self):
+    def __len__(self) -> int:
         """
         The function returns the size of an object.
 
@@ -73,7 +74,7 @@ class RepeatArray:
         """
         return self.size
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Any]:
         """
         The function returns an iterator that repeats the value of the object a specified number of times.
 
@@ -91,7 +92,7 @@ class RepeatArray:
         """
         return repeat(self.value, self.size)
 
-    def get(self, _item):  # defaultvalue is ignored
+    def get(self, _item: Any) -> Any:  # defaultvalue is ignored
         """
         The `get` function returns the value of the object.
 
@@ -122,7 +123,7 @@ class ShiftArray(list):
     indexing and setting values with an arbitrary starting index.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
         The function is a constructor that initializes an object with a start value of 0 and calls the
         constructor of the parent class "list".
@@ -149,7 +150,7 @@ class ShiftArray(list):
         super().__init__(*args, **kwargs)
         self.start = 0
 
-    def set_start(self, start):
+    def set_start(self, start: int) -> None:
         """
         The function sets the value of the "start" attribute.
 
@@ -171,7 +172,7 @@ class ShiftArray(list):
         """
         self.start = start
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: int) -> Any:
         """
         The `__getitem__` function returns the item at the specified index, adjusted by the `start` attribute.
 
@@ -205,7 +206,7 @@ class ShiftArray(list):
             raise IndexError("Index out of range")
         return list.__getitem__(self, key - self.start)
 
-    def __setitem__(self, key, newValue):
+    def __setitem__(self, key: int, newValue: Any) -> None:
         """
         The `__setitem__` function is used to set the value of an item in a list-like object, adjusting the
         index based on the start value.
@@ -229,7 +230,7 @@ class ShiftArray(list):
         """
         list.__setitem__(self, key - self.start, newValue)
 
-    def items(self):
+    def items(self) -> Iterator[tuple[int, Any]]:
         """
         The `items` function returns an iterator that yields tuples containing the index and value of each
         element in the object.

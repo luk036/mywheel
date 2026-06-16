@@ -49,7 +49,7 @@ class MapAdapter(Mapping[int, T]):
         """
         return self.lst.__getitem__(key)
 
-    def __setitem__(self, key: int, new_value: T):
+    def __setitem__(self, key: int, new_value: T) -> None:
         """
         This function sets the value at a given index in a list-like object.
 
@@ -66,7 +66,7 @@ class MapAdapter(Mapping[int, T]):
         """
         self.lst.__setitem__(key, new_value)
 
-    def __delitem__(self, _):
+    def __delitem__(self, _: int) -> None:
         """
         The __delitem__ function raises a NotImplementedError and provides a docstring explaining that
         deleting items from MapAdapter is not recommended.
@@ -98,7 +98,7 @@ class MapAdapter(Mapping[int, T]):
         """
         return iter(range(len(self.lst)))
 
-    def __contains__(self, value) -> bool:
+    def __contains__(self, value: int) -> bool:
         """
         The `__contains__` function checks if a given value is present in the `rng` attribute of the object.
 
@@ -124,7 +124,7 @@ class MapAdapter(Mapping[int, T]):
         """
         return len(self.lst)
 
-    def values(self):
+    def values(self) -> Iterator[T]:
         """
         The `values` function returns an iterator that yields the elements of the `lst` attribute of the
         `MapAdapter` object.
@@ -142,7 +142,7 @@ class MapAdapter(Mapping[int, T]):
         """
         return iter(self.lst)
 
-    def items(self):
+    def items(self) -> Iterator[tuple[int, T]]:
         """
         The function returns an enumeration of the items in the list.
 

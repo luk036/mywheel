@@ -236,7 +236,7 @@ class TestBPQueueProperties:
     @given(
         st.integers(min_value=-10, max_value=-1), st.integers(min_value=1, max_value=10)
     )
-    def test_bpqueue_initial_empty_property(self, a, b) -> None:
+    def test_bpqueue_initial_empty_property(self, a: int, b: int) -> None:
         """New BPQueue should be empty."""
         bpq = BPQueue(a, b)
         assert bpq.is_empty()
@@ -254,7 +254,7 @@ class TestBPQueueProperties:
             max_size=20,
         ),
     )
-    def test_bpqueue_priority_ordering_property(self, a, b, items_data) -> None:
+    def test_bpqueue_priority_ordering_property(self, a: int, b: int, items_data: list[tuple[int, int]]) -> None:
         """Items should be returned in descending priority order."""
         bpq = BPQueue(a, b)
         items = []
@@ -280,7 +280,7 @@ class TestBPQueueProperties:
     @given(
         st.integers(min_value=-5, max_value=0), st.integers(min_value=1, max_value=5)
     )
-    def test_bpqueue_append_appendleft_order_property(self, a, b) -> None:
+    def test_bpqueue_append_appendleft_order_property(self, a: int, b: int) -> None:
         """appendleft should reverse order compared to append for same priority."""
         bpq1 = BPQueue(a, b)
         bpq2 = BPQueue(a, b)
@@ -305,7 +305,7 @@ class TestBPQueueProperties:
         st.integers(min_value=-3, max_value=3),
         st.integers(min_value=1, max_value=3),
     )
-    def test_bpqueue_increase_key_property(self, a, b, initial_key, delta) -> None:
+    def test_bpqueue_increase_key_property(self, a: int, b: int, initial_key: int, delta: int) -> None:
         """Increasing key should move item to higher priority bucket."""
         if a <= initial_key <= b and a <= initial_key + delta <= b:
             bpq = BPQueue(a, b)
@@ -326,7 +326,7 @@ class TestBPQueueProperties:
         st.integers(min_value=-3, max_value=3),
         st.integers(min_value=1, max_value=3),
     )
-    def test_bpqueue_decrease_key_property(self, a, b, initial_key, delta) -> None:
+    def test_bpqueue_decrease_key_property(self, a: int, b: int, initial_key: int, delta: int) -> None:
         """Decreasing key should move item to lower priority bucket."""
         if a <= initial_key <= b and a <= initial_key - delta <= b:
             bpq = BPQueue(a, b)
@@ -346,7 +346,7 @@ class TestBPQueueProperties:
     @given(
         st.integers(min_value=-5, max_value=0), st.integers(min_value=1, max_value=5)
     )
-    def test_bpqueue_clear_property(self, a, b) -> None:
+    def test_bpqueue_clear_property(self, a: int, b: int) -> None:
         """Clear should empty the queue."""
         bpq = BPQueue(a, b)
 
@@ -371,7 +371,7 @@ class TestBPQueueProperties:
             max_size=10,
         ),
     )
-    def test_bpqueue_detach_property(self, a, b, items_data) -> None:
+    def test_bpqueue_detach_property(self, a: int, b: int, items_data: list[tuple[int, int]]) -> None:
         """Detaching an item should remove it from the queue."""
         bpq = BPQueue(a, b)
         items = []

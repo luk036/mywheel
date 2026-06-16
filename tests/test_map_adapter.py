@@ -64,7 +64,7 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_length_property(self, values) -> None:
+    def test_map_adapter_length_property(self, values: list[int]) -> None:
         """Length should match the underlying list length."""
         adapter = MapAdapter(values)
         assert len(adapter) == len(values)
@@ -72,7 +72,7 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_iteration_property(self, values) -> None:
+    def test_map_adapter_iteration_property(self, values: list[int]) -> None:
         """Iteration should produce valid indices."""
         adapter = MapAdapter(values)
         indices = list(adapter)
@@ -82,7 +82,7 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_contains_property(self, values) -> None:
+    def test_map_adapter_contains_property(self, values: list[int]) -> None:
         """Contains should be true for valid indices and false for invalid ones."""
         adapter = MapAdapter(values)
 
@@ -98,7 +98,7 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_values_property(self, values) -> None:
+    def test_map_adapter_values_property(self, values: list[int]) -> None:
         """Values should match the underlying list values."""
         adapter = MapAdapter(values)
         adapter_values = list(adapter.values())
@@ -107,7 +107,7 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_items_property(self, values) -> None:
+    def test_map_adapter_items_property(self, values: list[int]) -> None:
         """Items should produce (index, value) pairs."""
         adapter = MapAdapter(values)
         adapter_items = list(adapter.items())
@@ -119,7 +119,7 @@ class TestMapAdapterProperties:
         st.integers(min_value=0, max_value=19),
         st.integers(min_value=-200, max_value=200),
     )
-    def test_map_adapter_getitem_property(self, values, index, new_value) -> None:
+    def test_map_adapter_getitem_property(self, values: list[int], index: int, new_value: int) -> None:
         """Getting and setting items should work correctly."""
         if index < len(values):
             adapter = MapAdapter(values.copy())
@@ -135,7 +135,7 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_keys_property(self, values) -> None:
+    def test_map_adapter_keys_property(self, values: list[int]) -> None:
         """Keys should match iteration result."""
         adapter = MapAdapter(values)
         keys = list(adapter.keys())
@@ -145,7 +145,7 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_reference_property(self, values) -> None:
+    def test_map_adapter_reference_property(self, values: list[int]) -> None:
         """Adapter should reference the original list."""
         adapter = MapAdapter(values)
         assert adapter.lst is values
@@ -158,7 +158,7 @@ class TestMapAdapterProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_map_adapter_delitem_not_implemented_property(self, values) -> None:
+    def test_map_adapter_delitem_not_implemented_property(self, values: list[int]) -> None:
         """Delitem should always raise NotImplementedError."""
         adapter = MapAdapter(values)
         with pytest.raises(NotImplementedError):

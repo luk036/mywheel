@@ -152,7 +152,7 @@ class TestDllistProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_dllist_append_pop_roundtrip_property(self, values) -> None:
+    def test_dllist_append_pop_roundtrip_property(self, values: list[int]) -> None:
         """Appending items and then popping them should preserve order."""
         dlist = Dllist(0)
         links = [Dllink(value) for value in values]
@@ -172,7 +172,7 @@ class TestDllistProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_dllist_appendleft_popleft_roundtrip_property(self, values) -> None:
+    def test_dllist_appendleft_popleft_roundtrip_property(self, values: list[int]) -> None:
         """Appending left and then popping left should preserve order."""
         dlist = Dllist(0)
         links = [Dllink(value) for value in values]
@@ -192,7 +192,7 @@ class TestDllistProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_dllist_iteration_order_property(self, values) -> None:
+    def test_dllist_iteration_order_property(self, values: list[int]) -> None:
         """Iteration should return items in insertion order for append."""
         dlist = Dllist(0)
         links = [Dllink(value) for value in values]
@@ -208,7 +208,7 @@ class TestDllistProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=0, max_size=20)
     )
-    def test_dllist_clear_property(self, values) -> None:
+    def test_dllist_clear_property(self, values: list[int]) -> None:
         """Clear should empty the list."""
         dlist = Dllist(0)
         links = [Dllink(value) for value in values]
@@ -227,7 +227,7 @@ class TestDllistProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=2, max_size=10)
     )
-    def test_dllist_mixed_operations_property(self, values) -> None:
+    def test_dllist_mixed_operations_property(self, values: list[int]) -> None:
         """Mixed append and appendleft operations should work correctly."""
         dlist = Dllist(0)
         links = [Dllink(value) for value in values]
@@ -252,7 +252,7 @@ class TestDllinkProperties:
     """Property-based tests for Dllink using Hypothesis."""
 
     @given(st.integers(min_value=-100, max_value=100))
-    def test_dllink_initial_state_property(self, data) -> None:
+    def test_dllink_initial_state_property(self, data: int) -> None:
         """New Dllink should point to itself."""
         link = Dllink(data)
         assert link.data == data
@@ -264,7 +264,7 @@ class TestDllinkProperties:
         st.integers(min_value=-100, max_value=100),
         st.integers(min_value=-100, max_value=100),
     )
-    def test_dllink_attach_detach_symmetry_property(self, data1, data2) -> None:
+    def test_dllink_attach_detach_symmetry_property(self, data1: int, data2: int) -> None:
         """Attaching and detaching should be symmetric operations."""
         link1 = Dllink(data1)
         link2 = Dllink(data2)
@@ -290,7 +290,7 @@ class TestDllinkProperties:
     @given(
         st.lists(st.integers(min_value=-100, max_value=100), min_size=3, max_size=10)
     )
-    def test_dllink_chain_property(self, values) -> None:
+    def test_dllink_chain_property(self, values: list[int]) -> None:
         """Chain of attached links should maintain correct connections."""
         links = [Dllink(value) for value in values]
 

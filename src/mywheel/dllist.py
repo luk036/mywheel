@@ -206,7 +206,7 @@ class DllIterator(Generic[T]):
         """Return the iterator object itself."""
         return self
 
-    def __next__(self):
+    def __next__(self) -> Dllink[T]:
         """
         The `__next__` function returns the next item in a doubly linked list and raises a `StopIteration`
         exception if there are no more items.
@@ -339,7 +339,7 @@ class Dllist(Generic[T]):
         """
         self.head.prev.attach(node)
 
-    def popleft(self):
+    def popleft(self) -> Dllink[T]:
         """
         The `popleft` function removes and returns the first node in a doubly linked list.
 
@@ -367,7 +367,7 @@ class Dllist(Generic[T]):
         res.detach()
         return res
 
-    def pop(self):
+    def pop(self) -> Dllink[T]:
         """
         The `pop` function removes and returns the last node in a doubly linked list.
 
