@@ -88,7 +88,7 @@ class TestRobinProperties:
     """Property-based tests for Robin using Hypothesis."""
 
     @given(st.integers(min_value=1, max_value=20))
-    def test_robin_cycle_structure_property(self, num_parts):
+    def test_robin_cycle_structure_property(self, num_parts) -> None:
         """Cycle should have correct structure and connections."""
         r = Robin(num_parts)
         assert len(r.cycle) == num_parts
@@ -106,7 +106,7 @@ class TestRobinProperties:
     @given(
         st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_exclude_completeness_property(self, num_parts, from_part):
+    def test_robin_exclude_completeness_property(self, num_parts, from_part) -> None:
         """Excluding a part should iterate through all other parts exactly once."""
         if from_part < num_parts:
             r = Robin(num_parts)
@@ -123,7 +123,7 @@ class TestRobinProperties:
     @given(
         st.integers(min_value=2, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_exclude_order_property(self, num_parts, from_part):
+    def test_robin_exclude_order_property(self, num_parts, from_part) -> None:
         """Exclusion should iterate in correct circular order."""
         if from_part < num_parts:
             r = Robin(num_parts)
@@ -136,7 +136,7 @@ class TestRobinProperties:
             assert result == expected
 
     @given(st.integers(min_value=1, max_value=20))
-    def test_robin_all_exclusions_property(self, num_parts):
+    def test_robin_all_exclusions_property(self, num_parts) -> None:
         """Excluding each part should give complementary results."""
         r = Robin(num_parts)
         all_results = {}
@@ -151,7 +151,7 @@ class TestRobinProperties:
             assert all_results[from_part] == expected
 
     @given(st.integers(min_value=1, max_value=20))
-    def test_robin_iterator_consistency_property(self, num_parts):
+    def test_robin_iterator_consistency_property(self, num_parts) -> None:
         """Multiple iterators from the same Robin should work independently."""
         r = Robin(num_parts)
 
@@ -170,7 +170,7 @@ class TestSlNodeProperties:
     """Property-based tests for SlNode using Hypothesis."""
 
     @given(st.integers(min_value=-100, max_value=100))
-    def test_slnode_initial_state_property(self, data):
+    def test_slnode_initial_state_property(self, data) -> None:
         """New node should point to itself."""
         node = SlNode(data)
         assert node.data == data
@@ -180,7 +180,7 @@ class TestSlNodeProperties:
         st.integers(min_value=-100, max_value=100),
         st.integers(min_value=-100, max_value=100),
     )
-    def test_slnode_linking_property(self, data1, data2):
+    def test_slnode_linking_property(self, data1, data2) -> None:
         """Linking nodes should maintain correct connections."""
         node1 = SlNode(data1)
         node2 = SlNode(data2)
@@ -198,7 +198,7 @@ class TestRobinIteratorProperties:
     @given(
         st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_iterator_initialization_property(self, num_parts, from_part):
+    def test_robin_iterator_initialization_property(self, num_parts, from_part) -> None:
         """Iterator should initialize with correct current and stop nodes."""
         if from_part < num_parts:
             r = Robin(num_parts)
@@ -210,7 +210,7 @@ class TestRobinIteratorProperties:
     @given(
         st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_iterator_self_iterable_property(self, num_parts, from_part):
+    def test_robin_iterator_self_iterable_property(self, num_parts, from_part) -> None:
         """Iterator should be self-iterable."""
         if from_part < num_parts:
             r = Robin(num_parts)
@@ -221,7 +221,7 @@ class TestRobinIteratorProperties:
     @given(
         st.integers(min_value=3, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_iterator_multiple_next_calls_property(self, num_parts, from_part):
+    def test_robin_iterator_multiple_next_calls_property(self, num_parts, from_part) -> None:
         """Multiple next calls should produce correct sequence."""
         if from_part < num_parts:
             r = Robin(num_parts)

@@ -79,7 +79,7 @@ class TestRepeatArrayProperties:
         st.integers(min_value=-1000, max_value=1000),
         st.integers(min_value=0, max_value=100),
     )
-    def test_repeat_array_all_elements_equal(self, value, size):
+    def test_repeat_array_all_elements_equal(self, value, size) -> None:
         """All elements in RepeatArray should be equal to the initial value."""
         ra = RepeatArray(value, size)
         for i in range(size):
@@ -89,7 +89,7 @@ class TestRepeatArrayProperties:
         st.integers(min_value=-1000, max_value=1000),
         st.integers(min_value=0, max_value=100),
     )
-    def test_repeat_array_length_property(self, value, size):
+    def test_repeat_array_length_property(self, value, size) -> None:
         """Length should match the size parameter."""
         ra = RepeatArray(value, size)
         assert len(ra) == size
@@ -98,7 +98,7 @@ class TestRepeatArrayProperties:
         st.integers(min_value=-1000, max_value=1000),
         st.integers(min_value=0, max_value=100),
     )
-    def test_repeat_array_iteration_property(self, value, size):
+    def test_repeat_array_iteration_property(self, value, size) -> None:
         """Iteration should produce size copies of the value."""
         ra = RepeatArray(value, size)
         result = list(ra)
@@ -109,7 +109,7 @@ class TestRepeatArrayProperties:
         st.integers(min_value=0, max_value=100),
         st.integers(min_value=-1000, max_value=1000),
     )
-    def test_repeat_array_index_ignored_property(self, value, size, index):
+    def test_repeat_array_index_ignored_property(self, value, size, index) -> None:
         """Any index should return the same value."""
         ra = RepeatArray(value, size)
         assert ra[index] == value
@@ -119,7 +119,7 @@ class TestRepeatArrayProperties:
         st.integers(min_value=0, max_value=100),
         st.integers(min_value=-1000, max_value=1000),
     )
-    def test_repeat_array_get_method_property(self, value, size, key):
+    def test_repeat_array_get_method_property(self, value, size, key) -> None:
         """Get method should ignore the key parameter."""
         ra = RepeatArray(value, size)
         assert ra.get(key) == value
@@ -132,7 +132,7 @@ class TestShiftArrayProperties:
         st.lists(st.integers(min_value=-100, max_value=100), min_size=1, max_size=20),
         st.integers(min_value=-50, max_value=50),
     )
-    def test_shift_array_index_mapping_property(self, values, start):
+    def test_shift_array_index_mapping_property(self, values, start) -> None:
         """Index mapping should be consistent with start offset."""
         sa = ShiftArray(values)
         sa.set_start(start)
@@ -144,7 +144,7 @@ class TestShiftArrayProperties:
         st.lists(st.integers(min_value=-100, max_value=100), min_size=1, max_size=20),
         st.integers(min_value=-50, max_value=50),
     )
-    def test_shift_array_items_property(self, values, start):
+    def test_shift_array_items_property(self, values, start) -> None:
         """Items should return (index, value) pairs with correct indices."""
         sa = ShiftArray(values)
         sa.set_start(start)
@@ -157,7 +157,7 @@ class TestShiftArrayProperties:
         st.lists(st.integers(min_value=-100, max_value=100), min_size=1, max_size=20),
         st.integers(min_value=-50, max_value=50),
     )
-    def test_shift_array_length_preserved_property(self, values, start):
+    def test_shift_array_length_preserved_property(self, values, start) -> None:
         """Length should be preserved regardless of start value."""
         sa = ShiftArray(values)
         sa.set_start(start)
@@ -168,7 +168,7 @@ class TestShiftArrayProperties:
         st.integers(min_value=-50, max_value=50),
         st.integers(min_value=0, max_value=19),
     )
-    def test_shift_array_setitem_property(self, values, start, index):
+    def test_shift_array_setitem_property(self, values, start, index) -> None:
         """Setting an item should update the underlying list correctly."""
         if index < len(values):
             sa = ShiftArray(values.copy())
@@ -184,7 +184,7 @@ class TestShiftArrayProperties:
         st.integers(min_value=-50, max_value=50),
         st.integers(min_value=-100, max_value=100),
     )
-    def test_shift_array_out_of_bounds_property(self, values, start, invalid_index):
+    def test_shift_array_out_of_bounds_property(self, values, start, invalid_index) -> None:
         """Accessing indices outside the valid range should raise IndexError for getitem."""
         sa = ShiftArray(values)
         sa.set_start(start)
@@ -202,7 +202,7 @@ class TestShiftArrayProperties:
 class TestRepeatArrayCoverage:
     """Additional tests to improve coverage for RepeatArray."""
 
-    def test_init_assignment(self):
+    def test_init_assignment(self) -> None:
         """Test that __init__ properly assigns value and size attributes."""
         ra = RepeatArray("test", 42)
         assert hasattr(ra, "value")
@@ -210,7 +210,7 @@ class TestRepeatArrayCoverage:
         assert ra.value == "test"
         assert ra.size == 42
 
-    def test_getitem_ignored_key(self):
+    def test_getitem_ignored_key(self) -> None:
         """Test that __getitem__ ignores the key parameter."""
         ra = RepeatArray(5, 3)
         # Test with various key types to ensure they're all ignored
@@ -218,12 +218,12 @@ class TestRepeatArrayCoverage:
         assert ra[100] == 5
         assert ra[-5] == 5
 
-    def test_len_returns_size(self):
+    def test_len_returns_size(self) -> None:
         """Test that __len__ returns the size attribute."""
         ra = RepeatArray(None, 7)
         assert len(ra) == 7
 
-    def test_iter_returns_iterator(self):
+    def test_iter_returns_iterator(self) -> None:
         """Test that __iter__ returns a proper iterator."""
         ra = RepeatArray(9, 4)
         it = ra.__iter__()
@@ -233,7 +233,7 @@ class TestRepeatArrayCoverage:
         # Check that it yields the correct values
         assert list(it) == [9, 9, 9, 9]
 
-    def test_get_ignored_item(self):
+    def test_get_ignored_item(self) -> None:
         """Test that get ignores the item parameter."""
         ra = RepeatArray("value", 5)
         # Test with various item types to ensure they're all ignored
@@ -246,7 +246,7 @@ class TestRepeatArrayCoverage:
 class TestShiftArrayCoverage:
     """Additional tests to improve coverage for ShiftArray."""
 
-    def test_init_with_args_kwargs(self):
+    def test_init_with_args_kwargs(self) -> None:
         """Test that __init__ properly handles args and kwargs."""
         # Test with positional arguments
         sa1 = ShiftArray([1, 2, 3])
@@ -258,14 +258,14 @@ class TestShiftArrayCoverage:
         assert list(sa2) == []
         assert sa2.start == 0
 
-    def test_set_start_assignment(self):
+    def test_set_start_assignment(self) -> None:
         """Test that set_start properly assigns the start attribute."""
         sa = ShiftArray([1, 2, 3])
         sa.set_start(10)
         assert hasattr(sa, "start")
         assert sa.start == 10
 
-    def test_getitem_bounds_check(self):
+    def test_getitem_bounds_check(self) -> None:
         """Test that __getitem__ performs bounds checking."""
         sa = ShiftArray([1, 2, 3])
         sa.set_start(10)
@@ -282,7 +282,7 @@ class TestShiftArrayCoverage:
         with pytest.raises(IndexError):
             _ = sa[13]  # Above range
 
-    def test_setitem_adjusts_index(self):
+    def test_setitem_adjusts_index(self) -> None:
         """Test that __setitem__ adjusts the index correctly."""
         sa = ShiftArray([1, 2, 3])
         sa.set_start(5)
@@ -298,7 +298,7 @@ class TestShiftArrayCoverage:
         assert sa[6] == 20
         assert sa[7] == 30
 
-    def test_items_returns_iterator(self):
+    def test_items_returns_iterator(self) -> None:
         """Test that items returns a proper iterator."""
         sa = ShiftArray([1, 2, 3])
         sa.set_start(10)

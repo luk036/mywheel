@@ -159,12 +159,12 @@ tox
 - **Test structure**:
   ```python
   # Standard pytest test
-  def test_feature():
+  def test_feature() -> None:
       assert expected == actual
 
   # Property-based test
   @given(st.integers(min_value=1, max_value=100))
-  def test_property(value):
+  def test_property(value) -> None:
       assert invariant_holds(value)
   ```
 
