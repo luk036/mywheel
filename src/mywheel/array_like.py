@@ -173,9 +173,13 @@ class ShiftArray(list):
         self.start = start
 
     @overload
-    def __getitem__(self, key: SupportsIndex, /) -> Any: ...
+    def __getitem__(self, key: SupportsIndex, /) -> Any:
+        ...
+
     @overload
-    def __getitem__(self, key: slice, /) -> list[Any]: ...
+    def __getitem__(self, key: slice, /) -> list[Any]:
+        ...
+
     def __getitem__(self, key: SupportsIndex | slice, /) -> Any:
         """
         The `__getitem__` function returns the item at the specified index, adjusted by the `start` attribute.
@@ -214,9 +218,13 @@ class ShiftArray(list):
         return list.__getitem__(self, k - self.start)
 
     @overload
-    def __setitem__(self, key: SupportsIndex, value: Any, /) -> None: ...
+    def __setitem__(self, key: SupportsIndex, value: Any, /) -> None:
+        ...
+
     @overload
-    def __setitem__(self, key: slice, value: Iterable[Any], /) -> None: ...
+    def __setitem__(self, key: slice, value: Iterable[Any], /) -> None:
+        ...
+
     def __setitem__(self, key: SupportsIndex | slice, newValue: Any, /) -> None:
         """
         The `__setitem__` function is used to set the value of an item in a list-like object, adjusting the
