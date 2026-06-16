@@ -221,7 +221,9 @@ class TestRobinIteratorProperties:
     @given(
         st.integers(min_value=3, max_value=20), st.integers(min_value=0, max_value=19)
     )
-    def test_robin_iterator_multiple_next_calls_property(self, num_parts, from_part) -> None:
+    def test_robin_iterator_multiple_next_calls_property(
+        self, num_parts, from_part
+    ) -> None:
         """Multiple next calls should produce correct sequence."""
         if from_part < num_parts:
             r = Robin(num_parts)

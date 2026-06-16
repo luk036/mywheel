@@ -184,7 +184,9 @@ class TestShiftArrayProperties:
         st.integers(min_value=-50, max_value=50),
         st.integers(min_value=-100, max_value=100),
     )
-    def test_shift_array_out_of_bounds_property(self, values, start, invalid_index) -> None:
+    def test_shift_array_out_of_bounds_property(
+        self, values, start, invalid_index
+    ) -> None:
         """Accessing indices outside the valid range should raise IndexError for getitem."""
         sa = ShiftArray(values)
         sa.set_start(start)
