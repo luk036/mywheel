@@ -1,4 +1,4 @@
-from typing import Iterator, List, Mapping, TypeVar
+from typing import ItemsView, Iterator, List, Mapping, TypeVar, ValuesView
 
 T = TypeVar("T")
 
@@ -98,7 +98,7 @@ class MapAdapter(Mapping[int, T]):
         """
         return iter(range(len(self.lst)))
 
-    def __contains__(self, value: int) -> bool:
+    def __contains__(self, value: object) -> bool:
         """
         The `__contains__` function checks if a given value is present in the `rng` attribute of the object.
 
@@ -110,7 +110,7 @@ class MapAdapter(Mapping[int, T]):
             >>> 2 in a
             True
         """
-        return value < len(self.lst) and value >= 0
+        return isinstance(value, int) and value < len(self.lst) and value >= 0
 
     def __len__(self) -> int:
         """
@@ -124,7 +124,7 @@ class MapAdapter(Mapping[int, T]):
         """
         return len(self.lst)
 
-    def values(self) -> Iterator[T]:
+    def values(self) -> ValuesView[T]:
         """
         The `values` function returns an iterator that yields the elements of the `lst` attribute of the
         `MapAdapter` object.
@@ -140,9 +140,9 @@ class MapAdapter(Mapping[int, T]):
             3
             6
         """
-        return iter(self.lst)
+        return super().values()
 
-    def items(self) -> Iterator[tuple[int, T]]:
+    def items(self) -> ItemsView[int, T]:
         """
         The function returns an enumeration of the items in the list.
 
@@ -157,7 +157,7 @@ class MapAdapter(Mapping[int, T]):
             2: 3
             3: 6
         """
-        return enumerate(self.lst)
+        return super().items()
 
 
 if __name__ == "__main__":

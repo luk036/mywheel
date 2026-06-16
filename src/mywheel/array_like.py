@@ -1,5 +1,5 @@
 from itertools import repeat
-from typing import Any, Iterator
+from typing import Any, Iterable, Iterator, SupportsIndex, overload
 
 __all__ = ["RepeatArray", "ShiftArray"]
 
@@ -172,7 +172,11 @@ class ShiftArray(list):
         """
         self.start = start
 
-    def __getitem__(self, key: int) -> Any:
+    @overload
+    def __getitem__(self, key: SupportsIndex, /) -> Any: ...
+    @overload
+    def __getitem__(self, key: slice, /) -> list[Any]: ...
+    def __getitem__(self, key: SupportsIndex | slice, /) -> Any:
         """
         The `__getitem__` function returns the item at the specified index, adjusted by the `start` attribute.
 
@@ -202,11 +206,18 @@ class ShiftArray(list):
             IndexError: Index out of range
 
         """
-        if not (0 <= key - self.start < len(self)):
+        if isinstance(key, slice):
+            return list.__getitem__(self, key)
+        k = int(key)
+        if not (0 <= k - self.start < len(self)):
             raise IndexError("Index out of range")
-        return list.__getitem__(self, key - self.start)
+        return list.__getitem__(self, k - self.start)
 
-    def __setitem__(self, key: int, newValue: Any) -> None:
+    @overload
+    def __setitem__(self, key: SupportsIndex, value: Any, /) -> None: ...
+    @overload
+    def __setitem__(self, key: slice, value: Iterable[Any], /) -> None: ...
+    def __setitem__(self, key: SupportsIndex | slice, newValue: Any, /) -> None:
         """
         The `__setitem__` function is used to set the value of an item in a list-like object, adjusting the
         index based on the start value.
@@ -228,7 +239,10 @@ class ShiftArray(list):
             >>> shift_array
             [99, 2, 3, 8, 5]
         """
-        list.__setitem__(self, key - self.start, newValue)
+        if isinstance(key, slice):
+            list.__setitem__(self, key, newValue)
+            return
+        list.__setitem__(self, int(key) - self.start, newValue)
 
     def items(self) -> Iterator[tuple[int, Any]]:
         """
