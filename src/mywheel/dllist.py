@@ -3,8 +3,19 @@ Doubly Linked List Implementation
 
 This code implements a doubly linked list data structure in Python. A doubly linked list is a
 type of data structure where each element (node) contains data and links to both the next and
-previous elements in the list. This implementation provides two main classes: Dllink for
-individual nodes and Dllist for the entire list.
+previous elements in the list.
+
+.. svgbob::
+   :align: center
+
+      ┌──────┐    ┌──────┐    ┌──────┐
+      │ Data │    │ Data │    │ Data │
+      └──┬───┘    └──┬───┘    └──┬───┘
+         │           │           │
+      ───┼───►  ────┼───►  ────┼───►  next
+      ◄──┼───  ◄────┼───  ◄────┼───  prev
+         │           │           │
+      Head         Node         Tail
 
 The purpose of this code is to provide a flexible and efficient way to store and manipulate
 collections of data. It's particularly useful when you need to frequently insert or remove
