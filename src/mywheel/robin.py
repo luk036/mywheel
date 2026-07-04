@@ -42,24 +42,7 @@ __all__ = ["SlNode", "RobinIterator", "Robin"]
 
 
 class SlNode:
-    """Node for a Singly-linked list
-
-    The `SlNode` class represents a node in a singly-linked list, with a `next` pointer and a `data`
-    value.
-
-    .. svgbob::
-       :align: center
-
-            SlNode
-             +---------+
-             | next  *-|----->
-             +---------+
-             |  data   |
-             +---------+
-    """
-
-    next: "SlNode"
-    data: int
+    __slots__ = ("next", "data")
 
     def __init__(self, data: int):
         """

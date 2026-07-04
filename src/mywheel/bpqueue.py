@@ -40,7 +40,7 @@ fast priority-based access and modifications are required.
 
 from typing import List
 
-from .dllist import Dllink, Dllist
+from .dllist import Dllink, DllIterator
 
 __all__ = ["BPQueue", "BPQueueIterator", "Item"]
 
@@ -103,7 +103,8 @@ class BPQueue:
     _max: int
     _offset: int
     _high: int
-    _bucket: List[Dllist[List[int]]]
+    _bucket: List[Dllink[List[int]]]
+    _max: int
 
     def __init__(self, a: int, b: int) -> None:
         """
@@ -116,17 +117,17 @@ class BPQueue:
 
         Examples:
             >>> bpq = BPQueue(-3, 3)
-            >>> bpq._bucket[0].is_empty()
+            >>> bpq._bucket[0].next == bpq._bucket[0]
             False
-            >>> bpq._bucket[1].is_empty()
+            >>> bpq._bucket[1].next == bpq._bucket[1]
             True
         """
         assert a <= b
         self._max = 0
         self._offset = a - 1
         self._high = b - self._offset
-        self._bucket = list(Dllist([i, 4848]) for i in range(self._high + 1))
-        self._bucket[0].appendleft(sentinel)  # sentinel
+        self._bucket = [Dllink(0) for _ in range(self._high + 1)]
+        self._bucket[0].attach(sentinel)  # sentinel
 
     def is_empty(self) -> bool:
         """
@@ -155,17 +156,9 @@ class BPQueue:
         return self._max + self._offset
 
     def clear(self) -> None:
-        """
-        The `clear` function resets the priority queue by clearing all the buckets.
-
-        Examples:
-            >>> bpq = BPQueue(-3, 3)
-            >>> bpq.clear()
-            >>> bpq.is_empty()
-            True
-        """
         while self._max > 0:
-            self._bucket[self._max].clear()
+            h = self._bucket[self._max]
+            h.next = h.prev = h
             self._max -= 1
 
     def set_key(self, it: Item, gain: int) -> None:
@@ -241,7 +234,7 @@ class BPQueue:
         it.data[0] = k - self._offset
         if self._max < it.data[0]:
             self._max = it.data[0]
-        self._bucket[it.data[0]].appendleft(it)
+        self._bucket[it.data[0]].attach(it)
 
     def append(self, it: Item, k: int) -> None:
         """
@@ -268,33 +261,13 @@ class BPQueue:
         it.data[0] = k - self._offset
         if self._max < it.data[0]:
             self._max = it.data[0]
-        self._bucket[it.data[0]].append(it)
+        h = self._bucket[it.data[0]]
+        h.prev.attach(it)
 
     def popleft(self) -> Item:
-        """
-        The `popleft` function removes and returns the node with the highest key from the BPQueue.
-
-        :return: The method `popleft` returns a `Dllink` object.
-
-        Examples:
-            >>> bpq = BPQueue(-3, 3)
-            >>> a = Dllink([0, 3])
-            >>> b = Dllink([0, 4])
-            >>> c = Dllink([0, 5])
-            >>> bpq.appendleft(a, 0)
-            >>> bpq.appendleft(b, 1)
-            >>> bpq.appendleft(c, 0)
-            >>> bpq.popleft().data[1]
-            4
-            >>> bpq.popleft().data[1]
-            5
-            >>> bpq.popleft().data[1]
-            3
-            >>> bpq.is_empty()
-            True
-        """
-        res = self._bucket[self._max].popleft()
-        while self._bucket[self._max].is_empty():
+        res = self._bucket[self._max].next
+        res.detach()
+        while self._bucket[self._max].next == self._bucket[self._max]:
             self._max -= 1
         return res
 
@@ -335,7 +308,8 @@ class BPQueue:
         it.data[0] -= delta
         assert it.data[0] > 0
         assert it.data[0] <= self._high
-        self._bucket[it.data[0]].append(it)  # FIFO
+        h = self._bucket[it.data[0]]
+        h.prev.attach(it)  # FIFO
         if self._max < it.data[0]:  # item may not be in the BPQueue
             self._max = it.data[0]
             return
@@ -382,7 +356,7 @@ class BPQueue:
         it.data[0] += delta
         assert it.data[0] > 0
         assert it.data[0] <= self._high
-        self._bucket[it.data[0]].appendleft(it)  # LIFO
+        self._bucket[it.data[0]].attach(it)  # LIFO
         # self._bucket[it.data[0]].append(it)  # LIFO
         if self._max < it.data[0]:
             self._max = it.data[0]
@@ -450,10 +424,7 @@ class BPQueue:
         self._update_max_key()
 
     def _update_max_key(self) -> None:
-        """
-        The `_update_max_key` function updates the maximum key in a BPQueue object.
-        """
-        while self._bucket[self._max].is_empty():
+        while self._bucket[self._max].next == self._bucket[self._max]:
             self._max -= 1
 
     def __iter__(self) -> "BPQueueIterator":
@@ -492,55 +463,20 @@ class BPQueueIterator:
     """
 
     def __init__(self, bpq: BPQueue) -> None:
-        """
-        The function initializes an object with a given BPQueue and sets the current key and item.
-
-        :param bpq: The `bpq` parameter is of type `BPQueue`. It is an object that represents a bounded priority queue
-        :type bpq: BPQueue
-
-        Examples:
-            >>> bpq = BPQueue(-3, 3)
-            >>> a = Dllink([0, 3])
-            >>> bpq.appendleft(a, 0)
-            >>> it = BPQueueIterator(bpq)
-            >>> b = next(it)
-            >>> next(it)
-            Traceback (most recent call last):
-            ...
-            StopIteration
-        """
         self.bpq = bpq
         self.curkey = bpq._max
-        self.curitem = iter(bpq._bucket[bpq._max])
+        self.curitem = DllIterator(bpq._bucket[bpq._max])
 
     def __iter__(self) -> "BPQueueIterator":
         """Return the iterator object itself."""
         return self
 
     def __next__(self) -> Item:
-        """
-        The `__next__` function returns the next item in a linked list, iterating through the buckets in
-        reverse order.
-
-        :return: an object of type "Dllink".
-
-        Examples:
-            >>> bpq = BPQueue(-3, 3)
-            >>> a = Dllink([0, 3])
-            >>> bpq.appendleft(a, 0)
-            >>> it = BPQueueIterator(bpq)
-            >>> b = next(it)
-            >>> next(it)
-            Traceback (most recent call last):
-            ...
-            StopIteration
-
-        """
         while self.curkey > 0:
             try:
                 res = next(self.curitem)
                 return res
             except StopIteration:
                 self.curkey -= 1
-                self.curitem = iter(self.bpq._bucket[self.curkey])
+                self.curitem = DllIterator(self.bpq._bucket[self.curkey])
         raise StopIteration

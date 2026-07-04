@@ -6,24 +6,7 @@ __all__ = ["MapAdapter"]
 
 
 class MapAdapter(Mapping[int, T]):
-    """MapAdapter
-
-    The `MapAdapter` class is a custom implementation of a mutable mapping with integer keys and generic
-    values, which adapts a list to behave like a dictionary.
-
-    .. svgbob::
-       :align: center
-
-        +---+---+---+---+
-        | 0 | 1 | 2 | 3 |
-        +---+---+---+---+
-          |   |   |   |
-          v   v   v   v
-        +---+---+---+---+
-        | A | B | C | D |
-        +---+---+---+---+
-          List
-    """
+    __slots__ = ("lst",)
 
     def __init__(self, lst: List[T]) -> None:
         """

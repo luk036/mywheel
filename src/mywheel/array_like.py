@@ -7,17 +7,7 @@ __all__ = ["RepeatArray", "ShiftArray"]
 
 
 class RepeatArray:
-    """The RepeatArray class creates a list-like object that repeats a given value for a specified number
-    of times.
-
-    .. svgbob::
-       :align: center
-
-        +---+---+---+---+---+
-        | V | V | V | V | V |
-        +---+---+---+---+---+
-          0   1   2   3   4
-    """
+    __slots__ = ("value", "size")
 
     def __init__(self, value: Any, size: int) -> None:
         """
