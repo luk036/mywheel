@@ -104,7 +104,6 @@ class BPQueue:
     _offset: int
     _high: int
     _bucket: List[Dllink[List[int]]]
-    _max: int
 
     def __init__(self, a: int, b: int) -> None:
         """
@@ -126,7 +125,7 @@ class BPQueue:
         self._max = 0
         self._offset = a - 1
         self._high = b - self._offset
-        self._bucket = [Dllink(0) for _ in range(self._high + 1)]
+        self._bucket = [Dllink([0]) for _ in range(self._high + 1)]
         self._bucket[0].attach(sentinel)  # sentinel
 
     def is_empty(self) -> bool:
