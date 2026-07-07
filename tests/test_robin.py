@@ -70,24 +70,11 @@ def test_robin_iteration() -> None:
     assert result == [0, 1, 2, 3]
 
 
-def test_robin_one_part() -> None:
-    """Test Robin with one part."""
-    r = Robin(1)
-    result = list(r.exclude(0))
-    assert result == []
-
-
-def test_robin_zero_parts() -> None:
-    """Test Robin with zero parts."""
-    r = Robin(0)
-    with pytest.raises(IndexError):
-        r.exclude(0)
-
 
 class TestRobinProperties:
     """Property-based tests for Robin using Hypothesis."""
 
-    @given(st.integers(min_value=1, max_value=20))
+    @given(st.integers(min_value=2, max_value=20))
     def test_robin_cycle_structure_property(self, num_parts: int) -> None:
         """Cycle should have correct structure and connections."""
         r = Robin(num_parts)
@@ -104,7 +91,7 @@ class TestRobinProperties:
             assert current_node.next is next_node
 
     @given(
-        st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
+        st.integers(min_value=2, max_value=20), st.integers(min_value=0, max_value=19)
     )
     def test_robin_exclude_completeness_property(
         self, num_parts: int, from_part: int
@@ -137,7 +124,7 @@ class TestRobinProperties:
                 expected.append((from_part + i) % num_parts)
             assert result == expected
 
-    @given(st.integers(min_value=1, max_value=20))
+    @given(st.integers(min_value=2, max_value=20))
     def test_robin_all_exclusions_property(self, num_parts: int) -> None:
         """Excluding each part should give complementary results."""
         r = Robin(num_parts)
@@ -152,7 +139,7 @@ class TestRobinProperties:
             expected = set(range(num_parts)) - {from_part}
             assert all_results[from_part] == expected
 
-    @given(st.integers(min_value=1, max_value=20))
+    @given(st.integers(min_value=2, max_value=20))
     def test_robin_iterator_consistency_property(self, num_parts: int) -> None:
         """Multiple iterators from the same Robin should work independently."""
         r = Robin(num_parts)
@@ -198,7 +185,7 @@ class TestRobinIteratorProperties:
     """Property-based tests for RobinIterator using Hypothesis."""
 
     @given(
-        st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
+        st.integers(min_value=2, max_value=20), st.integers(min_value=0, max_value=19)
     )
     def test_robin_iterator_initialization_property(
         self, num_parts: int, from_part: int
@@ -212,7 +199,7 @@ class TestRobinIteratorProperties:
             assert iterator.stop is r.cycle[from_part]
 
     @given(
-        st.integers(min_value=1, max_value=20), st.integers(min_value=0, max_value=19)
+        st.integers(min_value=2, max_value=20), st.integers(min_value=0, max_value=19)
     )
     def test_robin_iterator_self_iterable_property(
         self, num_parts: int, from_part: int
