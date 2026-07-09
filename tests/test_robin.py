@@ -70,7 +70,6 @@ def test_robin_iteration() -> None:
     assert result == [0, 1, 2, 3]
 
 
-
 class TestRobinProperties:
     """Property-based tests for Robin using Hypothesis."""
 

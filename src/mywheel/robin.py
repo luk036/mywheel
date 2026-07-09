@@ -156,8 +156,9 @@ class Robin:
             >>> iter.stop.data == 3
             True
         """
-        assert 0 <= from_part < len(self.cycle), \
-            f"from_part {from_part} out of range for cycle of size {len(self.cycle)}"
+        assert (
+            0 <= from_part < len(self.cycle)
+        ), f"from_part {from_part} out of range for cycle of size {len(self.cycle)}"
         return RobinIterator(self.cycle[from_part])
 
 
