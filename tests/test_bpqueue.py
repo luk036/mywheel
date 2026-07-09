@@ -200,6 +200,42 @@ class TestBPQueueCoverage:
         # Max should remain at initial value since modify_key returns early
         assert bpq.get_max() == -4
 
+    def test_modify_key_negative_delta(self) -> None:
+        """Test modify_key with negative delta (line 402→exit)."""
+        bpq = BPQueue(-3, 3)
+        a = Dllink([0, 3])
+        bpq.append(a, 1)
+        old_max = bpq.get_max()
+        bpq.modify_key(a, -1)
+        assert bpq.get_max() < old_max
+
+    def test_iterator_iter_returns_self(self) -> None:
+        """Test BPQueueIterator.__iter__ returns self (line 471)."""
+        bpq = BPQueue(-3, 3)
+        a = Dllink([0, 3])
+        bpq.append(a, 0)
+        it = iter(bpq)
+        assert iter(it) is it
+
+    def test_increase_key_does_not_update_max(self) -> None:
+        """Test increase_key when key remains below max (line 360→362 false branch)."""
+        bpq = BPQueue(-3, 3)
+        a = Dllink([0, 3])
+        b = Dllink([0, 4])
+        bpq.append(a, 0)  # key 0
+        bpq.append(b, 2)  # key 2, max = 2
+        # Increase a from 0 to 1, still below max of 2
+        bpq.increase_key(a, 1)
+        assert bpq.get_max() == 2  # max unchanged
+
+    def test_modify_key_zero_delta(self) -> None:
+        """Test modify_key with delta=0 (line 402→exit false branch)."""
+        bpq = BPQueue(-3, 3)
+        a = Dllink([0, 3])
+        bpq.append(a, 0)
+        bpq.modify_key(a, 0)  # delta=0, neither increase nor decrease
+        assert bpq.get_max() == 0
+
     def test_decrease_key_asserts(self) -> None:
         """Test decrease_key with boundary conditions to trigger asserts."""
         bpq = BPQueue(-3, 3)

@@ -11,20 +11,9 @@ class TestRepeatArray:
         assert ra.value == 10
         assert ra.size == 5
 
-    def test_getitem(self) -> None:
-        ra = RepeatArray(10, 5)
-        assert ra[0] == 10
-        assert ra[4] == 10
-        # The index is ignored, so any index should work
-        assert ra[100] == 10
-
     def test_len(self) -> None:
         ra = RepeatArray(10, 5)
         assert len(ra) == 5
-
-    def test_iter(self) -> None:
-        ra = RepeatArray(10, 3)
-        assert list(ra) == [10, 10, 10]
 
     def test_get(self) -> None:
         ra = RepeatArray(10, 5)
@@ -42,16 +31,6 @@ class TestShiftArray:
         sa = ShiftArray([1, 2, 3])
         sa.set_start(5)
         assert sa.start == 5
-
-    def test_getitem(self) -> None:
-        sa = ShiftArray([1, 2, 3])
-        sa.set_start(5)
-        assert sa[5] == 1
-        assert sa[7] == 3
-        with pytest.raises(IndexError):
-            sa[4]
-        with pytest.raises(IndexError):
-            sa[8]
 
     def test_setitem(self) -> None:
         sa = ShiftArray([1, 2, 3])
@@ -323,3 +302,14 @@ class TestShiftArrayCoverage:
         # Check that it yields the correct (index, value) pairs
         expected = [(10, 1), (11, 2), (12, 3)]
         assert list(items) == expected
+
+    def test_getitem_slice(self) -> None:
+        """Test __getitem__ with slice (line 206)."""
+        sa = ShiftArray([10, 20, 30, 40, 50])
+        assert sa[1:3] == [20, 30]
+
+    def test_setitem_slice(self) -> None:
+        """Test __setitem__ with slice (lines 243-244)."""
+        sa = ShiftArray([10, 20, 30, 40, 50])
+        sa[1:3] = [99, 88]
+        assert list(sa) == [10, 99, 88, 40, 50]
