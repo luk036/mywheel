@@ -5,58 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.5.0] - 2026-07-16
 
-### Added
-- GitHub Actions CI workflow with Python 3.8-3.12 testing
-- mypy type checking configuration
-- Improved README with quick start examples and performance characteristics
-- Comprehensive CONTRIBUTING.md guide
-- Explicit public API exports via `__all__` in all modules
-- Additional PyPI classifiers for Python versions and audience
+### Performance
+- **`__slots__` on core classes**: Added `__slots__` to `MapAdapter`, `RepeatArray`, and `SlNode`, saving ~176 bytes per instance for each. (#f4d6f8c)
+- **Compact BPQueue buckets**: Replaced per-bucket `Dllist([i, 4848])` with bare `Dllink` sentinels, eliminating the per-bucket `Dllist` wrapper object + list — saving ~168 bytes per bucket (~150 MB for large circuits with pmax=50K). (#f4d6f8c)
 
-### Changed
-- Enhanced documentation and developer experience
+### Documentation
+- **svgbob doubly-linked list diagram**: Added ASCII-to-SVG diagram to `dllist.py` module docstring. (#b275f30)
 
-## [0.1.0] - TBD
+### Fixed
+- **mypy errors**: Resolved type annotation errors in config and `bpqueue`. (#69e04ae)
+- **Robin precondition**: Enforced `num_parts >= 2` precondition, replaced empty-cycle guard with assertion. (#5411bce)
+- **Python 3.9 compat**: Added `from __future__ import annotations` for PEP 604 syntax. (#f99e33d)
 
-### Added
-- Initial release with core data structures:
-  - `Dllist`: Doubly-linked list with O(1) operations
-  - `BPQueue`: Bounded priority queue for small integer keys
-  - `Robin`: Round-robin iterator
-  - `MapAdapter`: List-to-map adapter
-  - `RepeatArray`: Memory-efficient repeated value array
-  - `ShiftArray`: Array with arbitrary start index
-- Full type hints with mypy support
-- Comprehensive test suite with pytest and hypothesis
-- Pre-commit hooks for code quality
-- Sphinx documentation
+### Testing
+- **Coverage raised 95%→98%**: Deduped redundant tests, added slice and iterator coverage tests. (#71de094)
 
-### Features
-- Memory efficient implementations using `__slots__`
-- Sentinel nodes for circular data structures
-- Property-based testing with hypothesis
-- Zero runtime dependencies
-- Python 3.8+ support
+### Code Cleanup
+- **Removed PyScaffold boilerplate**: Deleted `skeleton.py`/`test_skeleton.py`, dropped Python < 3.9 compat, removed dead entry points and duplicate `LICENSE`. (#bde6f85)
 
----
-
-## Notes for Maintainers
-
-### Adding New Entries
-
-When adding new entries to changelog:
-
-1. Use categories: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`
-2. Link issue references: `[Unreleased]` or `[#123]`
-3. Order entries logically (new features first, then fixes)
-4. Keep entries concise but informative
-
-### Version Bumping
-
-This project uses `setuptools_scm` for versioning. To release:
-
-1. Create git tag: `git tag -a v0.2.0 -m "Release v0.2.0"`
-2. Push tag: `git push origin v0.2.0`
-3. CI will automatically build and publish to PyPI
+### Build & CI
+- **CI repair**: Fixed broken entry_points and remaining skeleton imports. (#551afd2)
