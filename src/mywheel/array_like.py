@@ -11,10 +11,7 @@ class RepeatArray:
 
     def __init__(self, value: Any, size: int) -> None:
         """
-        The function initializes an object with a value and size attribute.
 
-        :param value: The value parameter is used to store the value of an object. It can be of any data type, such as an integer, string, or even another object
-        :param size: The `size` parameter represents the size of an object or data structure.
 
         Examples:
             >>> repeat_array = RepeatArray(1, 5)
@@ -29,12 +26,7 @@ class RepeatArray:
 
     def __getitem__(self, _key: Any) -> Any:  # key is ignored
         """
-        The `__getitem__` function returns the value of the object regardless of the key provided.
 
-        :param _key: The parameter `_key` in the __getitem__ method is used to indicate that the key argument is
-                     ignored. It is a convention in Python to use `_key` as a placeholder for variables that are not used or
-                     not important in a particular context. In this case, the key argument is not used in the method implementation
-        :return: The value stored in the `self.value` attribute.
 
         Examples:
             >>> repeat_array = RepeatArray(1, 5)
@@ -54,9 +46,7 @@ class RepeatArray:
 
     def __len__(self) -> int:
         """
-        The function returns the size of an object.
 
-        :return: The size of the object.
 
         Examples:
             >>> repeat_array = RepeatArray(1, 5)
@@ -68,9 +58,7 @@ class RepeatArray:
 
     def __iter__(self) -> Iterator[Any]:
         """
-        The function returns an iterator that repeats the value of the object a specified number of times.
 
-        :return: The `repeat` function is being returned.
 
         Examples:
             >>> repeat_array = RepeatArray(1, 5)
@@ -86,12 +74,8 @@ class RepeatArray:
 
     def get(self, _item: Any) -> Any:  # defaultvalue is ignored
         """
-        The `get` function returns the value of the object.
 
-        :param _item: The underscore `_item` is a convention in Python to indicate that a parameter is not going to
-                      be used in the function. In this case, the parameter is ignored and not used in the function logic
 
-        :return: The value of the `self.value` attribute is being returned.
 
         Examples:
             >>> repeat_array = RepeatArray(1, 5)
@@ -117,8 +101,6 @@ class ShiftArray(list):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
-        The function is a constructor that initializes an object with a start value of 0 and calls the
-        constructor of the parent class "list".
 
         Examples:
             >>> shift_array = ShiftArray([1, 2, 3])
@@ -144,9 +126,7 @@ class ShiftArray(list):
 
     def set_start(self, start: int) -> None:
         """
-        The function sets the value of the "start" attribute.
 
-        :param start: The `start` parameter is a value that will be assigned to the `start` attribute of the object
 
         Examples:
             >>> shift_array = ShiftArray([1, 2, 3, 4, 5])
@@ -174,10 +154,7 @@ class ShiftArray(list):
 
     def __getitem__(self, key: SupportsIndex | slice, /) -> Any:
         """
-        The `__getitem__` function returns the item at the specified index, adjusted by the `start` attribute.
 
-        :param key: The `key` parameter is the index or slice object used to access the elements of the list. It can be an integer index or a slice object that specifies a range of indices
-        :return: The method is returning the item at the specified index in the list.
 
         Examples:
             >>> shift_array = ShiftArray([1, 2, 3, 4, 5])
@@ -219,11 +196,7 @@ class ShiftArray(list):
 
     def __setitem__(self, key: SupportsIndex | slice, newValue: Any, /) -> None:
         """
-        The `__setitem__` function is used to set the value of an item in a list-like object, adjusting the
-        index based on the start value.
 
-        :param key: The key parameter represents the index of the element in the list that you want to set a new value for
-        :param newValue: The `newValue` parameter is the value that you want to set for the given key in the list
 
         Examples:
             >>> shift_array = ShiftArray([1, 2, 3, 4, 5])
@@ -246,10 +219,7 @@ class ShiftArray(list):
 
     def items(self) -> Iterator[tuple[int, Any]]:
         """
-        The `items` function returns an iterator that yields tuples containing the index and value of each
-        element in the object.
 
-        :return: The `items` method is returning an iterator that yields tuples containing the index (starting from `self.start`) and the corresponding value for each element in the object.
 
         Examples:
             >>> shift_array = ShiftArray([1, 2, 3, 4, 5])

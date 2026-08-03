@@ -45,32 +45,17 @@ class SlNode:
     __slots__ = ("next", "data")
 
     def __init__(self, data: int):
-        """
-        The function initializes an object with a data attribute and a next attribute that points to itself.
-
-        :param data: The `data` parameter is an integer that represents the value to be stored in the node
-        :type data: int
-        """
         self.next = self
         self.data = data
 
 
 class RobinIterator:
-    """The `RobinIterator` class is an iterator that iterates over a singly linked list starting from a
-    given node.
-    """
-
     __slots__ = ("curr", "stop")
     curr: SlNode
     stop: SlNode
 
     def __init__(self, node: SlNode) -> None:
         """
-        The function initializes the current and stop pointers to the given node.
-
-        :param node: The `node` parameter is an instance of the `SlNode` class. It represents a node in a singly linked list
-        :type node: SlNode
-
         Examples:
             >>> node = SlNode(1)
             >>> iter = RobinIterator(node)
@@ -84,19 +69,9 @@ class RobinIterator:
         self.curr = self.stop = node
 
     def __iter__(self) -> "RobinIterator":
-        """
-        The function returns an instance of the RobinIterator class.
-
-        :return: The `__iter__` method is returning an instance of the `RobinIterator` class.
-        """
         return self
 
     def __next__(self) -> int:
-        """
-        The __next__ function returns the next item in the iterator.
-
-        :return: The `next()` method is being called and its return value is being returned.
-        """
         self.curr = self.curr.next
         if self.curr != self.stop:
             return self.curr.data
@@ -106,9 +81,6 @@ class RobinIterator:
 
 class Robin:
     """Round Robin
-
-    The `Robin` class implements a round-robin algorithm for cycling through a list of parts, and
-    the `exclude` method returns an iterator starting from a specified part.
 
     .. svgbob::
        :align: center
@@ -124,12 +96,6 @@ class Robin:
     cycle: List[SlNode]
 
     def __init__(self, num_parts: int):
-        """
-        The function initializes a cycle of linked nodes with a given number of parts.
-
-        :param num_parts: The `num_parts` parameter is an integer that represents the number of parts in the cycle
-        :type num_parts: int
-        """
         assert num_parts >= 2, f"num_parts must be at least 2, got {num_parts}"
         self.cycle = list(SlNode(k) for k in range(num_parts))
         prev_node = self.cycle[-1]
@@ -139,15 +105,6 @@ class Robin:
 
     def exclude(self, from_part: int) -> RobinIterator:
         """
-        The `exclude` function returns a `RobinIterator` object that excludes a specified part of a cycle.
-
-        :param from_part: The `from_part` parameter is an integer that represents the starting index of the
-                          cycle that should be excluded
-
-        :type from_part: int
-
-        :return: The `exclude` method is returning a `RobinIterator` object.
-
         Examples:
             >>> r = Robin(5)
             >>> iter = r.exclude(3)
