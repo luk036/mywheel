@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2026-09-04
+
+### Code Cleanup
+- **Removed AI slop**: Stripped boilerplate from docstrings and comments across `array_like`, `bpqueue`, `dllist`, `map_adapter` and `robin`. (#4f8adb1)
+
+### Build & CI
+- **Updated GitHub Actions**: checkout→v4, setup-python→v5. (#cb993a9)
+- **Removed stale `.bak` workflow**: Deleted `python-app.bak`. (#f8799c1)
+
 ## [0.5.0] - 2026-07-16
 
 ### Performance
