@@ -106,7 +106,7 @@ class Dllink(Generic[T]):
             >>> a.is_locked()
             True
         """
-        return id(self.next) == id(self)
+        return self.next is self
 
     def lock(self) -> None:
         """
@@ -196,7 +196,7 @@ class DllIterator(Generic[T]):
             >>> id(b) == id(c)
             True
         """
-        if id(self.curr) != id(self.link):
+        if self.curr is not self.link:
             res = self.curr
             self.curr = self.curr.next
             return res
@@ -255,7 +255,7 @@ class Dllist(Generic[T]):
             >>> a.is_empty()
             True
         """
-        return id(self.head.next) == id(self.head)
+        return self.head.next is self.head
 
     def clear(self) -> None:
         """

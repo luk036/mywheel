@@ -211,7 +211,7 @@ class BPQueue:
     def popleft(self) -> Item:
         res = self._bucket[self._max].next
         res.detach()
-        while self._bucket[self._max].next == self._bucket[self._max]:
+        while self._bucket[self._max].next is self._bucket[self._max]:
             self._max -= 1
         return res
 
@@ -281,7 +281,8 @@ class BPQueue:
         self._bucket[it.data[0]].attach(it)  # LIFO
         if self._max < it.data[0]:
             self._max = it.data[0]
-        self._update_max_key()
+        else:
+            self._update_max_key()
 
     def modify_key(self, it: Item, delta: int) -> None:
         """
@@ -303,7 +304,7 @@ class BPQueue:
             >>> a.data[0]
             3
         """
-        if it.next == it:  # locked
+        if it.next is it:  # locked
             return
         if delta > 0:
             self.increase_key(it, delta)
@@ -321,10 +322,11 @@ class BPQueue:
             True
         """
         it.detach()
-        self._update_max_key()
+        if it.data[0] == self._max:
+            self._update_max_key()
 
     def _update_max_key(self) -> None:
-        while self._bucket[self._max].next == self._bucket[self._max]:
+        while self._bucket[self._max].next is self._bucket[self._max]:
             self._max -= 1
 
     def __iter__(self) -> "BPQueueIterator":

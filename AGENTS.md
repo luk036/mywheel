@@ -67,7 +67,7 @@ flake8 .                      # Lint code
 ### Error Handling
 - Use `assert` for invariant checks and preconditions
 - Raise specific exceptions: `IndexError`, `NotImplementedError`, `StopIteration`
-- Use `id()` for object identity comparisons: `id(self.next) == id(self)`
+- Use `is` / `is not` for object identity comparisons (faster than `id()`; semantically identical): `self.next is self`
 - No bare `except:` clauses (use specific exceptions)
 
 ### Testing Patterns
@@ -99,7 +99,7 @@ def __next__(self) -> ReturnType:
 #### Circular Data Structures
 - Sentinel nodes for linked lists (`head` points to itself)
 - Self-referential initialization: `self.next = self`
-- Use `id()` for equality checks on circular references
+- Use `is` / `is not` for equality checks on circular references (faster than `id()`; semantically identical)
 
 #### Generic Types
 ```python

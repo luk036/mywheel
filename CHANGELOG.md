@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Performance
+- **Identity checks use `is`**: Replaced `id(x) == id(y)` with `x is y` in `Dllink.is_locked`, `Dllist.is_empty`, and `DllIterator.__next__`, and switched the node/bucket identity comparisons in `BPQueue` from `==` to `is`. This removes a `builtins.id` call from every hot-path check. Public API unchanged.
+- **`BPQueue` skips redundant max scans**: `increase_key` only calls `_update_max_key()` when the raised key does not exceed the current max, and `detach` only calls it when the detached item was in the max bucket. Neither can leave `_max` pointing at an empty bucket. Public API unchanged.
+
 ## [0.6.0] - 2026-09-04
 
 ### Code Cleanup
